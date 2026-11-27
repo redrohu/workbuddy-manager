@@ -38,7 +38,9 @@ class NativeUpstreamRuntimeTest(unittest.IsolatedAsyncioTestCase):
             with mock.patch.object(config, 'WB2API_MODE', 'native'), \
                     mock.patch.object(config, 'WB2API_START_SCRIPT', start), \
                     mock.patch.object(config, 'WB2API_STOP_SCRIPT', stop), \
-                    mock.patch.object(asyncio, 'create_subprocess_exec', side_effect=fake_exec):
+                    mock.patch.object(asyncio, 'create_subprocess_exec', side_effect=fake_exec), \
+                    mock.patch.object(wb2api, '_wait_for_upstream',
+                                      mock.AsyncMock(return_value={'connected': True})) as wait:
                 ok, message = await wb2api.restart_container()
 
             self.assertTrue(ok, message)
@@ -46,6 +48,32 @@ class NativeUpstreamRuntimeTest(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(Path(calls[0][-1]), stop)
             self.assertEqual(Path(calls[1][-1]), start)
             self.assertIn('原生', message)
+            # 启动脚本跑完后必须探测 /status 就绪，不能把「进程已拉起」当成成功
+            wait.assert_awaited_once()
+
+    async def test_restart_reports_failure_when_upstream_never_ready(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            start = root / 'start-workbuddy2api.cmd'
+            stop = root / 'stop-workbuddy2api.cmd'
+            start.touch()
+            stop.touch()
+
+            async def fake_exec(*args, **kwargs):
+                return _Process()
+
+            with mock.patch.object(config, 'WB2API_MODE', 'native'), \
+                    mock.patch.object(config, 'WB2API_START_SCRIPT', start), \
+                    mock.patch.object(config, 'WB2API_STOP_SCRIPT', stop), \
+                    mock.patch.object(asyncio, 'create_subprocess_exec', side_effect=fake_exec), \
+                    mock.patch.object(wb2api, '_wait_for_upstream',
+                                      mock.AsyncMock(return_value={'connected': False,
+                                                                   'error': '端口未监听'})):
+                ok, message = await wb2api.restart_container()
+
+            self.assertFalse(ok, message)
+            self.assertIn('未就绪', message)
+            self.assertIn('端口未监听', message)
 
     def test_logs_prefer_native_log_file_and_tail_limit(self) -> None:
         with tempfile.TemporaryDirectory() as td:
