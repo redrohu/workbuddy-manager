@@ -837,6 +837,9 @@ grep api_key /opt/workbuddy2api/config.json
 
 ## 附：Windows 原生部署（无需 Docker）
 
+> 飞牛 OS（fnOS）用户：本项目可以打成飞牛原生 fpk 安装包（内置 Python 与上游网关，
+> 不需要 Docker），打包、校验与升级方法见 [deploy/fpk/README.md](fpk/README.md)。
+
 前提：`workbuddy2api` 已在本机运行，并有可用的启停脚本与文件日志。
 
 ```powershell

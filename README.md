@@ -271,6 +271,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/ithtelab/workbuddy-manager/m
 - [开发与架构](docs/development.md) —— 本地开发、架构、目录结构
 - [安全说明](docs/security-notes.md) —— 威胁模型与加固
 - [部署指南](deploy/README.md) —— 反向代理、HTTPS、Windows 原生、一键更新
+- [飞牛 OS（fnOS）fpk 打包](deploy/fpk/README.md) —— 打成飞牛原生安装包（arm）、校验、升级与发布到应用源
 - [账号出口线路](docs/account-proxy-routes.md) —— 每个账号走不同代理出口
 - [API 令牌](docs/api-tokens.md) —— 只读令牌与作用域
 - [调用抓包](docs/api-traffic-tap.md) —— 回放每一次调用的完整上下文

@@ -270,6 +270,7 @@ Threat model and hardening notes: [security notes](docs/security-notes.md) and t
 - [Development & architecture](docs/development.md) — local dev, architecture, layout
 - [Security notes](docs/security-notes.md) — threat model and hardening
 - [Deployment guide](deploy/README.md) — reverse proxy, HTTPS, Windows, updates
+- [fnOS fpk packaging](deploy/fpk/README.md) — native fnOS (Feiniu NAS) package for arm: build, verify, upgrade, publish to an app source (Chinese)
 - [Account proxy routes](docs/account-proxy-routes.md) — per-account egress
 - [API tokens](docs/api-tokens.md) — read-only tokens and scopes
 - [Request traces](docs/api-traffic-tap.md) — replay the full context of every call

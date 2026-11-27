@@ -4,23 +4,80 @@
 `dev/build_fpk.py` 组装成最终安装包。想改启动逻辑、安装向导、默认端口，改这里的
 文件即可，不需要碰打包脚本。
 
-## 一句话打包
+> 目前只打 **arm（aarch64）** 包。x86 的 fnOS 机型暂不提供，也装不了本包。
+
+## 第一次打包前的准备
+
+打包用的素材缓存在 `dev/.fpk-cache/`（已在 `.gitignore` 里，不进版本库）：
+
+| 文件 | 怎么来 | 缺了会怎样 |
+|---|---|---|
+| `wb2api` | aarch64 的上游网关二进制，放进缓存目录，或打包时用 `--upstream-bin <路径>` 指定 | 报「找不到 aarch64 的 wb2api 二进制」；放错架构会报「是 x86_64 的二进制」 |
+| `cpython-3.12.16-aarch64-install_only.tar.gz` | 第一次打包加 `--fetch-python` 自动下载（需联网，约 28 MB） | 报缺内置 Python 运行时 |
+| `wheels/` | 打包时按 `server/requirements.txt` 自动解析下载，之后复用 | 需联网；缓存里混进非 aarch64 的 wheel 会直接报错 |
+| `upstream-scripts/` | 上游任务脚本（可选），找不到时退而用仓库里的 `upstream/scripts` | 包照样能装，只是缺上游自带的成长任务脚本 |
+
+另外需要 Node.js（构建前端）和 Python 3.12（运行打包脚本）。
+
+## 打包
 
 ```bash
-# 先构建前端（改了前端代码就必须重跑）
+# 1) 构建前端（改了前端代码就必须重跑；旧产物会被打包脚本拦下）
 cd web && npm run build:export && cd ..
 
-# 打包
+# 2) 打包。版本号默认取 server/main.py 的 version
 python dev/build_fpk.py
 
-# 产物：dist/wbmgr-<版本>.fpk —— fnOS 应用中心 → 手动安装 → 选这个文件
+#    指定包的版本号（只改包，不改仓库代码），或在原版本上自动递增
+python dev/build_fpk.py --version 2.11.29
+python dev/build_fpk.py --bump patch
+
+#    只做打包前的检查，不生成文件
+python dev/build_fpk.py --check
 ```
 
-校验（打完建议跑一遍，装不上时它先说话）：
+产物在 `dist/wbmgr-<版本>.fpk`（`-o` 可改输出目录），结尾会打印文件大小和 sha256。
+
+## 校验
+
+打完建议跑一遍，装不上时它会先指出问题：
 
 ```bash
-python dev/check_fpk.py dist/wbmgr-2.11.23.fpk --ref _fpk/wbmgr.fpk
+python dev/check_fpk.py dist/wbmgr-2.11.29.fpk
+
+# 手头有一个已知能装的包时，可以加 --ref 逐项对比外层结构
+python dev/check_fpk.py dist/wbmgr-2.11.29.fpk --ref _fpk/wbmgr.fpk
 ```
+
+它检查外层文件与权限、manifest 必需字段、checksum、内层必需文件、wb2api 与
+wheel 的架构、后端换行、桌面入口和前端产物是否为新版。全部通过时最后一行是
+「✓ 全部校验通过」。
+
+## 安装与升级
+
+1. 把 `.fpk` 拷到电脑上，打开 fnOS 应用中心 → 手动安装 → 选择该文件；
+2. 首次安装按向导设置管理员密码与端口；
+3. 装好后从飞牛桌面图标打开，或访问 `http://<NAS-IP>:7864/`（端口以向导里填的为准）。
+
+**升级必须用更高的版本号。** fnOS 只在新包版本**高于**已装版本时才当作升级；
+版本相同或更低会被拒绝，或被当成重装。打包前先确认 NAS 上装的是哪个版本
+（也要看应用源里发布过的版本），不够高就用 `--version` 或 `--bump` 抬上去。
+
+升级不会动共享目录里的数据（见下面第 6 条）；包内「一键更新」在 fpk 版里不适用，
+更新统一走应用中心。
+
+## 发布到第三方应用源（可选）
+
+飞牛的第三方应用源（例如 [mingk326/FnDepot](https://github.com/mingk326/FnDepot)）
+只放清单 `fnpack.json`、图标和说明，fpk 本身挂在 GitHub Release 上。发新版时：
+
+1. 把 fpk 上传到该仓库的 Release；
+2. 在 `fnpack.json` 对应应用的 `releases` 下加一条：`changelog`、`updated_at`，
+   以及 `packages.arm` 的 `download_url`、`sha256`、`size`（打包结尾打印的
+   sha256 与文件字节数）；
+3. 推送后，在飞牛里刷新应用源即可看到新版本。
+
+应用源里的命名、版本号和本仓库不必完全一致，只要版本号比已发布的高即可升级。
 
 ## 目录说明
 
@@ -103,12 +160,16 @@ deploy/fpk/
 ## 换版本时要做的事
 
 1. 改 `server/main.py` 的 `version='x.y.z'`（界面的「关于」读它）；
-2. 在 `CHANGELOG.md` 里加该版本段落（`manifest` 的 changelog 从这里取）；
+2. 在 `CHANGELOG.md` 里加该版本段落。`manifest` 的 changelog 优先取
+   `[未发布]` 段，它为空时才取同名版本段；
 3. `python dev/build_fpk.py --version x.y.z`。
+
+只是想让 NAS 能升级、不打算正式发版时，可以只做第 3 步：`--version` 只改包的
+版本号。代价是面板「关于」里显示的仍是 `server/main.py` 的版本号，两者会不一致。
 
 ## 在 x86 上验证 aarch64 包（可选）
 
-`dev/_fpk_runtest.sh` 会借助 qemu 在 WSL 里把包装起来真跑一遍（解压 → 装依赖 →
+`dev/fpk_runtest.sh` 会借助 qemu 在 WSL 里把包装起来真跑一遍（解压 → 装依赖 →
 起服务 → 探 `/healthz`）。前置：
 
 ```bash
@@ -118,3 +179,16 @@ wsl -d Debian12 -- bash -lc 'apt-get install -y qemu-user-static libc6-arm64-cro
 然后用 WSL 跑该脚本。它证明的是「包内 Python 能跑、依赖装得上、服务起得来」，
 这些恰恰是 fpk 装完最常见的失败点；装不上或起不来时，它比安装器那句
 「安装失败」有用得多。
+
+脚本假定包已经解到固定位置（外层在 `/root/fpktest/out`，`app.tgz` 解到
+`/opt/fnos-sim/apps/wbmgr`），路径见脚本开头的变量，按需修改。
+
+## 常见问题
+
+| 现象 | 原因与处理 |
+|---|---|
+| 安装器只说「安装失败」 | 先跑 `dev/check_fpk.py`，结构、checksum、换行问题它都会指出来 |
+| 装上了，但飞牛桌面上没有图标 | `ui/` 缺失或 `ui/config` 写错（见第 7 条）；`check_fpk.py` 会检查 |
+| 装上了，但启动失败 | 多半是依赖没装上：wheel 架构不对或漏了依赖（见第 1、2 条）；可用 `dev/fpk_runtest.sh` 在本机复现 |
+| 选了新包，应用中心不认为是升级 | 版本号不够高，见「安装与升级」 |
+| 界面还是旧的 | 打包前没重新 `npm run build:export`；打包脚本会拦住缺字号样式的旧产物，但其他前端改动拦不住，改了前端就重建 |
