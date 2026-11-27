@@ -1528,7 +1528,11 @@ async def restart_container(container: str | None = None) -> tuple[bool, str]:
                 return False, f'执行 {script.name} 失败：{exc}'
             if proc.returncode != 0:
                 return False, f'{script.name} 退出码 {proc.returncode}'
-        return True, '原生 workbuddy2api 已重启'
+        # 启动脚本只负责拉起进程；必须探测 /status，不能把进程创建当成配置已生效。
+        status = await _wait_for_upstream()
+        if not status.get('connected'):
+            return False, f'原生 workbuddy2api 重启后未就绪：{status.get("error") or "未知错误"}'
+        return True, '原生 workbuddy2api 已重启并就绪'
 
     if config.WB2API_MODE == 'systemd':
         return await _systemctl('restart')

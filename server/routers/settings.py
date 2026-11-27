@@ -45,7 +45,23 @@ async def save_upstream(body: dict, request: Request,
     security.audit(user, 'update_upstream', '',
                    f'段={sections}' + (f'；顶层={top_keys}' if top_keys else '')
                    + f'；来源 {client_ip(request)}')
-    # 上游只在启动时读 config.json，保存后自动重载使其生效
+    # 管理端直接改写 config.json；内置网关只在启动时读取它，必须重启进程。
+    # 等待原生启停与就绪探测的真实结果，不把「已调度」当成「已生效」。
+    if wb2api.config.WB2API_MODE == 'native':
+        ok, message = await reload.restart_now()
+        result['reload_scheduled'] = False
+        result['reload_ok'] = ok
+        # 成功时不能带 reload_hint：前端把它当作「需要人工处理」的告警，
+        # 成功路径也带就会误报「设置已保存，但需要你手动一步」。
+        # 成功只回 reload_message（前端不读），失败才回可照做的提示。
+        if ok:
+            result['reload_message'] = message
+        else:
+            result['reload_hint'] = (
+                f'配置已写入，但自带网关重启未成功：{message}。请查看上游日志后重试。'
+            )
+        return result
+    # Docker 部署：上游只在启动时读 config.json，保存后自动重载使其生效
     result['reload_scheduled'] = reload.request_restart()
     # 无法自动重载上游时（没装 docker / 容器没挂 docker.sock），要如实告诉
     # 用户去宿主机重启，而不是让他以为改完就生效了。

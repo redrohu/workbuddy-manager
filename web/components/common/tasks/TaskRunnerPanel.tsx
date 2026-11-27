@@ -62,7 +62,7 @@ export function TaskRunnerPanel() {
           <Sparkles className="size-4 text-muted-foreground" />
           <span className="text-sm font-medium">{t('tasks.runTitle')}</span>
           {running && (
-            <Badge variant="secondary" className="rounded-full text-[10px]">
+            <Badge variant="secondary" className="rounded-full text-[0.625rem]">
               <Loader2 className="mr-1 size-3 animate-spin" />
               {t('tasks.runRunning', {mode: t(`tasks.runMode_${status?.mode}`)})}
               {status?.group ? ` · ${status.group}` : ''}
@@ -131,20 +131,20 @@ export function TaskRunnerPanel() {
           {/* whitespace-pre-line：这段说明是**分条的**（两种部署形态各一条修法），
               不加的话换行会被折成空格、整段挤成一坨，正好把「我该做哪一步」
               这个最有用的信息淹掉。 */}
-          <span className="text-[11px] leading-relaxed whitespace-pre-line text-muted-foreground">
+          <span className="text-[0.6875rem] leading-relaxed whitespace-pre-line text-muted-foreground">
             {status?.unavailable_reason}
           </span>
         </div>
       )}
 
-      <p className="mb-2 text-[11px] leading-relaxed text-muted-foreground">
+      <p className="mb-2 text-[0.6875rem] leading-relaxed text-muted-foreground">
         {t('tasks.runDesc')}
       </p>
 
       {/* 输出回显：脚本按行打印进度，等长任务需要看到「跑到哪了」 */}
       {status && status.lines.length > 0 && (
         <div className="max-h-[240px] overflow-auto rounded-xl bg-muted/60 p-3">
-          <pre className="whitespace-pre-wrap break-all font-mono text-[11px] leading-relaxed text-foreground/80">
+          <pre className="whitespace-pre-wrap break-all font-mono text-[0.6875rem] leading-relaxed text-foreground/80">
             {/* 面板回显的是上游脚本的原始 stdout（写死中文）。译文只在展示层按模板
                 逐行替换，存储与上游脚本都保持原文 —— 详见 lib/i18n/taskrun.ts。 */}
             {status.lines.map((l) => translateRunLine(l)).join('\n')}
@@ -160,7 +160,7 @@ export function TaskRunnerPanel() {
               <TriangleAlert className="size-4 text-amber-500" />
               {t('tasks.runFullConfirmTitle')}
             </DialogTitle>
-            <DialogDescription className="pt-2 text-[13px] leading-relaxed">
+            <DialogDescription className="pt-2 text-[0.8125rem] leading-relaxed">
               {/* 译文里用 ** 标重点（项目约定），由 RichText 渲染成 <b> —— 
                   直接输出会把星号原样显示出来。 */}
               <RichText text={t('tasks.runFullConfirmBody')} />

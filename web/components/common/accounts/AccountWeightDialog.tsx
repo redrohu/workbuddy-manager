@@ -111,7 +111,7 @@ export function AccountWeightDialog({
                 if (e.key === 'Enter') void save();
               }}
             />
-            <p className="text-[11px] leading-relaxed text-muted-foreground">
+            <p className="text-[0.6875rem] leading-relaxed text-muted-foreground">
               {t('accounts.weightHint')}
             </p>
           </div>

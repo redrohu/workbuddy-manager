@@ -66,7 +66,7 @@ function SeriesBadge({series}: {series: string}) {
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center rounded-md border px-1.5 py-0.5 text-[10px] font-medium',
+        'inline-flex shrink-0 items-center rounded-md border px-1.5 py-0.5 text-[0.625rem] font-medium',
         SERIES_STYLE[series] ?? 'border-border bg-muted text-muted-foreground',
       )}
     >
@@ -290,7 +290,7 @@ export default function ModelsPage() {
       {data && (
         <div
           className={cn(
-            'flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border px-3.5 py-2.5 text-[11px]',
+            'flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border px-3.5 py-2.5 text-[0.6875rem]',
             data.source === 'tencent'
               ? 'border-border bg-muted/60 text-muted-foreground'
               : 'border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400',
@@ -302,7 +302,7 @@ export default function ModelsPage() {
           {data.via && <span>{t('models.sourceVia', {via: data.via})}</span>}
           {data.cached && <span>{t('models.sourceCached', {n: data.cache_age})}</span>}
           {data.source !== 'tencent' && (
-            <span className="basis-full text-[10px] leading-4 opacity-90">
+            <span className="basis-full text-[0.625rem] leading-4 opacity-90">
               {data.source === 'upstream'
               ? t('models.fallbackNote')
                 : t('models.emptyNote')}
@@ -353,14 +353,14 @@ export default function ModelsPage() {
             />
           </div>
           <div className="-mx-0.5 flex flex-wrap items-center gap-1.5 overflow-x-auto px-0.5 pb-0.5">
-            <span className="flex shrink-0 items-center gap-1 text-[11px] text-muted-foreground">
+            <span className="flex shrink-0 items-center gap-1 text-[0.6875rem] text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />
               {t('models.series')}
             </span>
             <Button
               variant={series === 'all' ? 'default' : 'outline'}
               size="sm"
-              className="h-7 shrink-0 rounded-full px-2.5 text-[11px]"
+              className="h-7 shrink-0 rounded-full px-2.5 text-[0.6875rem]"
               onClick={() => setSeries('all')}
             >
               {t('common.all')}
@@ -370,7 +370,7 @@ export default function ModelsPage() {
                 key={s}
                 variant={series === s ? 'default' : 'outline'}
                 size="sm"
-                className="h-7 shrink-0 rounded-full px-2.5 text-[11px]"
+                className="h-7 shrink-0 rounded-full px-2.5 text-[0.6875rem]"
                 onClick={() => setSeries(s)}
               >
                 {seriesLabel(s, t)}
@@ -389,7 +389,7 @@ export default function ModelsPage() {
                 key={k}
                 variant={cap === k ? 'default' : 'outline'}
                 size="sm"
-                className="h-7 shrink-0 rounded-full px-2.5 text-[11px]"
+                className="h-7 shrink-0 rounded-full px-2.5 text-[0.6875rem]"
                 onClick={() => setCap(k)}
               >
                 {label}
@@ -400,7 +400,7 @@ export default function ModelsPage() {
             <Button
               variant={sort === 'credits' ? 'default' : 'outline'}
               size="sm"
-              className="h-7 shrink-0 rounded-full px-2.5 text-[11px]"
+              className="h-7 shrink-0 rounded-full px-2.5 text-[0.6875rem]"
               title={t('models.sortByRatioTitle')}
               onClick={() => setSort((v) => (v === 'credits' ? 'default' : 'credits'))}
             >
@@ -426,11 +426,11 @@ export default function ModelsPage() {
               <Table className="wb-table-left">
                 <TableHeader>
                   <TableRow className="border-b border-border/60 hover:bg-transparent">
-                    <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('models.colModel')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('models.colContext')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('models.colMaxOutput')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('models.colEfforts')}</TableHead>
-                    <TableHead className="pr-4 text-[11px] text-muted-foreground">{t('models.series')}</TableHead>
+                    <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('models.colModel')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('models.colContext')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('models.colMaxOutput')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('models.colEfforts')}</TableHead>
+                    <TableHead className="pr-4 text-[0.6875rem] text-muted-foreground">{t('models.series')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -443,7 +443,7 @@ export default function ModelsPage() {
                           {m.name ? (
                             <>
                               <span className="text-xs font-medium">{m.name}</span>
-                              <span className="font-mono text-[11px] text-muted-foreground">{m.id}</span>
+                              <span className="font-mono text-[0.6875rem] text-muted-foreground">{m.id}</span>
                             </>
                           ) : (
                             <span className="font-mono text-xs font-medium">{m.id}</span>
@@ -460,7 +460,7 @@ export default function ModelsPage() {
                         {m.efforts.length ? (
                           <div className="flex flex-wrap items-center gap-1">
                             {m.efforts.map((e) => (
-                              <Badge key={e} variant="secondary" className="rounded-md font-mono text-[10px]">
+                              <Badge key={e} variant="secondary" className="rounded-md font-mono text-[0.625rem]">
                                 {e}
                               </Badge>
                             ))}
@@ -468,7 +468,7 @@ export default function ModelsPage() {
                                 用户据此知道不指定档位时会走哪一档 */}
                             {m.default_effort && (
                               <span
-                                className="text-[11px] text-muted-foreground"
+                                className="text-[0.6875rem] text-muted-foreground"
                                 title={t('models.defaultEffortTitle', {effort: m.default_effort})}
                               >
                                 {t('models.defaultEffort', {effort: m.default_effort})}
@@ -476,7 +476,7 @@ export default function ModelsPage() {
                             )}
                           </div>
                         ) : (
-                          <span className="text-[11px] text-muted-foreground">—</span>
+                          <span className="text-[0.6875rem] text-muted-foreground">—</span>
                         )}
                       </TableCell>
                       <TableCell className="pr-4">
@@ -487,28 +487,28 @@ export default function ModelsPage() {
                           {m.credits && (
                             <Badge
                               variant="secondary"
-                              className="rounded-md font-mono text-[10px]"
+                              className="rounded-md font-mono text-[0.625rem]"
                               title={t('models.creditRatioTitle')}
                             >
                               {m.credits}
                             </Badge>
                           )}
                           {(
-                            <Badge variant="secondary" className="rounded-md text-[10px]" title={t('models.visionTitle') + ' · ' + (m.native_modality_source || '') + ' ' + (m.native_modality_verified_at || '')}>
+                            <Badge variant="secondary" className="rounded-md text-[0.625rem]" title={t('models.visionTitle') + ' · ' + (m.native_modality_source || '') + ' ' + (m.native_modality_verified_at || '')}>
                               {t(m.native_modality === 'multimodal' ? 'models.vision' : m.native_modality === 'text' ? 'models.visionNo' : m.native_modality === 'router' ? 'models.visionRouter' : 'models.visionUnknown')}
                             </Badge>
                           )}
                           {m.only_reasoning && (
                             <Badge
                               variant="secondary"
-                              className="rounded-md text-[10px]"
+                              className="rounded-md text-[0.625rem]"
                               title={t('models.onlyReasoningTitle')}
                             >
                               {t('models.onlyReasoning')}
                             </Badge>
                           )}
                           {m.is_default && (
-                            <Badge variant="secondary" className="rounded-md text-[10px]" title={t('models.defaultTitle')}>
+                            <Badge variant="secondary" className="rounded-md text-[0.625rem]" title={t('models.defaultTitle')}>
                               {t('models.default')}
                             </Badge>
                           )}
@@ -521,7 +521,7 @@ export default function ModelsPage() {
               </Table>
             </div>
             {(filtered.length !== models.length || q.trim() || series !== 'all' || cap !== 'all') && (
-              <div className="border-t border-border/40 px-4 py-2 text-[11px] text-muted-foreground">
+              <div className="border-t border-border/40 px-4 py-2 text-[0.6875rem] text-muted-foreground">
                 {t('models.filteredCount', {n: filtered.length, total: models.length})}
               </div>
             )}
@@ -531,11 +531,11 @@ export default function ModelsPage() {
 
       {/* 失败原因：默认收起，供排查（例如某个账号凭证过期） */}
       {!!data?.errors?.length && (
-        <details className="rounded-[16px] bg-muted/60 px-3.5 py-2.5 text-[11px] text-muted-foreground">
+        <details className="rounded-[16px] bg-muted/60 px-3.5 py-2.5 text-[0.6875rem] text-muted-foreground">
           <summary className="cursor-pointer select-none">
             {t('models.failureLog', {n: data.errors.length})}
           </summary>
-          <ul className="mt-2 space-y-1 font-mono text-[10px] leading-4">
+          <ul className="mt-2 space-y-1 font-mono text-[0.625rem] leading-4">
             {data.errors.map((e, i) => (
               <li key={i} className="break-all">· {e}</li>
             ))}
@@ -543,7 +543,7 @@ export default function ModelsPage() {
         </details>
       )}
 
-      <p className="text-[11px] leading-4 text-muted-foreground">
+      <p className="text-[0.6875rem] leading-4 text-muted-foreground">
         {t('models.footnote')}
       </p>
     </div>

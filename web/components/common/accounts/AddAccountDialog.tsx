@@ -344,7 +344,7 @@ export function AddAccountDialog({
           {/* 重登时把「给谁修」摆明：版本已由该账号决定，界面上的全局切换在这里
               不参与（否则国际版账号会被写进一张国内版凭证）。 */}
           {target && (
-            <div className="w-full rounded-xl border border-border/60 bg-muted/50 px-3 py-2 text-[11px] leading-4">
+            <div className="w-full rounded-xl border border-border/60 bg-muted/50 px-3 py-2 text-[0.6875rem] leading-4">
               <div className="flex items-center justify-between gap-2">
                 <span className="font-medium">
                   {target.nickname || t('accounts.unnamed')}
@@ -353,7 +353,7 @@ export function AddAccountDialog({
                   {realmName}
                 </span>
               </div>
-              <div className="mt-0.5 font-mono text-[10px] text-muted-foreground truncate">
+              <div className="mt-0.5 font-mono text-[0.625rem] text-muted-foreground truncate">
                 {target.uid}
               </div>
               {target.panel_disabled && (
@@ -368,7 +368,7 @@ export function AddAccountDialog({
               摆出来只会让人以为能选却选不动（线路表读自上游配置的 proxies）。 */}
           {proxyRoutes.length > 0 && (
             <div className="w-full space-y-1.5">
-              <div className="text-[11px] font-medium">{t('accounts.proxyLine')}</div>
+              <div className="text-[0.6875rem] font-medium">{t('accounts.proxyLine')}</div>
               <Select value={proxy ? `route:${proxy}` : 'default'} disabled={!routesReady}
                       onValueChange={(value) => setProxy(value === 'default' ? '' : value.slice(6))}>
                 <SelectTrigger className="h-9 w-full rounded-full text-xs" aria-label={t('accounts.proxyLine')}>
@@ -387,7 +387,7 @@ export function AddAccountDialog({
               放在二维码之前：地区一变就要重新申请授权码，先选好再扫省得白扫。 */}
           {realm === 'global' && (
             <div className="w-full space-y-1.5">
-              <div className="text-[11px] font-medium">{t('addAccount.regionLabel')}</div>
+              <div className="text-[0.6875rem] font-medium">{t('addAccount.regionLabel')}</div>
               <Select value={region} onValueChange={setRegion}>
                 <SelectTrigger className="h-9 w-full rounded-full text-xs" aria-label={t('addAccount.regionLabel')}>
                   <SelectValue placeholder={t('addAccount.regionPlaceholder')} />
@@ -401,7 +401,7 @@ export function AddAccountDialog({
                 </SelectContent>
               </Select>
               {!region && (
-                <p className="text-[11px] leading-4 text-muted-foreground">
+                <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                   {t('addAccount.regionHint')}
                 </p>
               )}
@@ -429,7 +429,7 @@ export function AddAccountDialog({
                   target="_blank"
                   rel="noopener noreferrer"
                   title={authUrl}
-                  className="min-w-0 flex-1 truncate text-[11px] text-blue-500 hover:underline"
+                  className="min-w-0 flex-1 truncate text-[0.6875rem] text-blue-500 hover:underline"
                 >
                   {authUrl}
                 </a>

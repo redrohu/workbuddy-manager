@@ -235,7 +235,7 @@ export function AiChatInput({
                       setModelOpen((v) => !v);
                       setEffortOpen(false);
                     }}
-                    className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[11px] font-medium transition-colors hover:bg-muted/70"
+                    className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[0.6875rem] font-medium transition-colors hover:bg-muted/70"
                   >
                     <Sparkles className="h-3.5 w-3.5 text-muted-foreground" />
                     <span className="max-w-[160px] truncate">
@@ -260,7 +260,7 @@ export function AiChatInput({
                         onClick={(e) => e.stopPropagation()}
                       >
                         {models.length === 0 && (
-                          <div className="px-3 py-4 text-center text-[11px] text-muted-foreground">
+                          <div className="px-3 py-4 text-center text-[0.6875rem] text-muted-foreground">
                             {t('chat.noModels')}
                           </div>
                         )}
@@ -289,12 +289,12 @@ export function AiChatInput({
                                     {m.name || m.id}
                                   </span>
                                   {m.series && (
-                                    <span className="shrink-0 text-[11px] text-muted-foreground">
+                                    <span className="shrink-0 text-[0.6875rem] text-muted-foreground">
                                       {m.series}
                                     </span>
                                   )}
                                 </span>
-                                <span className="mt-0.5 block truncate font-mono text-[11px] text-muted-foreground">
+                                <span className="mt-0.5 block truncate font-mono text-[0.6875rem] text-muted-foreground">
                                   {m.id}
                                   {m.efforts.length > 0 && t('chat.reasoningSuffix', {efforts: m.efforts.join('/')})}
                                 </span>
@@ -321,7 +321,7 @@ export function AiChatInput({
                       setModelOpen(false);
                     }}
                     className={cn(
-                      'flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors',
+                      'flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.6875rem] font-medium transition-colors',
                       supported.length
                         ? 'bg-muted hover:bg-muted/70'
                         : 'cursor-not-allowed bg-muted/50 text-muted-foreground/60',
@@ -351,7 +351,7 @@ export function AiChatInput({
                             setEffortOpen(false);
                           }}
                           className={cn(
-                            'flex w-full items-center justify-between rounded-xl px-2.5 py-1.5 text-left text-[11px] transition-colors',
+                            'flex w-full items-center justify-between rounded-xl px-2.5 py-1.5 text-left text-[0.6875rem] transition-colors',
                             !effort ? 'bg-muted' : 'hover:bg-muted/60',
                           )}
                         >
@@ -367,7 +367,7 @@ export function AiChatInput({
                               setEffortOpen(false);
                             }}
                             className={cn(
-                              'flex w-full items-center justify-between rounded-xl px-2.5 py-1.5 text-left text-[11px] transition-colors',
+                              'flex w-full items-center justify-between rounded-xl px-2.5 py-1.5 text-left text-[0.6875rem] transition-colors',
                               effort === e ? 'bg-muted' : 'hover:bg-muted/60',
                             )}
                           >
@@ -380,7 +380,7 @@ export function AiChatInput({
                   </AnimatePresence>
                 </div>
 
-                <span className="ml-auto hidden text-[11px] text-muted-foreground sm:inline">
+                <span className="ml-auto hidden text-[0.6875rem] text-muted-foreground sm:inline">
                   {t('chat.keyboardHint')}
                 </span>
               </div>

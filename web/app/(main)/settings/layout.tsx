@@ -27,7 +27,17 @@ import {
 } from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import {notify} from '@/lib/toast';
-import {getExpiryDailyGroup, setExpiryDailyGroup} from '@/lib/display-prefs';
+import {
+  DEFAULT_FONT_SCALE,
+  FONT_SCALE_CHOICES,
+  FONT_SCALE_FACTORS,
+  FONT_SCALE_LABEL_KEYS,
+  getExpiryDailyGroup,
+  getFontScale,
+  setExpiryDailyGroup,
+  setFontScale,
+  type FontScale,
+} from '@/lib/display-prefs';
 import {useI18n} from '@/lib/i18n/provider';
 import {t as tGlobal, tp as tpGlobal} from '@/lib/i18n';
 import {RichText} from '@/lib/i18n/rich-text';
@@ -878,6 +888,19 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
     setExpiryDaily(getExpiryDailyGroup());
   }, []);
 
+  /**
+   * 「界面字号」——同样是**界面偏好**，存浏览器本地、改完立即生效。
+   *
+   * 与 expiryDaily 同一个取舍：它不改变系统行为，所以不进 GROUPS（那套分组
+   * 每条都要写进上游 config.json）。首屏后读 localStorage —— 真正的「首帧
+   * 生效」由 app/layout.tsx 的内联脚本负责（见 display-prefs 的
+   * fontScaleBootScript），这里只是让选择器显示当前档位。
+   */
+  const [fontScale, setFontScaleState] = useState<FontScale>(DEFAULT_FONT_SCALE);
+  useEffect(() => {
+    setFontScaleState(getFontScale());
+  }, []);
+
   /** 可视化表单状态 */
   const [form, setForm] = useState<Record<Group, Record<string, FieldValue>>>({
     prompt: defaultValues(PROMPT_FIELDS),
@@ -1220,8 +1243,8 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
               <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
               <div className="space-y-1">
                 <div className="text-xs font-medium">{t('settings.cfgUnreadable')}</div>
-                <div className="text-[11px] text-muted-foreground">{upstreamError}</div>
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-[0.6875rem] text-muted-foreground">{upstreamError}</div>
+                <div className="text-[0.6875rem] text-muted-foreground">
                   <RichText text={t('settings.cfgUnreadableHint')} />
                 </div>
               </div>
@@ -1265,7 +1288,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 )}
               </div>
               {cfg?.upstream_auth_dir && (
-                <p className="mt-2 text-[11px] leading-4 text-amber-600 dark:text-amber-400">
+                <p className="mt-2 text-[0.6875rem] leading-4 text-amber-600 dark:text-amber-400">
                   {t('settings.authDirMismatch')}
                 </p>
               )}
@@ -1276,20 +1299,20 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 <div className="flex min-w-0 items-center gap-2">
                   <div className="text-sm font-medium">{t('settings.modelsTitle')}</div>
                   {modelSource === 'dynamic' && (
-                    <span className="shrink-0 text-[11px] text-muted-foreground">
+                    <span className="shrink-0 text-[0.6875rem] text-muted-foreground">
                       {t('settings.modelsDynamic', {count: models.length, n: models.length})}
                     </span>
                   )}
                   {modelSource === 'static' && (
                     <span
-                      className="shrink-0 text-[11px] text-amber-600 dark:text-amber-400"
+                      className="shrink-0 text-[0.6875rem] text-amber-600 dark:text-amber-400"
                       title={t('settings.modelsStaticTitle')}
                     >
                       {t('settings.modelsStatic', {count: models.length, n: models.length})}
                     </span>
                   )}
                   {modelSource === 'unknown' && models.length > 0 && (
-                    <span className="shrink-0 text-[11px] text-muted-foreground">
+                    <span className="shrink-0 text-[0.6875rem] text-muted-foreground">
                       {t('settings.modelsCount', {count: models.length, n: models.length})}
                     </span>
                   )}
@@ -1302,7 +1325,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-7 shrink-0 gap-1.5 text-[11px]"
+                  className="h-7 shrink-0 gap-1.5 text-[0.6875rem]"
                   disabled={modelsLoading}
                   title={t('settings.refetchModelsTitle')}
                   onClick={() => loadModels(false)}
@@ -1318,7 +1341,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
               <div className="flex flex-wrap gap-1">
                 {models.length ? (
                   models.map((m) => (
-                    <Badge key={m.id} variant="secondary" className="rounded-full font-mono text-[10px]">
+                    <Badge key={m.id} variant="secondary" className="rounded-full font-mono text-[0.625rem]">
                       {m.id}
                     </Badge>
                   ))
@@ -1333,7 +1356,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                   授权，所以「同样的部署、不同账号看到的模型数量不同」是正常的——
                   并非本站少显示。上游自身还会缓存 1 小时。 */}
               {models.length > 0 && (
-                <p className="mt-2 text-[11px] leading-4 text-muted-foreground">
+                <p className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
                   {modelSource === 'static' ? (
                     <RichText text={t('settings.modelsStaticNote')} />
                   ) : (
@@ -1350,13 +1373,13 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
           <div className="rounded-[20px] bg-muted px-3.5 py-3">
             <div className="mb-2.5">
               <div className="text-sm font-medium">{t('settings.displayTitle')}</div>
-              <RichText className="text-[11px] text-muted-foreground" text={t('settings.displayDesc')} />
+              <RichText className="text-[0.6875rem] text-muted-foreground" text={t('settings.displayDesc')} />
             </div>
             <div className="flex items-center justify-between gap-3 rounded-2xl bg-background/60 px-3 py-2">
               <div className="min-w-0">
                 <div className="text-xs font-medium">{t('settings.expiryDailyLabel')}</div>
                 <RichText
-                  className="mt-0.5 block text-[11px] leading-4 text-muted-foreground"
+                  className="mt-0.5 block text-[0.6875rem] leading-4 text-muted-foreground"
                   text={t('settings.expiryDailyDesc')}
                 />
               </div>
@@ -1369,6 +1392,63 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 }}
               />
             </div>
+
+            {/*
+              字号：改的是 <html> 的 rem 基准（见 app/globals.css 的
+              `--wb-font-scale` 与 lib/display-prefs 的说明），所以**整页按比例
+              缩放**——文案里如实这么写，不假装「只放大文字」。
+
+              选项用 Select 而不是一排按钮：四个档位的标签在窄屏放不下一行，
+              而 Select 的宽度是固定的。下面单独一行显示当前倍数，是为了让
+              「我到底改了多少」有具体数字可看（成人的 1.1 倍与 1.2 倍差别
+              不小，光看「大 / 特大」判断不出来）。
+            */}
+            <div className="mt-1.5 flex items-center justify-between gap-3 rounded-2xl bg-background/60 px-3 py-2">
+              <div className="min-w-0">
+                <div className="text-xs font-medium" data-slot="font-scale-label">
+                  {t('settings.fontScaleLabel')}
+                </div>
+                {/* 说明这行带 `data-slot`：浏览器验收脚本按它量「11px 的小字
+                    是否跟着档位放大」（纯标记，不影响展示与读屏）。 */}
+                <div
+                  data-slot="font-scale-desc"
+                  className="mt-0.5 text-[0.6875rem] leading-4 text-muted-foreground"
+                >
+                  <RichText text={t('settings.fontScaleDesc')} />
+                </div>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <span
+                  data-slot="font-scale-factor"
+                  className="text-[0.6875rem] tabular-nums text-muted-foreground"
+                >
+                  ×{FONT_SCALE_FACTORS[fontScale]}
+                </span>
+                <Select
+                  value={fontScale}
+                  onValueChange={(v) => {
+                    // 先落 state（这一帧的选择器立刻变），再写盘并应用到页面
+                    const next = v as FontScale;
+                    setFontScaleState(next);
+                    setFontScale(next);
+                  }}
+                >
+                  <SelectTrigger
+                    aria-label={t('settings.fontScaleLabel')}
+                    className="h-8 w-[104px] bg-background text-xs"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {FONT_SCALE_CHOICES.map((choice) => (
+                      <SelectItem key={choice} value={choice} className="text-xs">
+                        {t(FONT_SCALE_LABEL_KEYS[choice])}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
 
           {/* 定时任务与错峰设置已整合至「账号 → 任务」：避免两处配置割裂 */}
@@ -1378,7 +1458,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 <CalendarClock className="h-4 w-4 shrink-0 text-muted-foreground" />
                 <span>{t('tasks.upstreamMovedTitle')}</span>
               </div>
-              <div className="text-[11px] leading-4 text-muted-foreground">
+              <div className="text-[0.6875rem] leading-4 text-muted-foreground">
                 {t('tasks.upstreamMovedDesc')}
               </div>
             </div>
@@ -1399,7 +1479,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                   <div>
                     <div className="text-sm font-medium">{tp(g.title)}</div>
                     {/* 分组说明里带加粗强调（如「只对国内版账号生效」），走 RichText 渲染 */}
-                    <RichText className="text-[11px] text-muted-foreground" text={tp(g.desc)} />
+                    <RichText className="text-[0.6875rem] text-muted-foreground" text={tp(g.desc)} />
                   </div>
                   <div className="flex items-center gap-2">
                     {dirty && (
@@ -1440,11 +1520,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                         <div className="min-w-0">
                           <div className="text-xs font-medium">{tp(f.label)}</div>
                           <RichText
-                            className="mt-0.5 block text-[11px] leading-4 text-muted-foreground"
+                            className="mt-0.5 block text-[0.6875rem] leading-4 text-muted-foreground"
                             text={tp(f.desc)}
                           />
                           {f.kind !== 'bool' && err && (
-                            <div className="mt-0.5 text-[10px] leading-3 text-destructive">{err}</div>
+                            <div className="mt-0.5 text-[0.625rem] leading-3 text-destructive">{err}</div>
                           )}
                         </div>
 
@@ -1474,7 +1554,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                               }
                             />
                             {f.unit && (
-                              <span className="w-8 text-[11px] text-muted-foreground">{tp(f.unit)}</span>
+                              <span className="w-8 text-[0.6875rem] text-muted-foreground">{tp(f.unit)}</span>
                             )}
                           </div>
                         ) : f.kind === 'select' ? (
@@ -1531,7 +1611,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                       'caution' in f && f.caution ? (
                         <div
                           key={f.key}
-                          className="flex items-start gap-1.5 rounded-xl bg-amber-500/10 px-3 py-2 text-[11px] leading-4 text-amber-600 dark:text-amber-400"
+                          className="flex items-start gap-1.5 rounded-xl bg-amber-500/10 px-3 py-2 text-[0.6875rem] leading-4 text-amber-600 dark:text-amber-400"
                         >
                           <TriangleAlert className="mt-0.5 h-3 w-3 shrink-0" />
                           <RichText text={tp(f.caution)} />
@@ -1542,7 +1622,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 )}
 
                 {!isAdmin && (
-                  <p className="mt-2 text-[11px] text-muted-foreground">{t('settings.readonlyNote')}</p>
+                  <p className="mt-2 text-[0.6875rem] text-muted-foreground">{t('settings.readonlyNote')}</p>
                 )}
               </div>
             );
@@ -1564,7 +1644,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                     </Badge>
                   )}
                 </div>
-                <div className="mt-0.5 text-[11px] leading-4 text-muted-foreground">
+                <div className="mt-0.5 text-[0.6875rem] leading-4 text-muted-foreground">
                   {upstashConfigured
                     ? t('settings.upstashDescOn')
                     : t('settings.upstashDescOff')}
@@ -1605,7 +1685,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
 
             <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('settings.upstashUrl')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.upstashUrl')}</Label>
                 <Input
                   value={upstashForm.url}
                   disabled={!isAdmin || !upstreamReady}
@@ -1613,12 +1693,12 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                   placeholder="https://xxx-12345.upstash.io"
                   className="bg-background font-mono text-xs"
                 />
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-[0.6875rem] text-muted-foreground">
                   {t('settings.upstashUrlHint')}
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">Upstash Token</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">Upstash Token</Label>
                 <Input
                   type="password"
                   value={upstashForm.token}
@@ -1631,7 +1711,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                   }
                   className="bg-background font-mono text-xs"
                 />
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-[0.6875rem] text-muted-foreground">
                   {cfg?.upstash?.has_token
                     ? t('settings.upstashTokenHintSaved')
                     : t('settings.upstashTokenHint')}
@@ -1668,7 +1748,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 />
               )}
             </div>
-            <div className="mt-2 text-[11px] leading-4 text-muted-foreground">
+            <div className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
               {t('settings.upstashFooter')}
             </div>
           </div>
@@ -1682,7 +1762,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
             >
               <div>
                 <div className="text-sm font-medium">{t('settings.advanced')}</div>
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-[0.6875rem] text-muted-foreground">
                   {t('settings.advancedDesc')}
                 </div>
               </div>
@@ -1695,11 +1775,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
               <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="font-mono text-[11px] text-muted-foreground">schedule</div>
+                    <div className="font-mono text-[0.6875rem] text-muted-foreground">schedule</div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 rounded-full text-[11px]"
+                      className="h-7 rounded-full text-[0.6875rem]"
                       disabled={!isAdmin || busy || !upstreamReady}
                       onClick={() => saveJson('schedule', schedText)}
                     >
@@ -1718,11 +1798,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="font-mono text-[11px] text-muted-foreground">cooldown</div>
+                    <div className="font-mono text-[0.6875rem] text-muted-foreground">cooldown</div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 rounded-full text-[11px]"
+                      className="h-7 rounded-full text-[0.6875rem]"
                       disabled={!isAdmin || busy || !upstreamReady}
                       onClick={() => saveJson('cooldown', coolText)}
                     >
@@ -1741,11 +1821,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="font-mono text-[11px] text-muted-foreground">features</div>
+                    <div className="font-mono text-[0.6875rem] text-muted-foreground">features</div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 rounded-full text-[11px]"
+                      className="h-7 rounded-full text-[0.6875rem]"
                       disabled={!isAdmin || busy || !upstreamReady}
                       onClick={() => saveJson('features', featText)}
                     >
@@ -1764,11 +1844,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="font-mono text-[11px] text-muted-foreground">session_sticky</div>
+                    <div className="font-mono text-[0.6875rem] text-muted-foreground">session_sticky</div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 rounded-full text-[11px]"
+                      className="h-7 rounded-full text-[0.6875rem]"
                       disabled={!isAdmin || busy || !upstreamReady}
                       onClick={() => saveJson('session_sticky', sessText)}
                     >
@@ -1787,11 +1867,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="font-mono text-[11px] text-muted-foreground">pool</div>
+                    <div className="font-mono text-[0.6875rem] text-muted-foreground">pool</div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 rounded-full text-[11px]"
+                      className="h-7 rounded-full text-[0.6875rem]"
                       disabled={!isAdmin || busy || !upstreamReady}
                       onClick={() => saveJson('pool', poolText)}
                     >
@@ -1816,11 +1896,11 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                 ] as const).map(([name, val, setter]) => (
                   <div key={name} className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className="font-mono text-[11px] text-muted-foreground">{name}</div>
+                      <div className="font-mono text-[0.6875rem] text-muted-foreground">{name}</div>
                       <Button
                         size="sm"
                         variant="outline"
-                        className="h-7 rounded-full text-[11px]"
+                        className="h-7 rounded-full text-[0.6875rem]"
                         disabled={!isAdmin || busy || !upstreamReady}
                         onClick={() => saveJson(name, val)}
                       >
@@ -1851,16 +1931,16 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
           <PricingPanel />
           <div className="rounded-[20px] bg-muted p-4">
             <div className="mb-1 text-sm font-medium">{t('settings.mapNewAlias')}</div>
-            <div className="mb-3 text-[11px] text-muted-foreground">
+            <div className="mb-3 text-[0.6875rem] text-muted-foreground">
               <RichText text={t('settings.mapNewAliasDesc')} />
             </div>
             <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-4">
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('settings.mapAlias')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.mapAlias')}</Label>
                 <Input value={mapAlias} onChange={(e) => setMapAlias(e.target.value)} placeholder="gpt-4o-mini" className="bg-background" disabled={!isAdmin} />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('settings.mapTarget')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.mapTarget')}</Label>
                 <Select value={mapTarget} onValueChange={setMapTarget} disabled={!isAdmin}>
                   <SelectTrigger className="bg-background" aria-label={t('settings.mapTarget')}><SelectValue placeholder={t('chat.selectModel')} /></SelectTrigger>
                   <SelectContent>
@@ -1891,9 +1971,9 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/60 hover:bg-transparent">
-                  <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('settings.mapAlias')}</TableHead>
-                  <TableHead className="text-[11px] text-muted-foreground">{t('settings.mapTarget')}</TableHead>
-                  {isAdmin && <TableHead className="pr-4 text-right text-[11px] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
+                  <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('settings.mapAlias')}</TableHead>
+                  <TableHead className="text-[0.6875rem] text-muted-foreground">{t('settings.mapTarget')}</TableHead>
+                  {isAdmin && <TableHead className="pr-4 text-right text-[0.6875rem] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -1903,7 +1983,7 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
                       {/* 兜底那条（键为 `*`）直接显示成「兜底模型」，别让用户去记星号 */}
                       {alias === '*' ? (
                         <span className="flex items-center gap-1.5">
-                          <span className="font-sans text-[11px] font-medium">
+                          <span className="font-sans text-[0.6875rem] font-medium">
                             {t('settings.mapFallbackRow')}
                           </span>
                           <code className="text-muted-foreground">*</code>
@@ -1946,20 +2026,20 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
           {isAdmin && (
             <div className="rounded-[20px] bg-muted p-4">
               <div className="mb-1 text-sm font-medium">{t('settings.usersNew')}</div>
-              <div className="mb-3 text-[11px] text-muted-foreground">
+              <div className="mb-3 text-[0.6875rem] text-muted-foreground">
                 {t('settings.usersNewDesc')}
               </div>
               <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-4">
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('login.username')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('login.username')}</Label>
                   <Input value={newUser.username} onChange={(e) => setNewUser({...newUser, username: e.target.value})} className="bg-background" />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('login.password')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('login.password')}</Label>
                   <Input type="password" value={newUser.password} onChange={(e) => setNewUser({...newUser, password: e.target.value})} className="bg-background" />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('settings.usersRole')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.usersRole')}</Label>
                   <Select value={newUser.role} onValueChange={(v) => setNewUser({...newUser, role: v})}>
                     <SelectTrigger className="bg-background" aria-label={t('settings.usersRole')}><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -2000,9 +2080,9 @@ export default function SettingsLayout({children}: {children: React.ReactNode}) 
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/60 hover:bg-transparent">
-                  <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('login.username')}</TableHead>
-                  <TableHead className="text-[11px] text-muted-foreground">{t('settings.usersRole')}</TableHead>
-                  {isAdmin && <TableHead className="pr-4 text-right text-[11px] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
+                  <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('login.username')}</TableHead>
+                  <TableHead className="text-[0.6875rem] text-muted-foreground">{t('settings.usersRole')}</TableHead>
+                  {isAdmin && <TableHead className="pr-4 text-right text-[0.6875rem] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>

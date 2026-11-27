@@ -236,14 +236,14 @@ function UnifiedTaskRow({
             {label}
           </span>
           {ranToday && (
-            <span className="rounded-full bg-muted-foreground/10 px-1.5 text-[11px] text-muted-foreground">
+            <span className="rounded-full bg-muted-foreground/10 px-1.5 text-[0.6875rem] text-muted-foreground">
               {t('tasks.dailyRan')}
             </span>
           )}
         </div>
         <div
           className={
-            'text-[11px] leading-4 ' +
+            'text-[0.6875rem] leading-4 ' +
             (warn ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground')
           }
         >
@@ -371,17 +371,17 @@ function TokenPlanSection({onRan}: {onRan?: () => void}) {
                   aria-label={t('tasks.planTokenSection')} />
           <div className="min-w-0">
             <div className="text-xs font-medium">{t('tasks.planTokenSection')}</div>
-            <div className="text-[11px] text-muted-foreground">{t('tasks.planDesc')}</div>
+            <div className="text-[0.6875rem] text-muted-foreground">{t('tasks.planDesc')}</div>
           </div>
         </div>
       </div>
-      <div className="mt-1.5 text-[11px] leading-4 text-muted-foreground">
+      <div className="mt-1.5 text-[0.6875rem] leading-4 text-muted-foreground">
         {t('tasks.keepaliveHint')}
       </div>
 
       <div className="mt-2.5 flex flex-wrap items-end gap-3">
         <div className="space-y-1">
-          <Label className="text-[11px] text-muted-foreground">{t('tasks.planInterval')}</Label>
+          <Label className="text-[0.6875rem] text-muted-foreground">{t('tasks.planInterval')}</Label>
           <div className="flex items-center gap-1.5">
             <Input type="number" min={1} max={365} value={days}
                    onChange={(e) => setDays(Number(e.target.value))}
@@ -390,7 +390,7 @@ function TokenPlanSection({onRan}: {onRan?: () => void}) {
           </div>
         </div>
         <div className="space-y-1">
-          <Label className="text-[11px] text-muted-foreground">{t('tasks.planHour')}</Label>
+          <Label className="text-[0.6875rem] text-muted-foreground">{t('tasks.planHour')}</Label>
           <HourSelect value={hour} onChange={setHour} ariaLabel={t('tasks.planHour')} />
         </div>
         <div className="flex items-center gap-2">
@@ -407,7 +407,7 @@ function TokenPlanSection({onRan}: {onRan?: () => void}) {
         </div>
       </div>
 
-      <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+      <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-[0.6875rem] text-muted-foreground">
         <span>
           {t('tasks.planLast')}：
           {plan?.last_run ? fmtDateTime(plan.last_run) : t('tasks.planNever')}
@@ -671,11 +671,11 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="text-xs font-medium">{t('tasks.dailyTitle')}</div>
-          <div className="text-[11px] text-muted-foreground">{t('tasks.dailyHint')}</div>
+          <div className="text-[0.6875rem] text-muted-foreground">{t('tasks.dailyHint')}</div>
         </div>
 
         {sched && sched.conflicts.length > 0 && (
-          <div className="mt-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-[11px] leading-5 text-amber-700 dark:text-amber-300">
+          <div className="mt-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-[0.6875rem] leading-5 text-amber-700 dark:text-amber-300">
             <div className="flex items-center gap-1.5 font-medium">
               <TriangleAlert className="h-3.5 w-3.5" />
               {t('tasks.schedulerConflictTitle')}
@@ -793,7 +793,7 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
                       onChange={(n) => patchUp('activity_report_count', n)}
                     />
                     {!activityReportCountInRange(upDraft.activity_report_count) && (
-                      <span className="text-[11px] text-amber-600 dark:text-amber-400">
+                      <span className="text-[0.6875rem] text-amber-600 dark:text-amber-400">
                         {t('tasks.reportCountOutOfRange', {
                           min: ACTIVITY_REPORT_COUNT_MIN,
                           max: ACTIVITY_REPORT_COUNT_MAX,
@@ -862,10 +862,10 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
               />
             </>
           ) : unreadableMsg ? (
-            <div className="flex flex-wrap items-center gap-2 text-[11px] text-amber-600 dark:text-amber-400">
+            <div className="flex flex-wrap items-center gap-2 text-[0.6875rem] text-amber-600 dark:text-amber-400">
               <TriangleAlert className="h-3.5 w-3.5 shrink-0" />
               <span>{t('settings.cfgUnreadable')}：{unreadableMsg}</span>
-              <Button size="sm" variant="ghost" className="h-6 rounded-full px-2 text-[11px]" onClick={() => void load()}>
+              <Button size="sm" variant="ghost" className="h-6 rounded-full px-2 text-[0.6875rem]" onClick={() => void load()}>
                 {t('state.retry')}
               </Button>
             </div>
@@ -878,11 +878,11 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
         <div className="border-t border-border/60 pt-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="text-xs font-medium">{t('tasks.advancedPacingTitle')}</div>
-            <div className="text-[11px] text-muted-foreground">{t('tasks.advancedPacingHint')}</div>
+            <div className="text-[0.6875rem] text-muted-foreground">{t('tasks.advancedPacingHint')}</div>
           </div>
           <div className="mt-2.5 flex flex-wrap items-end gap-3">
             <div className="space-y-1">
-              <Label className="text-[11px] text-muted-foreground">{tp('每日任务随机延迟')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{tp('每日任务随机延迟')}</Label>
               <UnitSelect
                 value={upDraft.random_delay_minutes}
                 options={RANDOM_DELAY_OPTIONS}
@@ -892,7 +892,7 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
               />
             </div>
             <div className="space-y-1">
-              <Label className="text-[11px] text-muted-foreground">{tp('账号最短间隔')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{tp('账号最短间隔')}</Label>
               <UnitSelect
                 value={upDraft.account_delay_min_seconds}
                 options={ACCOUNT_DELAY_OPTIONS}
@@ -902,7 +902,7 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
               />
             </div>
             <div className="space-y-1">
-              <Label className="text-[11px] text-muted-foreground">{tp('账号最长间隔')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{tp('账号最长间隔')}</Label>
               <UnitSelect
                 value={upDraft.account_delay_max_seconds}
                 options={ACCOUNT_DELAY_OPTIONS}
@@ -913,7 +913,7 @@ function DailyTasksSection({onRan}: {onRan?: () => void}) {
             </div>
           </div>
           {delayErr && (
-            <div className="mt-1.5 text-[11px] text-destructive">{tp(delayErr)}</div>
+            <div className="mt-1.5 text-[0.6875rem] text-destructive">{tp(delayErr)}</div>
           )}
         </div>
       )}

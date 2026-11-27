@@ -160,12 +160,12 @@ export function CommandPalette() {
         onClick={() => setOpen(true)}
         aria-label={t('palette.triggerHint')}
         title={t('palette.triggerHint')}
-        className="inline-flex h-6 items-center gap-1.5 rounded-full border border-border/60 bg-muted/60 px-2.5 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="inline-flex h-6 items-center gap-1.5 rounded-full border border-border/60 bg-muted/60 px-2.5 text-[0.6875rem] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
       >
         <Search className="h-3 w-3 shrink-0 opacity-70" />
         <span className="hidden sm:inline">{t('palette.trigger')}</span>
         {mounted && (
-          <kbd className="hidden rounded border border-border/60 bg-background/70 px-1 font-sans text-[11px] leading-4 text-muted-foreground sm:inline">
+          <kbd className="hidden rounded border border-border/60 bg-background/70 px-1 font-sans text-[0.6875rem] leading-4 text-muted-foreground sm:inline">
             {isMacPlatform() ? '⌘K' : 'Ctrl K'}
           </kbd>
         )}
@@ -262,7 +262,7 @@ export function CommandPalette() {
             </div>
           )}
 
-          <div className="flex items-center justify-between gap-3 border-t border-border/60 px-4 py-2 text-[11px] text-muted-foreground">
+          <div className="flex items-center justify-between gap-3 border-t border-border/60 px-4 py-2 text-[0.6875rem] text-muted-foreground">
             <div className="hidden items-center gap-3 sm:flex">
               <span className="flex items-center gap-1">
                 <Kbd>↑</Kbd>
@@ -304,7 +304,7 @@ function isMacPlatform(): boolean {
 
 function Kbd({children}: {children: React.ReactNode}) {
   return (
-    <kbd className="rounded border border-border/60 bg-muted/60 px-1 font-sans text-[10px] leading-4">
+    <kbd className="rounded border border-border/60 bg-muted/60 px-1 font-sans text-[0.625rem] leading-4">
       {children}
     </kbd>
   );

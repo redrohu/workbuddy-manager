@@ -80,6 +80,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {useT} from '@/lib/i18n/provider';
+import {CHART_TICK_FONT, CHART_TIP_FONT} from '@/lib/chart-font';
 
 /**
  * 取数完成前的空值。
@@ -518,7 +519,7 @@ export default function DashboardPage() {
           而绝大多数部署就是单分组。有了它，用户才知道上面那些数是全池的，
           而不是又一个「看起来正常」的默认分组数。 */}
       {multiGroup && (
-        <p className="px-1 text-[11px] leading-4 text-muted-foreground">
+        <p className="px-1 text-[0.6875rem] leading-4 text-muted-foreground">
           {t('dashboard.scopeAllGroups', {n: slices.length})}
         </p>
       )}
@@ -608,7 +609,7 @@ export default function DashboardPage() {
                     {t('dashboard.unavailableCredits')}: {creditTotals.known ? fmtNumber(creditTotals.unavailable) : '—'}
                   </span>
                   {creditTotals.unknown > 0 && (
-                    <span className="text-[11px] font-normal tracking-normal text-muted-foreground">
+                    <span className="text-[0.6875rem] font-normal tracking-normal text-muted-foreground">
                       {t('dashboard.creditsUnknown', {n: creditTotals.unknown})}
                     </span>
                   )}
@@ -669,7 +670,7 @@ export default function DashboardPage() {
                 ⚠️ 用量**不按分组**：上游那份 `usage_daily` 表里没有分组列，
                 所以这几张卡片本来就是「全部分组」的口径。与上面的账号数正好
                 一致（那里也是全部聚合），因此不需要额外标注口径差异。 */}
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-[0.6875rem] text-muted-foreground">
               {weekFailed > 0
                 ? t('dashboard.weekFailed', {n: fmtNumber(weekFailed), realm: realmName})
                 : t('dashboard.requestsByRealm', {realm: realmName})}
@@ -686,14 +687,14 @@ export default function DashboardPage() {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                  <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} stroke="var(--muted-foreground)" />
-                  <YAxis tickLine={false} axisLine={false} fontSize={11} stroke="var(--muted-foreground)" />
+                  <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT} stroke="var(--muted-foreground)" />
+                  <YAxis tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT} stroke="var(--muted-foreground)" />
                   <Tooltip
                     contentStyle={{
                       background: 'var(--popover)',
                       border: '1px solid var(--border)',
                       borderRadius: 12,
-                      fontSize: 12,
+                      fontSize: CHART_TIP_FONT,
                     }}
                   />
                   <Area
@@ -854,14 +855,14 @@ export default function DashboardPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                       <XAxis
                         dataKey={flowXAxis.dataKey}
-                        tickLine={false} axisLine={false} fontSize={11}
+                        tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT}
                         stroke="var(--muted-foreground)"
                         interval={flowXAxis.interval}
                         tickFormatter={(v) => flowXAxis.format(v)}
                       />
                       {/* 刻度取绝对值：支出柱是负值，但读数不该显示成「-600」。 */}
                       <YAxis
-                        tickLine={false} axisLine={false} fontSize={11}
+                        tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT}
                         stroke="var(--muted-foreground)" width={52}
                         allowDecimals={false} domain={[-flowTop, flowTop]}
                         tickFormatter={(v) => fmtCompact(Math.abs(Number(v)))}
@@ -872,7 +873,7 @@ export default function DashboardPage() {
                           background: 'var(--popover)',
                           border: '1px solid var(--border)',
                           borderRadius: 12,
-                          fontSize: 12,
+                          fontSize: CHART_TIP_FONT,
                         }}
                         formatter={(value, name) => {
                           const n = Number(value);
@@ -880,7 +881,7 @@ export default function DashboardPage() {
                           return [fmtNumber(shown), String(name)] as [string, string];
                         }}
                       />
-                      <Legend wrapperStyle={{fontSize: 11}} />
+                      <Legend wrapperStyle={{fontSize: CHART_TICK_FONT}} />
                       <Bar dataKey="income" name={t('dashboard.income')} fill="var(--chart-2)"
                            radius={[3, 3, 0, 0]} maxBarSize={22} minPointSize={2} />
                       <Bar dataKey="expenseDown" name={t('dashboard.expense')}
@@ -896,23 +897,23 @@ export default function DashboardPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                       <XAxis
                         dataKey={flowXAxis.dataKey}
-                        tickLine={false} axisLine={false} fontSize={11}
+                        tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT}
                         stroke="var(--muted-foreground)"
                         interval={flowXAxis.interval}
                         tickFormatter={(v) => flowXAxis.format(v)}
                       />
                       {/* 双 Y 轴：收入常是几千、支出常是几十。同一根轴会把支出压成
                           贴着 0 的直线，等于没画。左轴收入、右轴支出，颜色与曲线对应。 */}
-                      <YAxis yAxisId="inc" tickLine={false} axisLine={false} fontSize={11}
+                      <YAxis yAxisId="inc" tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT}
                              stroke="var(--chart-2)" width={52} />
                       <YAxis yAxisId="exp" orientation="right" tickLine={false} axisLine={false}
-                             fontSize={11} stroke="var(--destructive)" width={48} />
+                             fontSize={CHART_TICK_FONT} stroke="var(--destructive)" width={48} />
                       <Tooltip
                         contentStyle={{
                           background: 'var(--popover)',
                           border: '1px solid var(--border)',
                           borderRadius: 12,
-                          fontSize: 12,
+                          fontSize: CHART_TIP_FONT,
                         }}
                         /* 与柱状图同一口径：Recharts 默认把原始浮点数直接塞进提示框，
                            支出是 usage.credit 的累加，会显示成 10 位小数（issue #365）。 */
@@ -921,7 +922,7 @@ export default function DashboardPage() {
                           return [fmtNumber(n), String(name)] as [string, string];
                         }}
                       />
-                      <Legend wrapperStyle={{fontSize: 11}} />
+                      <Legend wrapperStyle={{fontSize: CHART_TICK_FONT}} />
                       <Line yAxisId="inc" type="monotone" dataKey="income"
                             name={t('dashboard.income')} stroke="var(--chart-2)"
                             strokeWidth={2} dot={false} />
@@ -951,7 +952,7 @@ export default function DashboardPage() {
             .map((tier) => (
               <span
                 key={tier}
-                className={`text-[11px] tabular-nums ${availabilityClass(tier)}`}
+                className={`text-[0.6875rem] tabular-nums ${availabilityClass(tier)}`}
                 title={availabilityTitleKey(tier) ? t(availabilityTitleKey(tier)!) : undefined}
               >
                 {t(availabilityLabelKey(tier, scoped.find((a) => availabilityOf(a) === tier)))}
@@ -996,12 +997,12 @@ export default function DashboardPage() {
                     {/* 多于一个分组时才标归属：交错排列之后，光看昵称分不出
                         这条属于哪个池。单分组时它只是句废话。 */}
                     {multiGroup && (
-                      <span className="shrink-0 text-[11px] text-muted-foreground">
+                      <span className="shrink-0 text-[0.6875rem] text-muted-foreground">
                         {a.group.name}
                       </span>
                     )}
                     <span
-                      className={'shrink-0 text-[10px] font-medium ' + availabilityClass(tier)}
+                      className={'shrink-0 text-[0.625rem] font-medium ' + availabilityClass(tier)}
                       title={titleKey ? t(titleKey) : undefined}
                     >
                       {statusLabel}
@@ -1014,12 +1015,12 @@ export default function DashboardPage() {
                     />
                   </div>
                   <div className="mt-1.5 flex items-center justify-between gap-2">
-                    <span className={'text-[11px] tabular-nums ' + vis.textClass} title={t('accounts.colExpiry')}>
+                    <span className={'text-[0.6875rem] tabular-nums ' + vis.textClass} title={t('accounts.colExpiry')}>
                       {fmtRemain(a.remain_seconds)}
                     </span>
                     <span
                       className={
-                        'text-[11px] font-medium tabular-nums ' +
+                        'text-[0.6875rem] font-medium tabular-nums ' +
                         (typeof credOf(a) !== 'number'
                           ? 'text-muted-foreground'
                           : (credOf(a) as number) <= 0
@@ -1076,7 +1077,7 @@ function UpstreamBlock({
             {showName ? slice.name : t('dashboard.connStatus')}
           </span>
         </div>
-        <p className="text-[11px] text-muted-foreground">{t('dashboard.noUpstreamStatus')}</p>
+        <p className="text-[0.6875rem] text-muted-foreground">{t('dashboard.noUpstreamStatus')}</p>
       </>
     );
   }
@@ -1114,11 +1115,11 @@ function UpstreamBlock({
         </div>
       ))}
       {pool.globalOnly && !up.error && (
-        <p className="text-[11px] text-muted-foreground">
+        <p className="text-[0.6875rem] text-muted-foreground">
           {t('dashboard.globalTotalsNote')}
         </p>
       )}
-      {up.error && <p className="text-[11px] text-red-500">{up.error}</p>}
+      {up.error && <p className="text-[0.6875rem] text-red-500">{up.error}</p>}
     </>
   );
 }
@@ -1223,7 +1224,7 @@ function CreditFlowTile({label, value, tone, title}: {
   const sign = tone === 'expense' || (tone === 'net' && value < 0) ? '−' : '+';
   return (
     <div className="rounded-2xl bg-background/60 px-3 py-2.5" title={title}>
-      <div className="text-[11px] text-muted-foreground">{label}</div>
+      <div className="text-[0.6875rem] text-muted-foreground">{label}</div>
       <div className={'mt-1 text-lg font-semibold tabular-nums ' + color}>
         {sign}
         {fmtNumber(Math.abs(value))}

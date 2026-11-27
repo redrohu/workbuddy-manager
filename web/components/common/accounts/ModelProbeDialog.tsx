@@ -148,7 +148,7 @@ export function ModelProbeDialog({
             <ScanSearch className="size-4" />
             {t('accounts.probeTitle')}
           </DialogTitle>
-          <DialogDescription className="pt-1 text-[12px] leading-relaxed">
+          <DialogDescription className="pt-1 text-[0.75rem] leading-relaxed">
             {t('accounts.probeDesc')}
           </DialogDescription>
         </DialogHeader>
@@ -163,7 +163,7 @@ export function ModelProbeDialog({
                   type="button"
                   variant="outline" size="sm"
                   disabled={busy || accounts.length === 0}
-                  className="h-7 cursor-pointer gap-1 rounded-full text-[11px]"
+                  className="h-7 cursor-pointer gap-1 rounded-full text-[0.6875rem]"
                   onClick={() => {
                     setPickedAccounts(pickedAccounts.length === accounts.length ? [] : accounts.map((a) => a.file));
                     setCompleted(0);
@@ -175,13 +175,13 @@ export function ModelProbeDialog({
               </div>
               <div className="max-h-[150px] overflow-y-auto rounded-xl border p-2">
                 {accounts.length === 0 && (
-                  <div className="p-2 text-[11px] text-muted-foreground">
+                  <div className="p-2 text-[0.6875rem] text-muted-foreground">
                     {t('dashboard.noAccounts')}
                   </div>
                 )}
                 {accounts.map((a) => (
                   <label key={a.file}
-                         className="flex cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 text-[12px] hover:bg-muted">
+                         className="flex cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 text-[0.75rem] hover:bg-muted">
                     <input
                       type="checkbox"
                       disabled={busy}
@@ -202,7 +202,7 @@ export function ModelProbeDialog({
                   type="button"
                   variant="outline" size="sm"
                   disabled={busy || models.length === 0}
-                  className="h-7 cursor-pointer gap-1 rounded-full text-[11px]"
+                  className="h-7 cursor-pointer gap-1 rounded-full text-[0.6875rem]"
                   onClick={() => {
                     setPickedModels(pickedModels.length === models.length ? [] : models.map((m) => m.id));
                     setCompleted(0);
@@ -214,13 +214,13 @@ export function ModelProbeDialog({
               </div>
               <div className="max-h-[150px] overflow-y-auto rounded-xl border p-2">
                 {models.length === 0 && (
-                  <div className="p-2 text-[11px] text-muted-foreground">
+                  <div className="p-2 text-[0.6875rem] text-muted-foreground">
                     {t('accounts.probeNoModels')}
                   </div>
                 )}
                 {models.map((m) => (
                   <label key={m.id}
-                         className="flex cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 text-[12px] hover:bg-muted">
+                         className="flex cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 text-[0.75rem] hover:bg-muted">
                     <input
                       type="checkbox"
                       disabled={busy}
@@ -234,7 +234,7 @@ export function ModelProbeDialog({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.6875rem] text-muted-foreground">
             <span>{t('accounts.probeRequests', {n: combos})}</span>
             <span>{t('accounts.probeBatchProgress', {done: completed, total: combos, batches: batches.length})}</span>
             <button type="button" className="text-primary hover:underline" disabled={busy}
@@ -248,11 +248,11 @@ export function ModelProbeDialog({
               {t('accounts.probeSelectRestricted')}
             </button>
           </div>
-          <p className="text-[11px] leading-relaxed text-muted-foreground">{t('accounts.probeAutoRecoveryHint')}</p>
+          <p className="text-[0.6875rem] leading-relaxed text-muted-foreground">{t('accounts.probeAutoRecoveryHint')}</p>
           {busy && <progress className="h-1.5 w-full accent-primary" max={Math.max(1, combos)} value={completed} />}
 
           {error && (
-            <div className="flex items-start gap-2 rounded-xl bg-red-500/10 px-3 py-2 text-[11px] text-red-600">
+            <div className="flex items-start gap-2 rounded-xl bg-red-500/10 px-3 py-2 text-[0.6875rem] text-red-600">
               <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
               <span>{error}</span>
             </div>
@@ -261,21 +261,21 @@ export function ModelProbeDialog({
           {result && (
             <div className="min-w-0 space-y-2">
               <div className="flex flex-wrap gap-1.5">
-                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary">
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[0.625rem] text-primary">
                   {t('accounts.probeSynced', {n: result.results.filter((r) => r.gateway_synced).length})}
                 </span>
                 {STATUS_ORDER.filter((s) => (result.summary[s] ?? 0) > 0).map((s) => (
                   <span key={s}
-                        className={`whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] ${STATUS_STYLE[s]}`}>
+                        className={`whitespace-nowrap rounded-full px-2 py-0.5 text-[0.625rem] ${STATUS_STYLE[s]}`}>
                     {t(STATUS_KEY[s])} {result.summary[s]}
                   </span>
                 ))}
               </div>
               {result.results.some((r) => r.gateway_synced === false && !r.gateway_sync_skipped) && (
-                <p className="text-[11px] text-amber-600">{t('accounts.probeSyncFailed')}</p>
+                <p className="text-[0.6875rem] text-amber-600">{t('accounts.probeSyncFailed')}</p>
               )}
               <div className="max-h-[32vh] min-w-0 max-w-full overflow-auto rounded-xl border">
-                <table className="w-full border-collapse text-[11px]">
+                <table className="w-full border-collapse text-[0.6875rem]">
                   <thead className="sticky top-0 z-10 bg-background">
                     <tr className="border-b bg-muted/50">
                       <th className="whitespace-nowrap px-2 py-1.5 text-left font-medium">

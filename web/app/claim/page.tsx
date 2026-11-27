@@ -187,21 +187,21 @@ export default function ClaimPage() {
               {t('claim.subtitle', {left: info.left, total: info.shares})}
             </p>
             {info.models.length > 0 && (
-              <p className="mt-1 text-[11px] text-muted-foreground">
+              <p className="mt-1 text-[0.6875rem] text-muted-foreground">
                 {t('redPacket.modelsScoped', {list: info.models.join(', ')})}
               </p>
             )}
-            <p className="mt-1 text-[11px] text-muted-foreground">
+            <p className="mt-1 text-[0.6875rem] text-muted-foreground">
               {t('claim.expiresAt', {at: fmtDateTime(info.expires_at)})}
             </p>
 
             {/* 抽之前就说清「拿到之后往哪儿用」——省得领完还要回来问 */}
             <div className="mt-4 rounded-2xl bg-background px-3 py-2 text-left">
-              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
+              <div className="text-[0.6875rem] uppercase tracking-wide text-muted-foreground">
                 {t('claim.endpoint')}
               </div>
               <div className="mt-1 flex items-center gap-1.5">
-                <code className="min-w-0 flex-1 break-all font-mono text-[11px]">{endpoint}</code>
+                <code className="min-w-0 flex-1 break-all font-mono text-[0.6875rem]">{endpoint}</code>
                 <CopyButton value={endpoint} title={t('claim.copyEndpoint')} />
               </div>
             </div>
@@ -232,7 +232,7 @@ export default function ClaimPage() {
                       {info.quota_kind === 'token' ? t('claim.unitTokens') : t('claim.unitCredits')}
                     </div>
                   </div>
-                  <div className="mt-2 break-all rounded-xl bg-background px-3 py-2 font-mono text-[11px] leading-5">
+                  <div className="mt-2 break-all rounded-xl bg-background px-3 py-2 font-mono text-[0.6875rem] leading-5">
                     {info.my_key}
                   </div>
                   <Button
@@ -293,10 +293,10 @@ export default function ClaimPage() {
 
               {/* 密钥 + 复制 */}
               <div className="rounded-2xl bg-muted px-3 py-3">
-                <div className="mb-1.5 text-[11px] text-muted-foreground">
+                <div className="mb-1.5 text-[0.6875rem] text-muted-foreground">
                   {t('claim.yourKey')}
                 </div>
-                <div className="break-all rounded-xl bg-background px-3 py-2 font-mono text-[11px] leading-5">
+                <div className="break-all rounded-xl bg-background px-3 py-2 font-mono text-[0.6875rem] leading-5">
                   {got.key}
                 </div>
                 <Button
@@ -307,7 +307,7 @@ export default function ClaimPage() {
                   <Copy className="mr-1.5 h-4 w-4" />{t('claim.copy')}
                 </Button>
                 {got.models.length > 0 && (
-                  <div className="mt-1.5 text-[11px] leading-4 text-muted-foreground">
+                  <div className="mt-1.5 text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('redPacket.modelsScoped', {list: got.models.join(', ')})}
                   </div>
                 )}
@@ -315,14 +315,14 @@ export default function ClaimPage() {
 
               {/* 调用地址：拿到密钥后的下一个问题就是「往哪儿发请求」 */}
               <div className="rounded-2xl bg-muted px-3 py-3 text-left">
-                <div className="text-[11px] text-muted-foreground">{t('claim.endpoint')}</div>
+                <div className="text-[0.6875rem] text-muted-foreground">{t('claim.endpoint')}</div>
                 <div className="mt-1.5 flex items-center gap-1.5">
-                  <code className="min-w-0 flex-1 break-all rounded-xl bg-background px-3 py-2 font-mono text-[11px]">
+                  <code className="min-w-0 flex-1 break-all rounded-xl bg-background px-3 py-2 font-mono text-[0.6875rem]">
                     {endpoint}
                   </code>
                   <CopyButton value={endpoint} title={t('claim.copyEndpoint')} />
                 </div>
-                <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground">
+                <p className="mt-1.5 text-[0.6875rem] leading-4 text-muted-foreground">
                   {t('claim.endpointHint')}
                 </p>
               </div>
@@ -330,7 +330,7 @@ export default function ClaimPage() {
               <Button className="w-full rounded-full transition-transform active:scale-[0.98]" onClick={closeAndCopy}>
                 <Check className="mr-1.5 h-4 w-4" />{t('claim.done')}
               </Button>
-              <p className="text-center text-[11px] leading-4 text-muted-foreground">
+              <p className="text-center text-[0.6875rem] leading-4 text-muted-foreground">
                 {t('claim.closeHint')}
               </p>
             </div>

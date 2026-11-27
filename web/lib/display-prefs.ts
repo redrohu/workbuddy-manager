@@ -9,6 +9,128 @@
  */
 import type {CreditExpiry} from './types';
 
+/**
+ * 界面字号档位：存在**浏览器本地**（localStorage），不落后端。
+ *
+ * 为什么存在本地而不是服务端配置：这是「我这块屏幕上字号多大合适」的个人
+ * 偏好，与语言、版本切换同类（先例见 lib/i18n/config.ts 与 lib/realm-context.tsx）。
+ * 同一台机器上不同人、不同显示器需要的字号本来就不一样，存服务端反而会让
+ * 一个人改字号影响所有人的界面。
+ *
+ * 实现方式见 {@link applyFontScale} 与 app/globals.css：改 `html` 的
+ * `--wb-font-scale`，根字号 = `浏览器默认字号 × 倍数`（默认字号通常 16px，
+ * 所以 ×1.2 就是 19.2px），于是项目里所有 rem 字号（`text-xs` /
+ * `text-[0.6875rem]` …）一起按比例变。
+ *
+ * **副作用是「等比缩放」而不是「只放大文字」**：Tailwind 的间距、图标、
+ * 圆角同样以 rem 计量，会跟着一起变。这是**故意**的——只放大文字、间距不动，
+ * 密集的胶囊徽标与固定高度的按钮会挤到裁字；等比缩放则像浏览器缩放一样
+ * 处处保持原有比例。文案里如实写「整页按比例缩放」，不假装只动字号。
+ */
+export const FONT_SCALE_CHOICES = ['small', 'default', 'large', 'xlarge'] as const;
+
+export type FontScale = (typeof FONT_SCALE_CHOICES)[number];
+
+/** 默认档：与引入该设置之前**逐像素一致**（倍数为 1）。 */
+export const DEFAULT_FONT_SCALE: FontScale = 'default';
+
+/**
+ * 档位 → 根字号倍数。
+ *
+ * 档位写成语义名而不是直接存倍数（0.9 / 1.1 …）：倍数一旦进了 localStorage，
+ * 手改过的脏值（比如 7）会把界面放大到不可用且**没法在界面上调回来**；
+ * 存语义名则任何不认识的取值都回落到默认档。倍数只能通过这份表改。
+ */
+export const FONT_SCALE_FACTORS: Record<FontScale, number> = {
+  small: 0.9,
+  default: 1,
+  large: 1.1,
+  // 上限 1.2：1.25 在 1366 / 1440 宽的笔记本与手机上容易把密集布局挤到溢出
+  xlarge: 1.2,
+};
+
+const FONT_SCALE_KEY = 'wb.font-scale';
+
+/**
+ * 档位 → 文案键。
+ *
+ * 与 {@link FONT_SCALE_CHOICES} 分开列在这里、而**不**在组件里写
+ * `t(\`settings.fontScale_${choice}\`)`：拼出来的键不会被
+ * `server/tests/test_web_i18n.py` 的字面量扫描看到，漏翻时界面上直接显示裸键名
+ * （`settings.fontScale_large`），而且没有任何测试会红。列成常量外加一条
+ * 「这四个键在五种语言里都存在」的守卫（`server/tests/test_font_scale.py`）。
+ */
+export const FONT_SCALE_LABEL_KEYS: Record<FontScale, string> = {
+  small: 'settings.fontScaleSmall',
+  default: 'settings.fontScaleDefault',
+  large: 'settings.fontScaleLarge',
+  xlarge: 'settings.fontScaleXlarge',
+};
+
+/** 读取字号档位：读不到 / 存了不认识的值 / localStorage 不可用 → 默认档。 */
+export function getFontScale(): FontScale {
+  try {
+    const raw = window.localStorage.getItem(FONT_SCALE_KEY);
+    const hit = FONT_SCALE_CHOICES.find((c) => c === raw);
+    return hit ?? DEFAULT_FONT_SCALE;
+  } catch {
+    return DEFAULT_FONT_SCALE;
+  }
+}
+
+/**
+ * 写入字号档位，并**立即**把它应用到当前页面。
+ *
+ * 两件事放一起而不是让调用方各写一次：漏掉 `applyFontScale` 的表现是
+ * 「设置保存了、这一屏没变」，用户会以为没生效而反复点。
+ */
+export function setFontScale(v: FontScale): void {
+  try {
+    window.localStorage.setItem(FONT_SCALE_KEY, v);
+  } catch {
+    /* 写不进去只影响下次打开；本次会话仍按调用方给的档位渲染 */
+  }
+  applyFontScale(v);
+}
+
+/**
+ * 把档位应用到当前文档（改 `html` 上的 CSS 变量，见 app/globals.css）。
+ *
+ * 用 CSS 变量而不是直接写 `documentElement.style.fontSize`：变量只承载「倍数」，
+ * 「浏览器默认字号 × 倍数」这条算法留在 CSS 里一份，两边不会各算一套。
+ */
+export function applyFontScale(v: FontScale): void {
+  try {
+    document.documentElement.style.setProperty(
+      '--wb-font-scale',
+      String(FONT_SCALE_FACTORS[v] ?? 1),
+    );
+  } catch {
+    /* 没有 document（SSR / 测试环境）时无事可做 */
+  }
+}
+
+/**
+ * 首屏渲染**之前**应用字号的内联脚本源码（由 app/layout.tsx 注入）。
+ *
+ * 为什么需要它：`useEffect` 里读 localStorage 要等 React 挂载，用户会先看到
+ * 一帧默认字号再跳成自己选的字号（视觉上像闪一下）。内联脚本在解析 HTML 时
+ * 同步执行，赶在第一帧之前。
+ *
+ * 脚本内容由本模块的常量拼出来，**不另写一份**：key 名或倍数表改了而脚本没跟上，
+ * 表现是「设置里选了、刷新后回到默认」，很难查。`web/lib/font-scale.test.mjs`
+ * 会真的把这段脚本跑一遍，断言它把倍数写到 `--wb-font-scale` 上。
+ */
+export function fontScaleBootScript(): string {
+  const factors = JSON.stringify(FONT_SCALE_FACTORS);
+  const key = JSON.stringify(FONT_SCALE_KEY);
+  return (
+    '(function(){try{var f=' + factors + '[localStorage.getItem(' + key + ')];' +
+    'if(typeof f==="number"){document.documentElement.style.setProperty(' +
+    '"--wb-font-scale",String(f));}}catch(e){}})();'
+  );
+}
+
 /** 仪表盘「最近到期积分」是否按天归并。 */
 const EXPIRY_DAILY_KEY = 'wb.expiry-daily-group';
 

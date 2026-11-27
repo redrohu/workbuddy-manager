@@ -41,7 +41,7 @@ export function RealmToggle({compact = false}: {compact?: boolean}) {
             title={title}
             onClick={() => setRealm(id)}
             className={cn(
-              'relative flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors',
+              'relative flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.6875rem] font-medium transition-colors',
               active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
             )}
           >
@@ -70,7 +70,7 @@ export function RealmNote({className}: {className?: string}) {
   return (
     <div
       className={cn(
-        'flex items-start gap-2 rounded-[16px] border border-sky-500/30 bg-sky-500/10 px-3.5 py-2.5 text-[11px] leading-5 text-sky-700 dark:text-sky-300',
+        'flex items-start gap-2 rounded-[16px] border border-sky-500/30 bg-sky-500/10 px-3.5 py-2.5 text-[0.6875rem] leading-5 text-sky-700 dark:text-sky-300',
         className,
       )}
     >

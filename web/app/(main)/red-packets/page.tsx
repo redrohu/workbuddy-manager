@@ -304,7 +304,7 @@ export default function RedPacketsPage() {
                   placeholder={t('redPacket.fieldModelsPlaceholder')}
                 />
               </div>
-              <div className="mt-1 text-[11px] leading-3 text-muted-foreground">
+              <div className="mt-1 text-[0.6875rem] leading-3 text-muted-foreground">
                 {kind === 'token' ? t('redPacket.fieldModelsHint') : t('redPacket.fieldModelsHintOptional')}
               </div>
             </div>
@@ -325,7 +325,7 @@ export default function RedPacketsPage() {
           <div className="mb-1 text-sm font-medium">
             {t('redPacket.resultTitle', {n: created.keys.length})}
           </div>
-          <div className="mb-2 text-[11px] text-amber-600 dark:text-amber-400">
+          <div className="mb-2 text-[0.6875rem] text-amber-600 dark:text-amber-400">
             {t('redPacket.resultWarn')}
           </div>
 
@@ -335,11 +335,11 @@ export default function RedPacketsPage() {
               code（不可能），query 不需要任何路由支持。 */}
           {created.code && (
             <div className="mb-2 rounded-2xl bg-background/60 px-3 py-2">
-              <div className="mb-1 text-[11px] text-muted-foreground">
+              <div className="mb-1 text-[0.6875rem] text-muted-foreground">
                 {t('redPacket.claimLink')}
               </div>
               <div className="flex items-center gap-2">
-                <code className="min-w-0 flex-1 truncate text-[11px]">
+                <code className="min-w-0 flex-1 truncate text-[0.6875rem]">
                   {claimUrl(created.code)}
                 </code>
                 <Button
@@ -351,12 +351,12 @@ export default function RedPacketsPage() {
                   <Copy className="mr-1 h-3 w-3" />{t('redPacket.copyLink')}
                 </Button>
               </div>
-              <div className="mt-1 text-[11px] leading-4 text-muted-foreground">
+              <div className="mt-1 text-[0.6875rem] leading-4 text-muted-foreground">
                 {t('redPacket.claimLinkHint')}
               </div>
             </div>
           )}
-          <div className="max-h-64 overflow-auto rounded-2xl bg-background/60 p-2 font-mono text-[11px] leading-5">
+          <div className="max-h-64 overflow-auto rounded-2xl bg-background/60 p-2 font-mono text-[0.6875rem] leading-5">
             {created.keys.map((k) => (
               <div key={k.id} className="flex items-center justify-between gap-2">
                 <span className="truncate">{k.key}</span>
@@ -394,13 +394,13 @@ export default function RedPacketsPage() {
           <Table>
             <TableHeader>
               <TableRow className="border-b border-border/60 hover:bg-transparent">
-                <TableHead className="pl-4 text-[11px]">{t('redPacket.colTitle')}</TableHead>
-                <TableHead className="text-[11px]">{t('redPacket.colKind')}</TableHead>
-                <TableHead className="text-[11px]">{t('redPacket.colTotal')}</TableHead>
-                <TableHead className="text-[11px]">{t('redPacket.colShares')}</TableHead>
-                <TableHead className="text-[11px]">{t('redPacket.colMode')}</TableHead>
-                <TableHead className="text-[11px]">{t('redPacket.colExpires')}</TableHead>
-                <TableHead className="pr-4 text-[11px]">{t('accounts.colStatus')}</TableHead>
+                <TableHead className="pl-4 text-[0.6875rem]">{t('redPacket.colTitle')}</TableHead>
+                <TableHead className="text-[0.6875rem]">{t('redPacket.colKind')}</TableHead>
+                <TableHead className="text-[0.6875rem]">{t('redPacket.colTotal')}</TableHead>
+                <TableHead className="text-[0.6875rem]">{t('redPacket.colShares')}</TableHead>
+                <TableHead className="text-[0.6875rem]">{t('redPacket.colMode')}</TableHead>
+                <TableHead className="text-[0.6875rem]">{t('redPacket.colExpires')}</TableHead>
+                <TableHead className="pr-4 text-[0.6875rem]">{t('accounts.colStatus')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -428,14 +428,14 @@ export default function RedPacketsPage() {
                       {/* 已领取 / 总量。抽奖式红包一眼要看的是这个进度 ——
                           「还剩几份」比「谁发的」重要得多。 */}
                       <span
-                        className="shrink-0 rounded-full bg-background px-1.5 py-0.5 text-[11px] tabular-nums text-muted-foreground"
+                        className="shrink-0 rounded-full bg-background px-1.5 py-0.5 text-[0.6875rem] tabular-nums text-muted-foreground"
                         title={t('redPacket.claimedTip', {n: p.claimed, total: p.shares})}
                       >
                         {p.claimed}/{p.shares}
                       </span>
 
                       {p.revoked ? (
-                        <span className="rounded-full bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground">
+                        <span className="rounded-full bg-muted px-1.5 py-0.5 text-[0.6875rem] text-muted-foreground">
                           {t('redPacket.revokedTag')}
                         </span>
                       ) : (
@@ -523,7 +523,7 @@ export default function RedPacketsPage() {
               {detail.items.map((it) => (
                 <div key={it.key_id}
                      className="flex items-center justify-between gap-3 rounded-2xl bg-muted px-3 py-2">
-                  <span className="font-mono text-[11px]">{it.prefix}…</span>
+                  <span className="font-mono text-[0.6875rem]">{it.prefix}…</span>
                   <span className="tabular-nums">{fmtAmount(it.amount, detail.quota_kind)}</span>
                   <span className="text-muted-foreground">
                     {detail.quota_kind === 'token'
@@ -531,7 +531,7 @@ export default function RedPacketsPage() {
                       : t('redPacket.usedCredit', {n: it.used_credit.toFixed(2)})}
                   </span>
                   {!it.enabled && (
-                    <span className="rounded-full bg-muted-foreground/15 px-1.5 py-0.5 text-[10px]">
+                    <span className="rounded-full bg-muted-foreground/15 px-1.5 py-0.5 text-[0.625rem]">
                       {t('redPacket.revokedTag')}
                     </span>
                   )}

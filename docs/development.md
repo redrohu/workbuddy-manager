@@ -46,6 +46,33 @@ python -m unittest discover -s server/tests -t . -v
 > 这一组测试专门守住两个曾经写坏配置的坑：把整点数组当成数字间隔、
 > 把时长字符串当成秒数。
 
+#### 只跑某一项（含浏览器验收）
+
+有些改动改的是**界面观感**（字号、间距、布局），单元测试看不出对不对，得在真浏览器里
+量。这类改动配了一键脚本，自己起 mock 上游 + 管理端 + 塞演示数据，跑完自动清理，
+不动真实的 `data/` 与上游账号目录：
+
+```bash
+# 字号设置（设置 → 上游配置 → 界面 → 字号）
+python dev/verify_font_scale_local.py            # 自动断言，跑完退出
+python dev/verify_font_scale_local.py --manual   # 只起服务，自己点着看（Ctrl+C 退出）
+```
+
+> 前置：前端产物必须是新的（`cd web && npm run build:export`），脚本会检查 CSS 里
+> 有没有对应的样式，旧产物会直接报错而不是给出误导性的「通过」。
+> 浏览器断言需要 playwright-core，缺了脚本会打印安装命令并跳过那一段。
+
+只跑某个测试文件：
+
+```bash
+python -m pytest server/tests/test_font_scale.py -q
+```
+
+> Windows 上建议先 `set PYTHONUTF8=1`（或 `$env:PYTHONUTF8='1'`）：若干用例会
+> 起 node 子进程并读它的输出，默认的 GBK 解码会把中文输出现成
+> `UnicodeDecodeError`，看起来像测试失败，其实是控制台编码。
+
+
 # 架构
 
 ```

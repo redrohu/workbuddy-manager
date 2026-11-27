@@ -150,7 +150,7 @@ export function ReloginQueueDialog({
                 <div className="rounded-xl border border-border/70 bg-muted/40 p-4 space-y-3">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 text-xs font-semibold text-primary">
-                      <span className="grid h-5 w-5 place-items-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                      <span className="grid h-5 w-5 place-items-center rounded-full bg-primary text-[0.625rem] font-bold text-primary-foreground">
                         {selectedIndex + 1}
                       </span>
                       <span>{t('accounts.reloginQueueCurrent')}</span>
@@ -173,7 +173,7 @@ export function ReloginQueueDialog({
                   </div>
 
                   <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border/40">
-                    <span className="text-[11px] text-muted-foreground">
+                    <span className="text-[0.6875rem] text-muted-foreground">
                       {t('accounts.reloginQueueCurrentHint')}
                     </span>
                     <div className="flex gap-2">
@@ -204,7 +204,7 @@ export function ReloginQueueDialog({
               <div className="space-y-2 mt-4">
                 <div className="flex items-center justify-between px-1 text-xs text-muted-foreground font-medium">
                   <span>{t('accounts.reloginQueueWaitingCount', {count: queue.length})}</span>
-                  <span className="text-[11px] opacity-75">{t('accounts.reloginQueueListHint')}</span>
+                  <span className="text-[0.6875rem] opacity-75">{t('accounts.reloginQueueListHint')}</span>
                 </div>
 
                 <div className="rounded-xl border border-border/50 divide-y divide-border/40 overflow-hidden bg-background/50">
@@ -224,7 +224,7 @@ export function ReloginQueueDialog({
                         <div className="flex items-center gap-3 min-w-0">
                           <span
                             className={
-                              'grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-bold ' +
+                              'grid h-5 w-5 shrink-0 place-items-center rounded-full text-[0.625rem] font-bold ' +
                               (isSelected
                                 ? 'bg-primary text-primary-foreground'
                                 : 'bg-muted text-muted-foreground')
@@ -236,7 +236,7 @@ export function ReloginQueueDialog({
                             <div className="text-xs font-medium truncate">
                               {a.nickname || t('accounts.unnamed')}
                             </div>
-                            <div className="font-mono text-[10px] text-muted-foreground truncate">
+                            <div className="font-mono text-[0.625rem] text-muted-foreground truncate">
                               {a.uid}
                             </div>
                           </div>
@@ -264,7 +264,7 @@ export function ReloginQueueDialog({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 px-1 pt-1 text-[11px] text-muted-foreground">
+              <div className="flex items-center gap-2 px-1 pt-1 text-[0.6875rem] text-muted-foreground">
                 <TriangleAlert className="h-3.5 w-3.5 shrink-0 text-amber-500" />
                 <span>{t('accounts.reloginQueueAdvanceHint')}</span>
               </div>

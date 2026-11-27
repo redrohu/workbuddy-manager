@@ -5,6 +5,7 @@ import {ThemeProvider} from '@/components/common/layout/ThemeProvider';
 import {AuthProvider} from '@/lib/auth-context';
 import {I18nProvider} from '@/lib/i18n/provider';
 import {withBasePath} from '@/lib/base-path';
+import {fontScaleBootScript} from '@/lib/display-prefs';
 import './globals.css';
 
 // 字体改为随仓库分发的本地文件：原来用 next/font/google 时，构建期必须联网访问
@@ -67,6 +68,15 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${notoSansSC.variable} hide-scrollbar font-sans antialiased`}
       >
+        {/*
+          字号档位的「首帧」脚本：必须在 React 挂载前把用户选的倍数写到 <html> 上，
+          否则会先画一帧默认字号再跳成自己选的那档（看上去像闪一下）。
+          脚本内容由 lib/display-prefs.ts 的常量拼出来（不在这里另写一份 key 与
+          倍数表），并有 Node 行为测试真的执行它。
+          `suppressHydrationWarning` 挂在 <html> 上（已存在）：脚本改的是行内
+          style，服务端没有这一项，不抑制会报水合不一致。
+        */}
+        <script dangerouslySetInnerHTML={{__html: fontScaleBootScript()}} />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

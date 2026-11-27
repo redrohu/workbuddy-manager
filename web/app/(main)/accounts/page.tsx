@@ -1027,7 +1027,7 @@ export default function AccountsPage() {
     return (
       <Button
         variant="outline" size="sm"
-        className="h-auto max-w-full cursor-pointer whitespace-normal rounded-lg px-2 py-1 text-left text-[11px] text-amber-600 dark:text-amber-400"
+        className="h-auto max-w-full cursor-pointer whitespace-normal rounded-lg px-2 py-1 text-left text-[0.6875rem] text-amber-600 dark:text-amber-400"
         aria-haspopup="dialog"
         onClick={() => setModelLimitTarget(a)}
       >
@@ -1085,7 +1085,7 @@ export default function AccountsPage() {
           </span>
           {fromSnapshot ? (
             <span
-              className="rounded-full bg-muted px-1.5 py-0.5 text-[11px] leading-3 text-muted-foreground"
+              className="rounded-full bg-muted px-1.5 py-0.5 text-[0.6875rem] leading-3 text-muted-foreground"
               title={t('accounts.snapshotTitle')}
             >
               {t('accounts.snapshot')}
@@ -1094,14 +1094,14 @@ export default function AccountsPage() {
             meta &&
             (meta.cached ? (
               <span
-                className="rounded-full bg-amber-500/15 px-1.5 py-0.5 text-[10px] leading-3 text-amber-600 dark:text-amber-400"
+                className="rounded-full bg-amber-500/15 px-1.5 py-0.5 text-[0.625rem] leading-3 text-amber-600 dark:text-amber-400"
                 title={t('accounts.cacheTitle')}
               >
                 {meta.cache_age != null ? t('accounts.cacheAge', {n: meta.cache_age}) : t('accounts.cache')}
               </span>
             ) : (
               <span
-                className="rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[10px] leading-3 text-emerald-600 dark:text-emerald-400"
+                className="rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[0.625rem] leading-3 text-emerald-600 dark:text-emerald-400"
                 title={t('accounts.liveTitle')}
               >
                 {t('accounts.live')}
@@ -1168,7 +1168,7 @@ export default function AccountsPage() {
 
   function renderExpiry(a: Account) {
     if (a.expires_at <= 0) {
-      return <div className="w-[150px] text-[11px] text-muted-foreground">{t('metric.unknown')}</div>;
+      return <div className="w-[150px] text-[0.6875rem] text-muted-foreground">{t('metric.unknown')}</div>;
     }
     const pct = expiryBarPercent(a.remain_seconds, a.ttl_seconds);
     const vis = expiryVisual(a.remain_seconds);
@@ -1178,7 +1178,7 @@ export default function AccountsPage() {
     const issued = a.issued_at ?? null;
     return (
       <div className="w-[150px]">
-        <div className={`mb-1 text-[11px] font-medium tabular-nums ${vis.textClass}`}>
+        <div className={`mb-1 text-[0.6875rem] font-medium tabular-nums ${vis.textClass}`}>
           {fmtRemain(a.remain_seconds)}
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-border">
@@ -1186,7 +1186,7 @@ export default function AccountsPage() {
         </div>
         {issued != null && (
           <div
-            className="mt-1 text-[11px] text-muted-foreground"
+            className="mt-1 text-[0.6875rem] text-muted-foreground"
             title={t('accounts.issuedAt', {at: fmtDateTime(issued)})}
           >
             {t('accounts.lastRenewed', {ago: fmtAgo(issued)})}
@@ -1432,7 +1432,7 @@ export default function AccountsPage() {
     return (
       <div
         className={
-          'grid h-7 w-7 shrink-0 place-items-center rounded-full text-[11px] font-semibold ' +
+          'grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.6875rem] font-semibold ' +
           (a.is_expired ? 'bg-muted-foreground/20 text-muted-foreground' : 'bg-primary text-primary-foreground')
         }
       >
@@ -1566,7 +1566,7 @@ export default function AccountsPage() {
                     只在存在封禁账号、队列真正有内容时显示——没有待解封账号时
                     光秃秃的 NEW 没有引导意义。 */}
                 {blockedCount > 0 && (
-                  <span className="pointer-events-none absolute -right-1.5 -top-1.5 z-10 rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">
+                  <span className="pointer-events-none absolute -right-1.5 -top-1.5 z-10 rounded-full bg-red-500 px-1.5 py-0.5 text-[0.625rem] font-bold leading-none text-white">
                     NEW
                   </span>
                 )}
@@ -1650,7 +1650,7 @@ export default function AccountsPage() {
           )}
       </div>
       {groupInfo && !groupInfo.manageable && groupId != null && (
-        <p className="px-1 text-[11px] leading-4 text-muted-foreground">
+        <p className="px-1 text-[0.6875rem] leading-4 text-muted-foreground">
           {t('accounts.groupNoDir', {name: groupInfo.name})}
         </p>
       )}
@@ -1662,10 +1662,10 @@ export default function AccountsPage() {
           <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
           <div className="min-w-0 space-y-1">
             <div className="text-xs font-medium">{t('accounts.sharedInstanceTitle')}</div>
-            <p className="text-[11px] leading-4 text-muted-foreground">
+            <p className="text-[0.6875rem] leading-4 text-muted-foreground">
               {t('accounts.sharedInstanceHint')}
             </p>
-            <Link href="/settings" className="inline-block text-[11px] text-blue-500 hover:underline">
+            <Link href="/settings" className="inline-block text-[0.6875rem] text-blue-500 hover:underline">
               {t('accounts.sharedInstanceAction')}
             </Link>
           </div>
@@ -1719,7 +1719,7 @@ export default function AccountsPage() {
               />
             </div>
             <div className="-mx-0.5 flex flex-wrap items-center gap-1.5 overflow-x-auto px-0.5 pb-0.5">
-              <span className="flex shrink-0 items-center gap-1 text-[11px] text-muted-foreground">
+              <span className="flex shrink-0 items-center gap-1 text-[0.6875rem] text-muted-foreground">
                 <Coins className="h-3.5 w-3.5" />
                 {t('accounts.colStatus')}
               </span>
@@ -1728,7 +1728,7 @@ export default function AccountsPage() {
                   key={g}
                   variant={statusGroup === g ? 'default' : 'outline'}
                   size="sm"
-                  className="h-7 shrink-0 rounded-full px-2.5 text-[11px]"
+                  className="h-7 shrink-0 rounded-full px-2.5 text-[0.6875rem]"
                   onClick={() => { setStatusGroup(g); setPage(1); }}
                 >
                   {g === 'all' ? t('common.all') : t(availabilityGroupLabelKey(g))}
@@ -1760,7 +1760,7 @@ export default function AccountsPage() {
               )}
               {/* 每页条数：常驻在选择器里（不是只在多页时出现）——
                   账号少于一页时同样要能改，否则「改成 100」之后就没法改回来了。 */}
-              <span className="flex shrink-0 items-center gap-1 pl-0.5 text-[11px] text-muted-foreground">
+              <span className="flex shrink-0 items-center gap-1 pl-0.5 text-[0.6875rem] text-muted-foreground">
                 {t('accounts.pageSize')}
               </span>
               <Select value={String(pageSize)}
@@ -1799,9 +1799,9 @@ export default function AccountsPage() {
                     >
                       {a.nickname || t('accounts.unnamed')}
                     </div>
-                    <div className="truncate font-mono text-[11px] text-muted-foreground">{a.uid}</div>
+                    <div className="truncate font-mono text-[0.6875rem] text-muted-foreground">{a.uid}</div>
                     {a.note ? (
-                      <div className="truncate text-[11px] text-muted-foreground" title={a.note}>
+                      <div className="truncate text-[0.6875rem] text-muted-foreground" title={a.note}>
                         {t('accounts.noteLabel')}{a.note}
                       </div>
                     ) : null}
@@ -1816,7 +1816,7 @@ export default function AccountsPage() {
               {/* 封禁原因直接铺出来：移动端没有 hover，title 提示不可见（用户实测反馈）。
                   管理员额外给出解禁出路 —— 与桌面端徽章的悬停提示同一套文案。 */}
               {availabilityOf(a) === 'disabled' && (a.disabled_reason || isAdmin) && (
-                <div className="text-[11px] leading-4 text-rose-600 dark:text-rose-400">
+                <div className="text-[0.6875rem] leading-4 text-rose-600 dark:text-rose-400">
                   {a.disabled_reason
                     ? t('accounts.disabledReason', {reason: disabledReasonText(a)})
                     : t('accounts.badgeDisabled')}
@@ -1854,13 +1854,13 @@ export default function AccountsPage() {
         <Table className="table-fixed wb-first-left [&_td]:overflow-hidden">
           <TableHeader>
             <TableRow className="border-b border-border/60 hover:bg-transparent">
-              <TableHead className="w-[17%] pl-4 text-[11px] text-muted-foreground">{t('accounts.colNickname')}</TableHead>
-              <TableHead className="w-[14%] text-[11px] text-muted-foreground">UID</TableHead>
-              <TableHead className="w-[14%] text-[11px] text-muted-foreground">{t('accounts.colStatus')}</TableHead>
-              <TableHead className="w-[14%] text-[11px] text-muted-foreground">{t('metric.credits')}</TableHead>
-              <TableHead className="w-[13%] text-[11px] text-muted-foreground">{t('accounts.colExpiry')}</TableHead>
-              {hasProxyUi && <TableHead className="w-[10%] text-[11px] text-muted-foreground">{t('accounts.proxyLine')}</TableHead>}
-              {isAdmin && <TableHead className="w-[330px] whitespace-nowrap pr-4 text-right text-[11px] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
+              <TableHead className="w-[17%] pl-4 text-[0.6875rem] text-muted-foreground">{t('accounts.colNickname')}</TableHead>
+              <TableHead className="w-[14%] text-[0.6875rem] text-muted-foreground">UID</TableHead>
+              <TableHead className="w-[14%] text-[0.6875rem] text-muted-foreground">{t('accounts.colStatus')}</TableHead>
+              <TableHead className="w-[14%] text-[0.6875rem] text-muted-foreground">{t('metric.credits')}</TableHead>
+              <TableHead className="w-[13%] text-[0.6875rem] text-muted-foreground">{t('accounts.colExpiry')}</TableHead>
+              {hasProxyUi && <TableHead className="w-[10%] text-[0.6875rem] text-muted-foreground">{t('accounts.proxyLine')}</TableHead>}
+              {isAdmin && <TableHead className="w-[330px] whitespace-nowrap pr-4 text-right text-[0.6875rem] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -1882,7 +1882,7 @@ export default function AccountsPage() {
                         {a.nickname || t('accounts.unnamed')}
                       </div>
                       {a.note ? (
-                        <div className="truncate text-[11px] text-muted-foreground" title={a.note}>
+                        <div className="truncate text-[0.6875rem] text-muted-foreground" title={a.note}>
                           {t('accounts.noteLabel')}{a.note}
                         </div>
                       ) : null}
@@ -1961,7 +1961,7 @@ export default function AccountsPage() {
         {/* 页码条只在不止一页时出现——小池子（绝大多数部署）看不到多余控件 */}
         {paged.pages > 1 && (
           <div className="flex items-center justify-between border-t border-border/40 px-4 py-3">
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-[0.6875rem] text-muted-foreground">
               {t('accounts.pageInfo', {total: paged.total, page: paged.page, pages: paged.pages})}
             </div>
             <div className="flex gap-1">
@@ -1992,7 +1992,7 @@ export default function AccountsPage() {
       )}
 
       {/* 签到与任务记录已独立成页（账号一多，堆在本页会越滑越长） */}
-      <div className="flex flex-wrap items-center gap-2 px-1 text-[11px] text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-2 px-1 text-[0.6875rem] text-muted-foreground">
         <span>{t('accounts.movedTo')}</span>
         <Link href="/tasks" className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 font-medium text-foreground transition-colors hover:bg-muted/70">
           {t('nav.tasks')}

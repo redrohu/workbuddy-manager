@@ -86,6 +86,8 @@ class DockGroupsBehaviourTest(unittest.TestCase):
             return subprocess.run(
                 [_NODE, '--experimental-strip-types', str(_SCRIPT)],
                 capture_output=True, text=True, timeout=120, cwd=str(_ROOT),
+                # 脚本输出含中文；不指定的话 Windows 按 GBK 解码，读取线程崩掉、stdout 为空
+                encoding='utf-8', errors='replace',
             )
 
         proc = run_once()
@@ -385,3 +387,83 @@ class DockDialogVisibilityTest(unittest.TestCase):
         self.assertIn('profileOpen || addOpen', src,
                       '个人信息/快速添加弹窗打开时没有隐藏底栏')
         self.assertIn("{visibility: 'hidden'}", src)
+
+
+_ACTIVE_SCRIPT = _ROOT / 'web' / 'lib' / 'dock-active.test.mjs'
+_ACTIVE_MODULE = _ROOT / 'web' / 'lib' / 'dock-active.ts'
+
+
+class DockActiveTest(unittest.TestCase):
+    """底栏「当前页」判定逻辑（`web/lib/dock-active.ts`）的行为测试与结构不变式。"""
+
+    @unittest.skipUnless(_NODE, '未安装 node，跳过前端逻辑测试')
+    @unittest.skipUnless(_MAJOR is not None and _MAJOR >= _MIN_MAJOR,
+                         f'需要 node >= {_MIN_MAJOR}（type stripping），当前 {_MAJOR}')
+    def test_dock_active_behaviour(self) -> None:
+        self.assertTrue(_ACTIVE_SCRIPT.is_file(), f'缺少测试脚本: {_ACTIVE_SCRIPT}')
+
+        def run_once() -> subprocess.CompletedProcess:
+            return subprocess.run(
+                [_NODE, '--experimental-strip-types', str(_ACTIVE_SCRIPT)],
+                capture_output=True, text=True, timeout=120, cwd=str(_ROOT),
+                encoding='utf-8', errors='replace',
+            )
+
+        proc = run_once()
+        if proc.returncode not in (0, 1):
+            proc = run_once()
+        out = (proc.stdout or '') + (proc.stderr or '')
+        self.assertEqual(proc.returncode, 0, f'底栏当前页判定逻辑不符合预期：\n{out}')
+        self.assertIn('all passed', out, f'脚本没有跑到通过：\n{out}')
+
+    def test_dock_active_module_stays_zero_dep(self) -> None:
+        """`dock-active.ts` 不得出现运行时 import（保证 Node 直接跑测试不报「找不到模块」）。"""
+        offenders = [
+            line.strip() for line in _code(_ACTIVE_MODULE).splitlines()
+            if line.strip().startswith('import ')
+            and not line.strip().startswith('import type')
+        ]
+        self.assertEqual(
+            offenders, [],
+            'dock-active.ts 出现了运行时 import：\n  ' + '\n  '.join(offenders)
+            + '\n本模块被 web/lib/dock-active.test.mjs 直接 import，引入运行时 import '
+              '会让那条测试以「找不到模块」失败。',
+        )
+
+    def test_pathname_prop_wired_to_dock(self) -> None:
+        """FloatingDock 必须接收 pathname prop 并传给两个子组件。"""
+        dock = _code(_DOCK)
+        self.assertIn('findActiveHref', dock,
+                      'floating-dock.tsx 没有用 findActiveHref 统一算当前页，'
+                      '逐项判断会让 /settings/models 同时亮「设置」和「模型」')
+        self.assertRegex(dock, r"pathname\?:",
+                         'FloatingDock 没有声明 pathname prop')
+        self.assertRegex(dock, r'<FloatingDockDesktop[^>]*activeHref=\{activeHref\}',
+                         '当前页结果没有传给桌面端')
+        self.assertRegex(dock, r'<FloatingDockMobile[^>]*activeHref=\{activeHref\}',
+                         '当前页结果没有传给手机端')
+
+    def test_mobile_highlight_not_overridden(self) -> None:
+        """手机端高亮类必须排在 buttonClassName 之后（twMerge 后写的赢，否则被 bg-background/70 盖掉）。"""
+        dock = _code(_DOCK)
+        mobile = dock[dock.find('const FloatingDockMobile'):dock.find('FloatingDockMobile.displayName')]
+        hi = mobile.find("isActive && 'border-foreground bg-foreground")
+        self.assertGreater(hi, 0, '手机端菜单项没有高亮样式')
+        self.assertGreater(mobile.rfind('buttonClassName,', 0, hi), 0,
+                           '手机端高亮类排在 buttonClassName 前面，会被覆盖')
+
+    def test_aria_current_set_on_active_item(self) -> None:
+        """高亮项必须设置 aria-current="page"（桌面端和手机端各一处）。"""
+        dock = _code(_DOCK)
+        self.assertGreaterEqual(
+            dock.count("'aria-current': 'page' as const"), 2,
+            'floating-dock.tsx 桌面端与手机端都要给高亮项设置 aria-current="page"',
+        )
+
+    def test_management_bar_passes_pathname(self) -> None:
+        """ManagementBar 必须从 next/navigation 拿 pathname 并传给 FloatingDock。"""
+        bar = _code(_BAR)
+        self.assertIn('usePathname', bar,
+                      'ManagementBar 没有使用 usePathname()——当前页判定不会生效')
+        self.assertIn('pathname={pathname}', bar,
+                      'ManagementBar 没有把 pathname 传给 FloatingDock')

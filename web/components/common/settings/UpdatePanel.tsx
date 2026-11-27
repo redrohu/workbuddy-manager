@@ -369,13 +369,13 @@ export function UpdatePanel() {
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="rounded-2xl bg-background/60 px-3.5 py-3">
-            <div className="text-[11px] text-muted-foreground">{t('updatePanel.manager')}</div>
+            <div className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.manager')}</div>
             <div className="mt-1 flex items-center gap-1.5 text-sm font-semibold tabular-nums">
               {versions?.manager || status?.version || '—'}
               {/* 本次装的东西有没有被核对过：让用户看得见，不只留在日志里 */}
               {status?.integrity?.status === 'digest' && (
                 <span
-                  className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400"
+                  className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[0.625rem] font-medium text-emerald-600 dark:text-emerald-400"
                   title={status.integrity.digest
                     ? t('updatePanel.verifiedTitleDetail', {digest: status.integrity.digest})
                     : t('updatePanel.verifiedTitle')}
@@ -387,7 +387,7 @@ export function UpdatePanel() {
             </div>
           </div>
           <div className="rounded-2xl bg-background/60 px-3.5 py-3">
-            <div className="text-[11px] text-muted-foreground">{t('updatePanel.upstreamConn')}</div>
+            <div className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.upstreamConn')}</div>
             <div className="mt-1 flex items-center gap-1.5 text-sm font-semibold">
               {versions?.upstream_connected ? (
                 <>
@@ -407,14 +407,14 @@ export function UpdatePanel() {
             </div>
           </div>
           <div className="rounded-2xl bg-background/60 px-3.5 py-3">
-            <div className="text-[11px] text-muted-foreground">{t('updatePanel.lastUpdate')}</div>
+            <div className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.lastUpdate')}</div>
             <div className="mt-1 text-sm font-semibold">
               {status?.finished_at ? fmtAgo(status.finished_at) : t('format.never')}
             </div>
           </div>
         </div>
         {status?.upstream_dir && (
-          <div className="mt-2 truncate font-mono text-[11px] text-muted-foreground" title={status.upstream_dir}>
+          <div className="mt-2 truncate font-mono text-[0.6875rem] text-muted-foreground" title={status.upstream_dir}>
             {t('updatePanel.upstreamDir', {dir: status.upstream_dir})}
           </div>
         )}
@@ -429,7 +429,7 @@ export function UpdatePanel() {
               <div className="space-y-1.5">
                 <div className="text-xs font-medium">{t('updatePanel.newVersionAvailable')}</div>
                 {check.manager.has_update && (
-                  <div className="text-[11px] text-muted-foreground">
+                  <div className="text-[0.6875rem] text-muted-foreground">
                     {t('updatePanel.managerUpgrade', {from: check.manager.current})}{' '}
                     <span className="font-medium text-foreground">{check.manager.latest}</span>
                   </div>
@@ -437,7 +437,7 @@ export function UpdatePanel() {
                 {/* 更新前就能看到 Release 正文：像「需要配套上游」这种要求，
                     等装完再翻本地 CHANGELOG 已经晚了（issue #217）。 */}
                 {check.manager.has_update && !!check.manager.release_notes && (
-                  <details className="group text-[11px]">
+                  <details className="group text-[0.6875rem]">
                     <summary className="cursor-pointer list-none text-foreground/80">
                       <span className="group-open:hidden">{t('updatePanel.releaseNotes')}</span>
                       <span className="hidden group-open:inline">{t('updatePanel.hideReleaseNotes')}</span>
@@ -448,7 +448,7 @@ export function UpdatePanel() {
                   </details>
                 )}
                 {check.manager.has_update && check.manager.upstream_changed && (
-                  <div className="flex items-start gap-1.5 text-[11px] text-amber-600 dark:text-amber-400">
+                  <div className="flex items-start gap-1.5 text-[0.6875rem] text-amber-600 dark:text-amber-400">
                     <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                     <span>{t('updatePanel.upstreamChanged')}</span>
                   </div>
@@ -457,12 +457,12 @@ export function UpdatePanel() {
                     并把按钮收起来（issue #127/#129 是同一类窗口期问题）。产物上传后
                     最迟五分钟、或点一次刷新就会恢复。 */}
                 {check.manager.has_update && check.manager.assets_ready === false && (
-                  <div className="flex items-start gap-1.5 text-[11px] text-amber-600 dark:text-amber-400">
+                  <div className="flex items-start gap-1.5 text-[0.6875rem] text-amber-600 dark:text-amber-400">
                     <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                     <span>{t('updatePanel.assetsPending')}</span>
                   </div>
                 )}
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-[0.6875rem] text-muted-foreground">
                   {t('updatePanel.updateHint')}
                 </div>
               </div>
@@ -511,7 +511,7 @@ export function UpdatePanel() {
         && !status?.running && (
         <div className="flex items-start gap-2 rounded-[20px] border border-amber-500/30 bg-amber-500/10 px-4 py-3">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-          <span className="text-[11px] leading-4 text-muted-foreground">
+          <span className="text-[0.6875rem] leading-4 text-muted-foreground">
             {t('updatePanel.upstreamOnlyChanged')}
           </span>
         </div>
@@ -521,7 +521,7 @@ export function UpdatePanel() {
       {isAdmin && (
         <div className="rounded-[20px] bg-muted p-4">
           <div className="mb-1 text-xs font-medium">{t('updatePanel.ghTitle')}</div>
-          <div className="mb-2 text-[11px] leading-4 text-muted-foreground">
+          <div className="mb-2 text-[0.6875rem] leading-4 text-muted-foreground">
             <RichText text={t('updatePanel.ghDesc')} />
           </div>
           <div className="flex flex-wrap items-end gap-2">
@@ -548,7 +548,7 @@ export function UpdatePanel() {
               </Button>
             )}
           </div>
-          <div className="mt-2 text-[11px] text-muted-foreground">
+          <div className="mt-2 text-[0.6875rem] text-muted-foreground">
             {gh?.source === 'env'
               ? t('updatePanel.ghFromEnv')
               : gh?.configured
@@ -562,7 +562,7 @@ export function UpdatePanel() {
       {isAdmin && (
         <div className="rounded-[20px] bg-muted p-4">
           <div className="mb-1 text-xs font-medium">{t('updatePanel.mirrorTitle')}</div>
-          <div className="mb-2 text-[11px] leading-4 text-muted-foreground">
+          <div className="mb-2 text-[0.6875rem] leading-4 text-muted-foreground">
             <RichText text={t('updatePanel.mirrorDesc')} />
           </div>
           <div className="flex flex-wrap items-end gap-2">
@@ -591,12 +591,12 @@ export function UpdatePanel() {
           </div>
           {!!mirror?.presets?.length && (
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] text-muted-foreground">{t('updatePanel.mirrorPresets')}</span>
+              <span className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.mirrorPresets')}</span>
               {mirror.presets.map((p) => (
                 <button
                   key={p}
                   type="button"
-                  className="rounded-full bg-background px-2 py-0.5 font-mono text-[11px] text-muted-foreground hover:text-foreground"
+                  className="rounded-full bg-background px-2 py-0.5 font-mono text-[0.6875rem] text-muted-foreground hover:text-foreground"
                   onClick={() => setMirrorInput(p)}
                 >
                   {p}
@@ -604,7 +604,7 @@ export function UpdatePanel() {
               ))}
             </div>
           )}
-          <div className="mt-2 text-[11px] leading-4 text-muted-foreground">
+          <div className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
             {mirror?.source === 'env'
               ? t('updatePanel.mirrorFromEnv', {value: mirror.env_mirror})
               : mirror?.mirror
@@ -623,7 +623,7 @@ export function UpdatePanel() {
                 <Clock className="h-3.5 w-3.5" />
                 {t('updatePanel.autoTitle')}
               </div>
-              <div className="mt-1 text-[11px] leading-4 text-muted-foreground">
+              <div className="mt-1 text-[0.6875rem] leading-4 text-muted-foreground">
                 <RichText text={t('updatePanel.autoDesc')} />
               </div>
             </div>
@@ -635,14 +635,14 @@ export function UpdatePanel() {
             />
           </div>
           {auto!.unsupported_reason && (
-            <div className="mt-2 flex items-start gap-1.5 text-[11px] leading-4 text-amber-600 dark:text-amber-400">
+            <div className="mt-2 flex items-start gap-1.5 text-[0.6875rem] leading-4 text-amber-600 dark:text-amber-400">
               <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               {t('updatePanel.autoUnsupported')}
             </div>
           )}
           <div className="mt-3 grid gap-3 sm:grid-cols-3">
             <div className="space-y-1">
-              <Label className="text-[11px] text-muted-foreground">{t('updatePanel.autoInterval')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.autoInterval')}</Label>
               <Input
                 type="number"
                 min={1}
@@ -654,7 +654,7 @@ export function UpdatePanel() {
               />
             </div>
             <div className="space-y-1">
-              <Label className="text-[11px] text-muted-foreground">{t('updatePanel.autoWindow')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.autoWindow')}</Label>
               <div className="flex items-center gap-1.5">
                 <Input
                   type="number"
@@ -678,7 +678,7 @@ export function UpdatePanel() {
               </div>
             </div>
             <div className="space-y-1">
-              <Label className="text-[11px] text-muted-foreground">{t('updatePanel.autoTarget')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.autoTarget')}</Label>
               <Select value={autoForm.target}
                       onValueChange={(v) => setAutoForm({...autoForm, target: v as AutoUpdateConfig['target']})}>
                 <SelectTrigger className="h-8 w-full bg-background text-xs" aria-label={t('updatePanel.autoTarget')}>
@@ -692,7 +692,7 @@ export function UpdatePanel() {
             </div>
           </div>
           <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-            <div className="text-[11px] leading-4 text-muted-foreground">
+            <div className="text-[0.6875rem] leading-4 text-muted-foreground">
               {t('updatePanel.autoWindowHint', {
                 tz: `UTC${auto!.server_tz_offset_minutes >= 0 ? '+' : '-'}${
                   String(Math.floor(Math.abs(auto!.server_tz_offset_minutes) / 60)).padStart(2, '0')}:${
@@ -710,7 +710,7 @@ export function UpdatePanel() {
             )}
           </div>
           {auto!.state.last_check_at > 0 && (
-            <div className="mt-2 text-[11px] leading-4 text-muted-foreground">
+            <div className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
               {t('updatePanel.autoLastRun', {
                 ago: fmtAgo(auto!.state.last_check_at),
                 msg: auto!.state.last_message || '-',
@@ -724,7 +724,7 @@ export function UpdatePanel() {
       {check && check.manager.error && !status?.running && (
         <div className="flex items-start gap-2 rounded-[20px] border border-amber-500/30 bg-amber-500/10 px-4 py-3">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-          <div className="min-w-0 space-y-1 text-[11px] leading-4">
+          <div className="min-w-0 space-y-1 text-[0.6875rem] leading-4">
             <div className="font-medium">{t('updatePanel.checkFailed')}</div>
             <div className="break-all text-muted-foreground">
               {check.manager.error.slice(0, 200)}
@@ -746,7 +746,7 @@ export function UpdatePanel() {
           <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
           <span className="text-xs">{t('updatePanel.allUpToDate')}</span>
           {check.checked_at > 0 && (
-            <span className="text-[11px] text-muted-foreground">
+            <span className="text-[0.6875rem] text-muted-foreground">
               {t('updatePanel.checkedAgo', {ago: fmtAgo(check.checked_at)})}
             </span>
           )}
@@ -761,7 +761,7 @@ export function UpdatePanel() {
             <div className="text-xs font-medium">
               {t('updatePanel.updatingNow', {step: status.step || t('updatePanel.stepRunning')})}
             </div>
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-[0.6875rem] text-muted-foreground">
               {t('updatePanel.updatingHint')}
             </div>
           </div>
@@ -786,7 +786,7 @@ export function UpdatePanel() {
             <div className="text-xs font-medium">
               {status?.ok ? t('updatePanel.updateDone') : t('updatePanel.updateNotDone')}
             </div>
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-[0.6875rem] text-muted-foreground">
               {status?.ok
                 ? (status?.duration ? t('updatePanel.doneDuration', {n: status.duration}) : '') +
                   t('updatePanel.doneRestart') +
@@ -812,7 +812,7 @@ export function UpdatePanel() {
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
           <div className="space-y-1">
             <div className="text-xs font-medium">{t('updatePanel.updaterMissing')}</div>
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-[0.6875rem] text-muted-foreground">
               <RichText text={t('updatePanel.updaterMissingHint')} />
             </div>
           </div>
@@ -822,7 +822,7 @@ export function UpdatePanel() {
       {/* 更新操作 */}
       <div className="rounded-[20px] bg-muted p-4">
         <div className="mb-1 text-sm font-medium">{t('updatePanel.oneClickUpdate')}</div>
-        <div className="mb-3 text-[11px] leading-4 text-muted-foreground">
+        <div className="mb-3 text-[0.6875rem] leading-4 text-muted-foreground">
           {t('updatePanel.oneClickUpdateDesc')}
         </div>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -858,7 +858,7 @@ export function UpdatePanel() {
                     {i === 0 ? <DownloadCloud className="h-3.5 w-3.5" /> : <RotateCcw className="h-3.5 w-3.5" />}
                     {t(target.labelKey)}
                   </div>
-                  <div className="text-[11px] leading-4 text-muted-foreground">{t(target.descKey)}</div>
+                  <div className="text-[0.6875rem] leading-4 text-muted-foreground">{t(target.descKey)}</div>
                 </button>
               }
             />
@@ -866,12 +866,12 @@ export function UpdatePanel() {
           })}
         </div>
         {status?.can_update_upstream === false && (
-          <p className="mt-2 text-[11px] leading-4 text-muted-foreground">
+          <p className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
             <RichText text={t('updatePanel.dockerNote')} />
           </p>
         )}
         {!isAdmin && (
-          <p className="mt-2 text-[11px] text-muted-foreground">{t('updatePanel.readonlyNote')}</p>
+          <p className="mt-2 text-[0.6875rem] text-muted-foreground">{t('updatePanel.readonlyNote')}</p>
         )}
       </div>
 
@@ -882,18 +882,18 @@ export function UpdatePanel() {
             <Upload className="h-4 w-4" />
             {t('updatePanel.pkgTitle')}
             {pkg?.present && pkg.version && (
-              <Badge variant="secondary" className="rounded-full font-mono text-[10px]">
+              <Badge variant="secondary" className="rounded-full font-mono text-[0.625rem]">
                 {pkg.version}
               </Badge>
             )}
           </div>
-          <div className="mb-3 text-[11px] leading-4 text-muted-foreground">
+          <div className="mb-3 text-[0.6875rem] leading-4 text-muted-foreground">
             <RichText text={t('updatePanel.pkgDesc')} />
           </div>
 
           {pkg?.present ? (
             <div className="space-y-2">
-              <div className="rounded-2xl bg-background/60 px-3.5 py-2.5 text-[11px] leading-5">
+              <div className="rounded-2xl bg-background/60 px-3.5 py-2.5 text-[0.6875rem] leading-5">
                 <div className="font-mono">{pkg.name || t('updatePanel.pkgUnnamed')}</div>
                 <div className="text-muted-foreground break-all">
                   sha256 {pkg.sha256 || '—'}
@@ -929,12 +929,12 @@ export function UpdatePanel() {
             <div className="space-y-2">
               <div className="flex flex-wrap items-end gap-2">
                 <label className="flex flex-col gap-1">
-                  <Label className="text-[11px] text-muted-foreground">{t('updatePanel.pkgFile')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.pkgFile')}</Label>
                   <input
                     type="file"
                     accept=".tar.gz,application/gzip"
                     disabled={pkgBusy || running}
-                    className="text-[11px] file:mr-2 file:rounded-full file:border-0 file:bg-background file:px-3 file:py-1.5 file:text-[11px] file:text-foreground"
+                    className="text-[0.6875rem] file:mr-2 file:rounded-full file:border-0 file:bg-background file:px-3 file:py-1.5 file:text-[0.6875rem] file:text-foreground"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) void uploadPackage(file);
@@ -943,14 +943,14 @@ export function UpdatePanel() {
                   />
                 </label>
                 <label className="flex min-w-[16rem] flex-1 flex-col gap-1">
-                  <Label className="text-[11px] text-muted-foreground">{t('updatePanel.pkgShaLabel')}</Label>
-                  <Input className="h-8 bg-background font-mono text-[11px]"
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('updatePanel.pkgShaLabel')}</Label>
+                  <Input className="h-8 bg-background font-mono text-[0.6875rem]"
                          value={pkgSha} placeholder={t('updatePanel.pkgShaPlaceholder')}
                          onChange={(e) => setPkgSha(e.target.value)} />
                 </label>
               </div>
               {pkgBusy && (
-                <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <div className="flex items-center gap-1.5 text-[0.6875rem] text-muted-foreground">
                   <Loader2 className="h-3 w-3 animate-spin" />
                   {t('updatePanel.pkgUploading')}
                 </div>
@@ -971,7 +971,7 @@ export function UpdatePanel() {
             </div>
             <div className="flex items-center gap-2">
               {logs.length > 0 && (
-                <Badge variant="secondary" className="rounded-full text-[10px]">
+                <Badge variant="secondary" className="rounded-full text-[0.625rem]">
                   {t('updatePanel.logLines', {count: logs.length, n: logs.length})}
                 </Badge>
               )}
@@ -987,7 +987,7 @@ export function UpdatePanel() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 rounded-full px-2 text-[11px] text-muted-foreground"
+                      className="h-6 rounded-full px-2 text-[0.6875rem] text-muted-foreground"
                       disabled={clearBusy}
                     >
                       <Trash2 className="h-3 w-3" />
@@ -1003,7 +1003,7 @@ export function UpdatePanel() {
               ref={logRef}
               className="scroll-slim max-h-[320px] overflow-auto rounded-2xl bg-background/60 p-3"
             >
-              <pre className="whitespace-pre-wrap break-all font-mono text-[11px] leading-5 text-muted-foreground">
+              <pre className="whitespace-pre-wrap break-all font-mono text-[0.6875rem] leading-5 text-muted-foreground">
                 {logText}
               </pre>
             </div>

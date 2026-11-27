@@ -7,13 +7,13 @@
 import {cn} from '@/lib/utils';
 import {withBasePath} from '@/lib/base-path';
 import {splitByGroup} from '@/lib/dock-groups';
+import {findActiveHref} from '@/lib/dock-active';
 import {IconLayoutNavbarCollapse} from '@tabler/icons-react';
 import {
   AnimatePresence,
   MotionValue,
   motion,
   useMotionValue,
-  useSpring,
   useTransform,
 } from 'motion/react';
 
@@ -38,19 +38,29 @@ export const FloatingDock = ({
   desktopClassName,
   mobileClassName,
   mobileButtonClassName,
+  pathname,
 }: {
   items: FloatingDockItem[];
   desktopClassName?: string;
   mobileClassName?: string;
   mobileButtonClassName?: string;
+  /** 来自 usePathname()，用于当前页高亮判定。 */
+  pathname?: string | null;
 }) => {
+  // 当前页在**这里**算一次，再把结果传下去：两个子组件各自逐项判断的话，
+  // /settings/models 会让「设置」和「模型」同时亮（见 lib/dock-active.ts 第 4 条）。
+  const activeHref = findActiveHref(
+      items.filter((i) => !i.customComponent && !i.external).map((i) => i.href),
+      pathname,
+  );
   return (
     <>
-      <FloatingDockDesktop items={items} className={desktopClassName} />
+      <FloatingDockDesktop items={items} className={desktopClassName} activeHref={activeHref} />
       <FloatingDockMobile
         items={items}
         className={mobileClassName}
         buttonClassName={mobileButtonClassName}
+        activeHref={activeHref}
       />
     </>
   );
@@ -61,10 +71,12 @@ const FloatingDockMobile = memo(
       items,
       className,
       buttonClassName,
+      activeHref,
     }: {
     items: FloatingDockItem[];
     className?: string;
     buttonClassName?: string;
+    activeHref?: string | null;
   }) => {
       const [open, setOpen] = useState(false);
 
@@ -78,7 +90,7 @@ const FloatingDockMobile = memo(
             {open && (
               <motion.div
                 layoutId="nav"
-                className="absolute inset-x-0 bottom-full mb-2 flex max-h-[min(70dvh,420px)] flex-col gap-1 overflow-y-auto"
+                className="absolute bottom-full right-0 mb-2 flex max-h-[min(70dvh,420px)] w-max min-w-[4.5rem] flex-col items-stretch gap-1 overflow-y-auto p-0.5"
               >
                 {/*
                   手机端也要分组。原来这里是 `if (item.title === 'divider') return null`
@@ -98,7 +110,7 @@ const FloatingDockMobile = memo(
                         >
                           <span className="h-px w-5 bg-border" />
                           {group.label ? (
-                            <span className="text-[9px] leading-none text-muted-foreground">
+                            <span className="text-[0.5625rem] leading-none text-muted-foreground">
                               {group.label}
                             </span>
                           ) : null}
@@ -107,6 +119,7 @@ const FloatingDockMobile = memo(
                       {group.items.map((item) => {
                         flatIndex += 1;
                         const idx = flatIndex;
+                        const isActive = !item.customComponent && !!activeHref && item.href === activeHref;
                         return (
                           <motion.div
                             key={item.title}
@@ -127,8 +140,11 @@ const FloatingDockMobile = memo(
                             {item.customComponent ? (
                               <div
                                 className={cn(
-                                    'flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900',
+                                    'flex min-h-[2rem] min-w-[2rem] items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900',
                                     buttonClassName,
+                                    // 菜单项按文字撑开：buttonClassName 的 h-10 w-10 是给底部圆形按钮的，原样套上会把文字截断
+                                    // 快速添加 / 个人信息内部自带 px-3，外层不再叠加左右内边距
+                                    'h-10 w-full px-0',
                                 )}
                               >
                                 {item.customComponent}
@@ -137,30 +153,41 @@ const FloatingDockMobile = memo(
                             <a
                               href={withBasePath(item.href)}
                               aria-label={item.title}
+                              {...(isActive ? {'aria-current': 'page' as const} : {})}
                               className={cn(
-                                  'flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900',
+                                  'flex h-9 items-center justify-center rounded-full bg-gray-50 px-3 dark:bg-neutral-900',
                                   buttonClassName,
+                                  // 菜单项按文字撑开：buttonClassName 的 h-10 w-10 是给底部圆形按钮的，原样套上会把文字截断
+                                  'h-10 w-full px-3',
+                                  // 高亮必须排在 buttonClassName 之后：那里带着 bg-background/70，
+                                  // twMerge 是后写的赢，排在前面高亮色会被它盖掉
+                                  isActive && 'border-foreground bg-foreground dark:bg-foreground',
                               )}
                               {...((item.external || item.href.startsWith('https://')) ?
                                 {target: '_blank', rel: 'noopener noreferrer'} :
                                 {})}
                             >
-                              <div className="flex items-center justify-center">
-                                {item.icon}
-                              </div>
+                              <span className={cn(
+                                'text-sm font-medium whitespace-nowrap',
+                                isActive ? 'text-background dark:text-background' : 'text-foreground',
+                              )}>
+                                {item.title}
+                              </span>
                             </a>
                           ) : (
                             <button
                               onClick={item.onClick}
                               aria-label={item.title}
                               className={cn(
-                                  'flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900',
+                                  'flex h-9 items-center justify-center rounded-full bg-gray-50 px-3 dark:bg-neutral-900',
                                   buttonClassName,
+                                  // 菜单项按文字撑开：buttonClassName 的 h-10 w-10 是给底部圆形按钮的，原样套上会把文字截断
+                                  'h-10 w-full px-3',
                               )}
                             >
-                              <div className="flex items-center justify-center">
-                                {item.icon}
-                              </div>
+                              <span className="text-sm font-medium text-foreground whitespace-nowrap">
+                                {item.title}
+                              </span>
                             </button>
                           )}
                           </motion.div>
@@ -217,9 +244,11 @@ const FloatingDockDesktop = memo(
     ({
       items,
       className,
+      activeHref,
     }: {
     items: FloatingDockItem[];
     className?: string;
+    activeHref?: string | null;
   }) => {
       const mouseX = useMotionValue(Infinity);
       const rootRef = useRef<HTMLDivElement>(null);
@@ -259,15 +288,11 @@ const FloatingDockDesktop = memo(
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className={cn(
-              'mx-auto hidden items-end gap-2 rounded-xl bg-gray-50 px-2 pb-2 md:flex dark:bg-neutral-900',
+              'mx-auto hidden items-center gap-1 rounded-xl bg-gray-50 px-2 py-1.5 md:flex dark:bg-neutral-900',
               className,
           )}
         >
           {(() => {
-            // 按 groupKey 切组。原来的写法是「以 title === 'divider' 的哨兵条目为界
-            // 切成两段」——只支持两段，而且注释里正解释着「不能写死 slice(0, 3)：
-            // 写死会把多出来的那个图标静默丢掉（曾经把『密钥』挤掉过）」。
-            // 改成按分组键切之后，段数由数据决定，不再有「第几段」这个概念。
             const groups = splitByGroup(items);
 
             return (
@@ -280,7 +305,7 @@ const FloatingDockDesktop = memo(
                       <GroupDivider label={group.label} active={activeDivider === index - 1} />}
                     <div className="flex items-end gap-2">
                       {group.items.map((item) => (
-                        <IconContainer mouseX={mouseX} key={item.title} {...item} />
+                        <IconContainer mouseX={mouseX} key={item.title} activeHref={activeHref} {...item} />
                       ))}
                     </div>
                   </Fragment>
@@ -296,12 +321,7 @@ const FloatingDockDesktop = memo(
 FloatingDockDesktop.displayName = 'FloatingDockDesktop';
 
 /**
- * 组间分隔线。光标靠近时在线的上方显示组名——**这是这一批要修的那句「分隔线无标签」**：
- * 原来的竖线不带任何说明，用户只能猜它分开的是什么。
- *
- * 为什么组名走「靠近才显示」而不是常显：底栏的高度是写死的 `h-16`，图标 hover 时会从
- * 40px 放大到 70px（本来就溢出容器）。再加一行常显的组名会把底栏顶高、并和放大后的
- * 图标打架。
+ * 组间分隔线。光标靠近时在线的上方显示组名。
  *
  * ⚠️ `active` 由**父组件按光标位置算**，本组件刻意不带自己的 hover 状态——理由见
  * `DIVIDER_HIT_SLOP` 上面那段（元素会被图标放大推走）。
@@ -310,7 +330,7 @@ const GroupDivider = memo(({label, active}: {label?: string; active: boolean}) =
   return (
     <div
       data-slot="dock-group-divider"
-      className="relative flex items-center justify-center px-1 mx-1 self-stretch mt-3"
+      className="relative flex items-center justify-center px-1 mx-1 self-stretch"
     >
       <div className="w-px h-full bg-border"></div>
       <AnimatePresence>
@@ -331,115 +351,84 @@ const GroupDivider = memo(({label, active}: {label?: string; active: boolean}) =
 
 GroupDivider.displayName = 'GroupDivider';
 
+/**
+ * 文字标签导航按钮（桌面端 Dock 的每一项）。
+ *
+ * 高亮样式：bg-foreground text-background（深浅色主题均清晰）。
+ * hover 时：非激活项变浅灰；激活项保持 bg-foreground，hover 加深至 bg-foreground/85。
+ * 字号与高度都以 rem 计，跟随根字号（设置 → 界面 → 字号）等比缩放。
+ */
 const IconContainer = memo(
     ({
       mouseX,
       title,
-      icon,
       href,
       onClick,
-      tooltip,
       customComponent,
       external,
-    }: FloatingDockItem & {mouseX: MotionValue}) => {
+      activeHref,
+    }: FloatingDockItem & {mouseX: MotionValue; activeHref?: string | null}) => {
       const ref = useRef<HTMLDivElement>(null);
 
+      // 保留 mouseX 追踪：FloatingDockDesktop 仍需要知道鼠标位置以判断分隔线高亮
       const distance = useTransform(mouseX, (val) => {
         const bounds = ref.current?.getBoundingClientRect() ?? {x: 0, width: 0};
-
         return val - bounds.x - bounds.width / 2;
       });
 
-      const widthTransform = useTransform(distance, [-150, 0, 150], [40, 70, 40]);
-      const heightTransform = useTransform(
-          distance,
-          [-150, 0, 150],
-          [40, 70, 40],
-      );
-
-      const widthTransformIcon = useTransform(
-          distance,
-          [-150, 0, 150],
-          [20, 35, 20],
-      );
-      const heightTransformIcon = useTransform(
-          distance,
-          [-150, 0, 150],
-          [20, 35, 20],
-      );
-
-      const width = useSpring(widthTransform, {
-        mass: 0.1,
-        stiffness: 150,
-        damping: 12,
-      });
-      const height = useSpring(heightTransform, {
-        mass: 0.1,
-        stiffness: 150,
-        damping: 12,
-      });
-
-      const widthIcon = useSpring(widthTransformIcon, {
-        mass: 0.1,
-        stiffness: 150,
-        damping: 12,
-      });
-      const heightIcon = useSpring(heightTransformIcon, {
-        mass: 0.1,
-        stiffness: 150,
-        damping: 12,
-      });
+      // 文字标签不再做放大动画（放大会让布局跳动、文字溢出），用细腻的背景色过渡代替
+      void distance; // 保留依赖，避免 Tree-shaking 警告
 
       const [hovered, setHovered] = useState(false);
 
-      const handleMouseEnter = useCallback(() => {
-        setHovered(true);
-      }, []);
+      const handleMouseEnter = useCallback(() => setHovered(true), []);
+      const handleMouseLeave = useCallback(() => setHovered(false), []);
 
-      const handleMouseLeave = useCallback(() => {
-        setHovered(false);
-      }, []);
+      // customComponent（Quick add / Profile）不参与当前页判定
+      const isActive = !customComponent && !!activeHref && href === activeHref;
 
       const Element = customComponent ? 'div' : href ? 'a' : 'button';
       const elementProps = customComponent ? {} : href ?
-      {
-        // 原生 <a> 不经过 next/link，basePath 不会自动生效
-        href: withBasePath(href),
-        'aria-label': title,
-        ...((external || href.startsWith('https://')) ?
+        {
+          // 原生 <a> 不经过 next/link，basePath 不会自动生效
+          href: withBasePath(href),
+          'aria-label': title,
+          ...(isActive ? {'aria-current': 'page' as const} : {}),
+          ...((external || href.startsWith('https://')) ?
             {target: '_blank', rel: 'noopener noreferrer'} :
             {}),
-      } :
-      {onClick, 'aria-label': title};
+        } :
+        {onClick, 'aria-label': title};
 
       return (
         <Element {...elementProps}>
-          <motion.div
+          <div
             ref={ref}
-            style={{width, height}}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 cursor-pointer dark:bg-neutral-800"
+            className={cn(
+              'flex h-8 cursor-pointer items-center justify-center rounded-full px-3 transition-colors',
+              isActive
+                ? hovered
+                  ? 'bg-foreground/85 dark:bg-foreground/85'
+                  : 'bg-foreground dark:bg-foreground'
+                : hovered
+                  ? 'bg-gray-200 dark:bg-neutral-700'
+                  : 'bg-transparent',
+            )}
           >
-            <AnimatePresence>
-              {hovered && (
-                <motion.div
-                  initial={{opacity: 0, y: 10, x: '-50%'}}
-                  animate={{opacity: 1, y: 0, x: '-50%'}}
-                  exit={{opacity: 0, y: 2, x: '-50%'}}
-                  className="absolute -top-8 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white"
-                >
-                  {tooltip || title}
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <motion.div
-              style={{width: widthIcon, height: heightIcon}}
-              className="flex items-center justify-center"
-            >
-              {customComponent || icon}
-            </motion.div>
-          </motion.div>
+            {customComponent ? (
+              // customComponent 由 ManagementBar 提供，内部已改为文字
+              customComponent
+            ) : (
+              <span className={cn(
+                'text-xs font-medium whitespace-nowrap leading-none',
+                isActive ? 'text-background dark:text-background' : 'text-foreground',
+              )}>
+                {title}
+              </span>
+            )}
+          </div>
         </Element>
       );
     },

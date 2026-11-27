@@ -83,10 +83,10 @@ export function TokensPanel() {
       {/* ── 新建 ── */}
       <div className="rounded-[20px] bg-muted p-4">
         <div className="mb-1 text-sm font-medium">{t('settings.tokensNew')}</div>
-        <div className="mb-3 text-[11px] text-muted-foreground">{t('settings.tokensNewDesc')}</div>
+        <div className="mb-3 text-[0.6875rem] text-muted-foreground">{t('settings.tokensNewDesc')}</div>
         <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-4">
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('settings.tokensName')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.tokensName')}</Label>
             <Input
               value={form.name}
               onChange={(e) => setForm({...form, name: e.target.value})}
@@ -94,7 +94,7 @@ export function TokensPanel() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('settings.tokensScope')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.tokensScope')}</Label>
             <Select
               value={form.scope}
               onValueChange={(v) => setForm({...form, scope: v as 'readonly' | 'admin'})}
@@ -109,7 +109,7 @@ export function TokensPanel() {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('settings.tokensExpires')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('settings.tokensExpires')}</Label>
             <Select
               value={form.expires}
               onValueChange={(v) => setForm({...form, expires: v as 'never' | '30' | '90' | '365'})}
@@ -165,7 +165,7 @@ export function TokensPanel() {
       {created && (
         <div className="rounded-[20px] border border-amber-500/40 bg-amber-500/5 p-4">
           <div className="mb-1 text-sm font-medium">{t('settings.tokensCreated')}</div>
-          <div className="mb-2 text-[11px] text-muted-foreground">
+          <div className="mb-2 text-[0.6875rem] text-muted-foreground">
             {t('settings.tokensCreatedDesc')}
           </div>
           <div className="flex items-center gap-2">
@@ -185,7 +185,7 @@ export function TokensPanel() {
         </div>
       )}
 
-      <div className="rounded-[20px] bg-muted p-4 text-[11px] text-muted-foreground">
+      <div className="rounded-[20px] bg-muted p-4 text-[0.6875rem] text-muted-foreground">
         {t('settings.tokensSessionOnlyHint')}
       </div>
 
@@ -194,22 +194,22 @@ export function TokensPanel() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/60 hover:bg-transparent">
-              <TableHead className="pl-4 text-[11px] text-muted-foreground">
+              <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">
                 {t('settings.tokensColName')}
               </TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">
+              <TableHead className="text-[0.6875rem] text-muted-foreground">
                 {t('settings.tokensColPrefix')}
               </TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">
+              <TableHead className="text-[0.6875rem] text-muted-foreground">
                 {t('settings.tokensColScope')}
               </TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">
+              <TableHead className="text-[0.6875rem] text-muted-foreground">
                 {t('settings.tokensColExpires')}
               </TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">
+              <TableHead className="text-[0.6875rem] text-muted-foreground">
                 {t('settings.tokensColLastUsed')}
               </TableHead>
-              <TableHead className="pr-4 text-right text-[11px] text-muted-foreground">
+              <TableHead className="pr-4 text-right text-[0.6875rem] text-muted-foreground">
                 {t('accounts.colActions')}
               </TableHead>
             </TableRow>

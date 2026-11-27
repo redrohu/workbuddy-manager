@@ -173,7 +173,7 @@ export function UpstreamFormDialog({
         <DialogBody className="max-h-[min(640px,calc(100dvh-12rem))]">
           <div className="space-y-4 px-6 pb-2">
             <div className="space-y-1.5">
-              <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldName')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldName')}</Label>
               <Input
                 value={form.name}
                 onChange={(e) => {
@@ -192,19 +192,19 @@ export function UpstreamFormDialog({
             {!simple && (
               <>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldUrl')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldUrl')}</Label>
                   <Input
                     value={form.base_url}
                     onChange={(e) => setForm({...form, base_url: e.target.value})}
                     placeholder="http://127.0.0.1:7863"
                     maxLength={500}
                   />
-                  <p className="text-[11px] leading-4 text-muted-foreground">
+                  <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('upstreams.fieldUrlHint')}
                   </p>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldKey')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldKey')}</Label>
                   <Input
                     value={form.api_key}
                     onChange={(e) => setForm({...form, api_key: e.target.value})}
@@ -216,7 +216,7 @@ export function UpstreamFormDialog({
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldDir')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldDir')}</Label>
                   <Input
                     value={form.auth_dir}
                     onChange={(e) => {
@@ -226,24 +226,24 @@ export function UpstreamFormDialog({
                     placeholder={t('upstreams.fieldDirPlaceholder')}
                     maxLength={500}
                   />
-                  <p className="text-[11px] leading-4 text-muted-foreground">
+                  <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('upstreams.fieldDirHint')}
                   </p>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldContainer')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldContainer')}</Label>
                   <Input
                     value={form.container}
                     onChange={(e) => setForm({...form, container: e.target.value})}
                     placeholder={t('upstreams.fieldContainerPlaceholder')}
                     maxLength={64}
                   />
-                  <p className="text-[11px] leading-4 text-muted-foreground">
+                  <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('upstreams.fieldContainerHint')}
                   </p>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldNote')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldNote')}</Label>
                   <Textarea
                     value={form.note}
                     onChange={(e) => setForm({...form, note: e.target.value})}
@@ -252,7 +252,7 @@ export function UpstreamFormDialog({
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <Label className="text-[11px] text-muted-foreground">{t('upstreams.fieldEnabled')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('upstreams.fieldEnabled')}</Label>
                   <Switch checked={form.enabled} onCheckedChange={(v) => setForm({...form, enabled: v})} aria-label={t('upstreams.fieldEnabled')} />
                 </div>
               </>

@@ -133,7 +133,7 @@ function ListFooter({
   const t = useT();
   if (totalUnknown) return null;
   return (
-    <div className="flex shrink-0 flex-wrap items-center gap-x-2 border-t border-border/40 px-4 py-2 text-[11px] text-muted-foreground">
+    <div className="flex shrink-0 flex-wrap items-center gap-x-2 border-t border-border/40 px-4 py-2 text-[0.6875rem] text-muted-foreground">
       <span className="tabular-nums">{t('tasks.footerTotal', {n: fmtNumber(total)})}</span>
       {truncated && (
         <span className="text-amber-600 dark:text-amber-400">
@@ -403,13 +403,13 @@ export default function TasksPage() {
             <div className="flex min-w-0 items-center gap-2 text-sm font-medium">
               <CalendarCheck className="h-4 w-4 shrink-0" />
               <span className="shrink-0">{t('tasks.checkinTitle')}</span>
-              <span className="hidden truncate text-[11px] font-normal text-muted-foreground sm:inline">
+              <span className="hidden truncate text-[0.6875rem] font-normal text-muted-foreground sm:inline">
                 {t('tasks.checkinSubtitle')}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Select value={checkinDays} onValueChange={setCheckinDays}>
-                <SelectTrigger className="h-7 w-[116px] rounded-full text-[11px]" aria-label={t('tasks.checkinTitle')}><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-7 w-[116px] rounded-full text-[0.6875rem]" aria-label={t('tasks.checkinTitle')}><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {RANGES.map((r) => (
                     <SelectItem key={r.value} value={r.value} className="text-xs">{t(r.key)}</SelectItem>
@@ -471,7 +471,7 @@ export default function TasksPage() {
                       <span className="truncate text-xs font-medium">{l.nickname || l.uid || '—'}</span>
                       <span
                         className={
-                          'shrink-0 text-[11px] font-medium ' +
+                          'shrink-0 text-[0.6875rem] font-medium ' +
                           (l.success
                             ? 'text-emerald-600 dark:text-emerald-400'
                             : 'text-red-600 dark:text-red-400')
@@ -481,7 +481,7 @@ export default function TasksPage() {
                         {checkinResultText(l)}
                       </span>
                     </div>
-                    <div className="mt-0.5 flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
+                    <div className="mt-0.5 flex items-center justify-between gap-2 text-[0.6875rem] text-muted-foreground">
                       <span className="truncate tabular-nums">{fmtDateTimeMarked(l.ts)}</span>
                       <span className="shrink-0">{sourceLabel(l.source)}</span>
                     </div>
@@ -493,10 +493,10 @@ export default function TasksPage() {
                 <Table className="[&_td]:py-1 [&_th]:h-8">
                   <TableHeader>
                     <TableRow className="border-b border-border/60 hover:bg-transparent">
-                      <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('logs.colTime')}</TableHead>
-                      <TableHead className="text-[11px] text-muted-foreground">{t('tasks.colAccount')}</TableHead>
-                      <TableHead className="text-[11px] text-muted-foreground">{t('tasks.colSource')}</TableHead>
-                      <TableHead className="pr-4 text-[11px] text-muted-foreground">{t('tasks.colResult')}</TableHead>
+                      <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('logs.colTime')}</TableHead>
+                      <TableHead className="text-[0.6875rem] text-muted-foreground">{t('tasks.colAccount')}</TableHead>
+                      <TableHead className="text-[0.6875rem] text-muted-foreground">{t('tasks.colSource')}</TableHead>
+                      <TableHead className="pr-4 text-[0.6875rem] text-muted-foreground">{t('tasks.colResult')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -512,7 +512,7 @@ export default function TasksPage() {
                         <TableCell className="pr-4">
                           <span
                             className={
-                              'text-[11px] font-medium ' +
+                              'text-[0.6875rem] font-medium ' +
                               (l.success
                                 ? 'text-emerald-600 dark:text-emerald-400'
                                 : 'text-red-600 dark:text-red-400')
@@ -554,11 +554,11 @@ export default function TasksPage() {
             <div className="flex items-center gap-2 text-sm font-medium">
               <History className="h-4 w-4" />
               {t('tasks.rawLogTitle')}
-              <span className="hidden text-[11px] font-normal text-muted-foreground sm:inline">
+              <span className="hidden text-[0.6875rem] font-normal text-muted-foreground sm:inline">
                 {t('tasks.rawLogSubtitle')}
               </span>
             </div>
-            <span className="text-[11px] text-muted-foreground">{t('tasks.rawLogFrom')}</span>
+            <span className="text-[0.6875rem] text-muted-foreground">{t('tasks.rawLogFrom')}</span>
           </div>
           {/* 首屏加载中先给骨架：这块面板的「空」文案是一段解释（「上游只在失败与
               旅行/活跃时打日志，所以这里没有记录不代表没执行」），数据还没到时说出来
@@ -572,7 +572,7 @@ export default function TasksPage() {
             </div>
           ) : upstreamLines.length ? (
             <div className="scroll-slim min-h-0 flex-1 overflow-auto px-4 pb-3">
-              <pre className="whitespace-pre-wrap break-all font-mono text-[11px] leading-5 text-muted-foreground">
+              <pre className="whitespace-pre-wrap break-all font-mono text-[0.6875rem] leading-5 text-muted-foreground">
                 {upstreamLines.slice(-200).join('\n')}
               </pre>
             </div>
@@ -601,13 +601,13 @@ export default function TasksPage() {
           <div className="flex items-center gap-2 text-sm font-medium">
             <Cat className="h-4 w-4" />
             {t('tasks.taskLogTitle')}
-            <span className="hidden text-[11px] font-normal text-muted-foreground sm:inline">
+            <span className="hidden text-[0.6875rem] font-normal text-muted-foreground sm:inline">
               {t('tasks.taskLogSubtitle')}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Select value={taskDays} onValueChange={setTaskDays}>
-              <SelectTrigger className="h-7 w-[116px] rounded-full text-[11px]" aria-label={t('tasks.taskLogTitle')}>
+              <SelectTrigger className="h-7 w-[116px] rounded-full text-[0.6875rem]" aria-label={t('tasks.taskLogTitle')}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -631,7 +631,7 @@ export default function TasksPage() {
             <Button
               variant="outline"
               size="sm"
-              className="h-7 rounded-full text-[11px]"
+              className="h-7 rounded-full text-[0.6875rem]"
               disabled={collectBusy}
               onClick={collectTasks}
             >
@@ -686,7 +686,7 @@ export default function TasksPage() {
                   onClick={() => setTaskFilter(item.id)}
                   title={isEmpty ? t('tasks.filterEmptyTitle', {label: item.label}) : undefined}
                   className={
-                    'rounded-full px-2.5 py-1 text-[11px] transition-colors ' +
+                    'rounded-full px-2.5 py-1 text-[0.6875rem] transition-colors ' +
                     (active
                       ? 'bg-foreground text-background'
                       : isEmpty
@@ -736,12 +736,12 @@ export default function TasksPage() {
                     </span>
                   </div>
                   <div
-                    className={'mt-1 break-words text-[11px] leading-4 ' + (LEVEL_TONE[l.level] || 'text-muted-foreground')}
+                    className={'mt-1 break-words text-[0.6875rem] leading-4 ' + (LEVEL_TONE[l.level] || 'text-muted-foreground')}
                     title={l.message}
                   >
                     {taskLogResultText(l)}
                   </div>
-                  <div className="mt-1 flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
+                  <div className="mt-1 flex items-center justify-between gap-2 text-[0.6875rem] text-muted-foreground">
                     <span className="truncate" title={l.uid}>
                       {accountLabel(l)}
                     </span>
@@ -755,11 +755,11 @@ export default function TasksPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="border-b border-border/60 hover:bg-transparent">
-                    <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('logs.colTime')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('tasks.colKind')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('tasks.colAccount')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('tasks.colResult')}</TableHead>
-                    <TableHead className="pr-4 text-right text-[11px] text-muted-foreground">{t('tasks.colCredits')}</TableHead>
+                    <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('logs.colTime')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('tasks.colKind')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('tasks.colAccount')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('tasks.colResult')}</TableHead>
+                    <TableHead className="pr-4 text-right text-[0.6875rem] text-muted-foreground">{t('tasks.colCredits')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

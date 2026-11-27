@@ -28,7 +28,7 @@ export function LanguageToggle({className}: {className?: string}) {
         aria-label={t('language.switch')}
         title={t('language.switch')}
         className={cn(
-          'h-6 w-auto gap-1.5 rounded-full border-border/60 bg-muted/60 px-2.5 text-[11px] font-medium',
+          'h-6 w-auto gap-1.5 rounded-full border-border/60 bg-muted/60 px-2.5 text-[0.6875rem] font-medium',
           className,
         )}
       >

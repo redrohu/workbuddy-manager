@@ -98,7 +98,7 @@ export function UpstreamEndpoints() {
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <h2 className="text-sm font-semibold">{t('upstreams.title')}</h2>
-          <p className="text-[11px] leading-4 text-muted-foreground">{t('upstreams.desc')}</p>
+          <p className="text-[0.6875rem] leading-4 text-muted-foreground">{t('upstreams.desc')}</p>
         </div>
         {isAdmin && (
           <Button className="rounded-full" onClick={openCreate}>
@@ -120,36 +120,36 @@ export function UpstreamEndpoints() {
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className="text-sm font-medium">{item.name}</span>
                   {item.is_default && (
-                    <Badge variant="secondary" className="rounded-full text-[10px]">
+                    <Badge variant="secondary" className="rounded-full text-[0.625rem]">
                       {t('upstreams.defaultTag')}
                     </Badge>
                   )}
                   {!item.enabled && (
-                    <Badge variant="destructive" className="rounded-full text-[10px]">
+                    <Badge variant="destructive" className="rounded-full text-[0.625rem]">
                       {t('upstreams.disabledTag')}
                     </Badge>
                   )}
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="text-[0.6875rem] text-muted-foreground">
                     {t('upstreams.boundKeys', {n: item.bound_keys ?? 0})}
                   </span>
                 </div>
-                <div className="truncate font-mono text-[11px] text-muted-foreground">
+                <div className="truncate font-mono text-[0.6875rem] text-muted-foreground">
                   {item.base_url}
                 </div>
                 {item.auth_dir ? (
                   <div
-                    className="truncate font-mono text-[11px] text-muted-foreground"
+                    className="truncate font-mono text-[0.6875rem] text-muted-foreground"
                     title={t('upstreams.dirLine', {dir: item.auth_dir})}
                   >
                     {t('upstreams.dirLine', {dir: item.auth_dir})}
                   </div>
                 ) : (
-                  <div className="truncate text-[11px] text-muted-foreground">
+                  <div className="truncate text-[0.6875rem] text-muted-foreground">
                     {t('upstreams.noDirLine')}
                   </div>
                 )}
                 {item.note ? (
-                  <div className="truncate text-[11px] text-muted-foreground">{item.note}</div>
+                  <div className="truncate text-[0.6875rem] text-muted-foreground">{item.note}</div>
                 ) : null}
               </div>
               {isAdmin && !item.is_default && (
@@ -185,7 +185,7 @@ export function UpstreamEndpoints() {
         </div>
       )}
 
-      <p className="text-[11px] leading-4 text-muted-foreground">{t('upstreams.hint')}</p>
+      <p className="text-[0.6875rem] leading-4 text-muted-foreground">{t('upstreams.hint')}</p>
 
       <UpstreamFormDialog
         open={formOpen}

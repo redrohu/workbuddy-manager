@@ -87,7 +87,7 @@ function InlineText({text}: {text: string}) {
         }
         if (part.startsWith('`') && part.endsWith('`')) {
           return (
-            <code key={i} className="rounded bg-muted px-1 py-0.5 font-mono text-[11px]">
+            <code key={i} className="rounded bg-muted px-1 py-0.5 font-mono text-[0.6875rem]">
               {part.slice(1, -1)}
             </code>
           );
@@ -105,7 +105,7 @@ function ItemList({items}: {items: ChangelogItem[]}) {
         <li
           key={i}
           className={
-            'text-[12px] leading-[1.75] text-muted-foreground break-words'
+            'text-[0.75rem] leading-[1.75] text-muted-foreground break-words'
             + (it.level > 0 ? ' mt-1.5 ml-3 border-l border-border pl-3' : '')
           }
         >
@@ -128,7 +128,7 @@ function SectionHeader({title}: {title: string}) {
   return (
     <div className="mb-2 flex items-center gap-2">
       <span className={'size-1.5 shrink-0 rounded-full ' + (SECTION_DOT[title] || 'bg-muted-foreground/50')} />
-      <span className="shrink-0 text-[11px] font-medium text-foreground">{label}</span>
+      <span className="shrink-0 text-[0.6875rem] font-medium text-foreground">{label}</span>
       <span className="h-px flex-1 bg-border" />
     </div>
   );
@@ -184,7 +184,7 @@ export function WhatsNewDialog() {
     <Dialog open={open} onOpenChange={(v) => { if (!v) dismiss(); }}>
       <DialogContent className="flex max-h-[min(600px,calc(100dvh-4rem))] max-w-[540px] flex-col gap-0 overflow-hidden p-0">
         <DialogHeader className="gap-1.5 border-b px-5 py-3.5">
-          <DialogTitle className="flex items-center gap-2 pr-7 text-[15px]">
+          <DialogTitle className="flex items-center gap-2 pr-7 text-[0.9375rem]">
             <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary/10">
               <Sparkles className="size-3.5 text-primary" />
             </span>
@@ -192,17 +192,17 @@ export function WhatsNewDialog() {
               {version ? t('whatsNew.titlePlain') : t('whatsNew.titleFallback')}
             </span>
             {version && (
-              <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 font-mono text-[10px] font-normal text-primary">
+              <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 font-mono text-[0.625rem] font-normal text-primary">
                 v{version}
               </span>
             )}
             {itemCount > 0 && (
-              <span className="ml-auto hidden shrink-0 text-[10px] font-normal text-muted-foreground sm:inline">
+              <span className="ml-auto hidden shrink-0 text-[0.625rem] font-normal text-muted-foreground sm:inline">
                 {t('whatsNew.itemCount', {n: itemCount})}
               </span>
             )}
           </DialogTitle>
-          <DialogDescription className="text-[11.5px] leading-relaxed">
+          <DialogDescription className="text-[0.71875rem] leading-relaxed">
             {t('whatsNew.thanks')}
           </DialogDescription>
         </DialogHeader>
@@ -234,7 +234,7 @@ export function WhatsNewDialog() {
         <div className="space-y-2 border-t px-5 py-3">
           <div className="flex flex-wrap items-center gap-2.5 rounded-lg bg-sky-500/[0.08] px-3 py-2">
             <Star className="size-3.5 shrink-0 fill-sky-500 text-sky-500" />
-            <p className="min-w-0 flex-1 text-[11px] leading-snug text-sky-800 dark:text-sky-200">
+            <p className="min-w-0 flex-1 text-[0.6875rem] leading-snug text-sky-800 dark:text-sky-200">
               <span className="font-medium">{t('whatsNew.starTitle')}</span>
               <span className="mx-1 opacity-50">·</span>
               {t('whatsNew.starBody')}
@@ -246,7 +246,7 @@ export function WhatsNewDialog() {
               href={REPO_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex shrink-0 items-center gap-1 rounded-full bg-sky-600 px-2.5 py-1 text-[10.5px] font-medium text-white transition-opacity hover:opacity-90 dark:bg-sky-500"
+              className="inline-flex shrink-0 items-center gap-1 rounded-full bg-sky-600 px-2.5 py-1 text-[0.65625rem] font-medium text-white transition-opacity hover:opacity-90 dark:bg-sky-500"
             >
               <Star className="size-2.5 fill-current" />
               {t('whatsNew.starLink')}
@@ -261,7 +261,7 @@ export function WhatsNewDialog() {
               屏幕上展开会吃掉一半正文区，而正文才是用户这次真正要看的。 */}
           <div className="flex items-start gap-2.5 rounded-lg bg-amber-500/[0.08] px-3 py-2">
             <Megaphone className="mt-0.5 size-3.5 shrink-0 text-amber-600 dark:text-amber-400" />
-            <p className="min-w-0 flex-1 text-[11px] leading-[1.5] text-amber-800 dark:text-amber-200">
+            <p className="min-w-0 flex-1 text-[0.6875rem] leading-[1.5] text-amber-800 dark:text-amber-200">
               <span className="font-medium text-amber-700 dark:text-amber-300">
                 {t('whatsNew.boundaryTitle')}：
               </span>
@@ -290,7 +290,7 @@ export function WhatsNewDialog() {
             href={REPO_URL}
             target="_blank"
             rel="noreferrer"
-            className="mr-auto hidden items-center gap-1 font-mono text-[10px] text-muted-foreground underline-offset-2 hover:underline sm:inline-flex"
+            className="mr-auto hidden items-center gap-1 font-mono text-[0.625rem] text-muted-foreground underline-offset-2 hover:underline sm:inline-flex"
           >
             {REPO_PATH}
             <ArrowUpRight className="size-2.5" />

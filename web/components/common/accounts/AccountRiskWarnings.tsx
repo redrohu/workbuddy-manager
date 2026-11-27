@@ -146,12 +146,12 @@ export function AccountRiskWarnings({
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span className="break-all font-medium">{item.nickname || item.uid}</span>
                     {item.note && (
-                      <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[11px] font-medium text-amber-800 dark:text-amber-200">
+                      <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[0.6875rem] font-medium text-amber-800 dark:text-amber-200">
                         {item.note}
                       </span>
                     )}
                     {item.nickname && item.uid && item.nickname !== item.uid && (
-                      <span className="font-mono text-[11px] text-muted-foreground">{item.uid.slice(0, 8)}</span>
+                      <span className="font-mono text-[0.6875rem] text-muted-foreground">{item.uid.slice(0, 8)}</span>
                     )}
                     <span className="text-muted-foreground">{item.group}</span>
                     <strong>{t(item.paused === true ? (item.needs_review ? 'risk.review' : 'risk.paused') : item.paused === null ? 'risk.unknown' : item.historical ? 'risk.historical' : 'risk.warning')}</strong>
@@ -160,7 +160,7 @@ export function AccountRiskWarnings({
                     {operationLabel(item.operation, t)} · HTTP {item.http_status} · {fmtDateTime(item.ts)}
                   </div>
                   {detailText && (
-                    <div className="mt-0.5 break-all text-[11px] text-muted-foreground" title={item.detail || undefined}>
+                    <div className="mt-0.5 break-all text-[0.6875rem] text-muted-foreground" title={item.detail || undefined}>
                       {detailText}
                     </div>
                   )}

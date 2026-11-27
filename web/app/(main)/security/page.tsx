@@ -282,13 +282,13 @@ export default function SecurityPage() {
               /* config 单独没取到：如实说「未取到」。**不能**渲染一个处于「关闭」
                  状态的开关——那会把「不知道」说成「关着」，而这一页的开关正是
                  用户判断拦截是否生效的依据。 */
-              <div className="text-[11px] text-muted-foreground">{t('security.notLoaded')}</div>
+              <div className="text-[0.6875rem] text-muted-foreground">{t('security.notLoaded')}</div>
             ) : (
               <>
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-xs font-medium">{t('security.enableControl')}</div>
-                    <div className="text-[11px] text-muted-foreground">{t('security.enableControlHint')}</div>
+                    <div className="text-[0.6875rem] text-muted-foreground">{t('security.enableControlHint')}</div>
                   </div>
                   <Switch
                     aria-label={t('security.enableControl')}
@@ -298,7 +298,7 @@ export default function SecurityPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('security.mode')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('security.mode')}</Label>
                   <Select
                     value={shownConfig.mode}
                     disabled={!isAdmin}
@@ -323,7 +323,7 @@ export default function SecurityPage() {
           </div>
           <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-4">
             <div className="space-y-1.5">
-              <Label className="text-[11px] text-muted-foreground">{t('security.type')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{t('security.type')}</Label>
               <Select value={newKind} onValueChange={(v) => setNewKind(v as 'allow' | 'deny')} disabled={!isAdmin}>
                 <SelectTrigger className="bg-background" aria-label={t('security.type')}><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -333,11 +333,11 @@ export default function SecurityPage() {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label className="text-[11px] text-muted-foreground">IP / CIDR</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">IP / CIDR</Label>
               <Input value={newCidr} onChange={(e) => setNewCidr(e.target.value)} placeholder={t('security.cidrPlaceholder')} className="bg-background" disabled={!isAdmin} />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-[11px] text-muted-foreground">{t('security.note')}</Label>
+              <Label className="text-[0.6875rem] text-muted-foreground">{t('security.note')}</Label>
               <Input value={newNote} onChange={(e) => setNewNote(e.target.value)} placeholder={t('common.optional')} className="bg-background" disabled={!isAdmin} />
             </div>
             <Button className="rounded-full" onClick={addRule} disabled={!isAdmin || busy}>
@@ -350,11 +350,11 @@ export default function SecurityPage() {
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/60 hover:bg-transparent">
-                  <TableHead className="pl-3 text-[11px] text-muted-foreground">{t('security.type')}</TableHead>
-                  <TableHead className="text-[11px] text-muted-foreground">IP / CIDR</TableHead>
-                  <TableHead className="text-[11px] text-muted-foreground">{t('security.note')}</TableHead>
-                  <TableHead className="text-[11px] text-muted-foreground">{t('security.createdAt')}</TableHead>
-                  {isAdmin && <TableHead className="pr-3 text-right text-[11px] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
+                  <TableHead className="pl-3 text-[0.6875rem] text-muted-foreground">{t('security.type')}</TableHead>
+                  <TableHead className="text-[0.6875rem] text-muted-foreground">IP / CIDR</TableHead>
+                  <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.note')}</TableHead>
+                  <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.createdAt')}</TableHead>
+                  {isAdmin && <TableHead className="pr-3 text-right text-[0.6875rem] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -430,7 +430,7 @@ export default function SecurityPage() {
             {/* 说明这张表**只记拦截**：用户看到记录变少时会以为是坏了，
                 而实际上是被刻意收窄到安全信号（放行的明细在「请求日志」页）。
                 不写这句，这个改动本身就是个新的困惑源。 */}
-            <span className="text-[11px] text-muted-foreground">
+            <span className="text-[0.6875rem] text-muted-foreground">
               {t('security.accessLogScope')}
             </span>
           </div>
@@ -457,11 +457,11 @@ export default function SecurityPage() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/60 hover:bg-transparent">
-              <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('logs.colTime')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">IP</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('security.path')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('security.result')}</TableHead>
-              <TableHead className="pr-4 text-[11px] text-muted-foreground">User-Agent</TableHead>
+              <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('logs.colTime')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">IP</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.path')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.result')}</TableHead>
+              <TableHead className="pr-4 text-[0.6875rem] text-muted-foreground">User-Agent</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -482,11 +482,11 @@ export default function SecurityPage() {
                       <Badge variant="secondary" className="rounded-full text-emerald-600 dark:text-emerald-400">{t('security.allowed')}</Badge>
                     )}
                     {l.blocked && l.reason && (
-                      <span className="text-[11px] text-muted-foreground">{reasonText(t, l.reason)}</span>
+                      <span className="text-[0.6875rem] text-muted-foreground">{reasonText(t, l.reason)}</span>
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="max-w-[280px] truncate pr-4 text-[11px] text-muted-foreground">
+                <TableCell className="max-w-[280px] truncate pr-4 text-[0.6875rem] text-muted-foreground">
                   {l.ua || '—'}
                 </TableCell>
               </TableRow>
@@ -514,7 +514,7 @@ export default function SecurityPage() {
           <div className="flex items-center gap-2 text-sm font-medium">
             <FileClock className="h-4 w-4" />
             {t('security.auditLog')}
-            <span className="hidden text-[11px] font-normal text-muted-foreground sm:inline">
+            <span className="hidden text-[0.6875rem] font-normal text-muted-foreground sm:inline">
               {t('security.auditLogHint')}
             </span>
           </div>
@@ -526,11 +526,11 @@ export default function SecurityPage() {
           <Table>
             <TableHeader>
               <TableRow className="border-b border-border/60 hover:bg-transparent">
-                <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('logs.colTime')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('security.action')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('security.actor')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('security.target')}</TableHead>
-                <TableHead className="pr-4 text-[11px] text-muted-foreground">{t('security.detail')}</TableHead>
+                <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('logs.colTime')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.action')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.actor')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('security.target')}</TableHead>
+                <TableHead className="pr-4 text-[0.6875rem] text-muted-foreground">{t('security.detail')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -543,7 +543,7 @@ export default function SecurityPage() {
                     <Badge
                       variant="secondary"
                       className={
-                        'rounded-full text-[10px] ' +
+                        'rounded-full text-[0.625rem] ' +
                         (a.action === 'login_failed'
                           ? 'bg-red-500/12 text-red-600 dark:text-red-400'
                           : a.action === 'login'
@@ -559,7 +559,7 @@ export default function SecurityPage() {
                     {a.actor === '(空)' ? t('security.actorEmpty') : a.actor || '—'}
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">{a.target || '—'}</TableCell>
-                  <TableCell className="max-w-[420px] truncate pr-4 text-[11px] text-muted-foreground" title={a.detail}>
+                  <TableCell className="max-w-[420px] truncate pr-4 text-[0.6875rem] text-muted-foreground" title={a.detail}>
                     {auditDetail(a.detail, t)}
                   </TableCell>
                 </TableRow>

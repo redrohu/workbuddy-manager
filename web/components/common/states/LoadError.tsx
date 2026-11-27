@@ -38,7 +38,7 @@ export function LoadError({
     return (
       <div
         role="status"
-        className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border border-amber-500/30 bg-amber-500/[0.07] px-3.5 py-2 text-[11px]"
+        className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border border-amber-500/30 bg-amber-500/[0.07] px-3.5 py-2 text-[0.6875rem]"
       >
         <TriangleAlert className="h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-400" />
         <span className="flex-1 leading-5">{text}</span>
@@ -46,7 +46,7 @@ export function LoadError({
           <Button
             variant="ghost"
             size="sm"
-            className="h-6 rounded-full px-2 text-[11px] text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+            className="h-6 rounded-full px-2 text-[0.6875rem] text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
             onClick={onRetry}
           >
             <RefreshCw className="h-3 w-3" />

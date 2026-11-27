@@ -140,7 +140,7 @@ export function ModelWhitelistInput({
           {names.map((name) => (
             <span
               key={name}
-              className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 font-mono text-[10px]"
+              className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 font-mono text-[0.625rem]"
             >
               {name}
               {!disabled && (
@@ -246,7 +246,7 @@ export function ModelWhitelistInput({
                 aria-pressed={freeOnly}
                 onClick={() => setFreeOnly((v) => !v)}
                 className={cn(
-                  'rounded-full px-2 py-0.5 text-[11px] transition-colors',
+                  'rounded-full px-2 py-0.5 text-[0.6875rem] transition-colors',
                   freeOnly ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                     : 'bg-muted text-muted-foreground hover:text-foreground',
                 )}
@@ -257,7 +257,7 @@ export function ModelWhitelistInput({
                 <button
                   type="button"
                   onClick={() => emit([...names, ...filtered.flatMap((g) => g.models.map((m) => qualified(g.key, m.id)))])}
-                  className="rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground hover:text-foreground"
+                  className="rounded-full bg-muted px-2 py-0.5 text-[0.6875rem] text-muted-foreground hover:text-foreground"
                 >
                   {t('keys.freeSelectAll')}
                 </button>
@@ -281,7 +281,7 @@ export function ModelWhitelistInput({
               )}
               {filtered.map((group) => (
                 <div key={group.key} className="mb-1">
-                  <div className="px-2 py-1 text-[11px] text-muted-foreground">{group.label}</div>
+                  <div className="px-2 py-1 text-[0.6875rem] text-muted-foreground">{group.label}</div>
                   {group.models.map((m) => {
                     const value = qualified(group.key, m.id);
                     const picked = names.includes(value);
@@ -308,12 +308,12 @@ export function ModelWhitelistInput({
                         </span>
                         <span className="min-w-0 flex-1 truncate font-mono">{m.id}</span>
                         {isFree(m) && (
-                          <span className="shrink-0 rounded-full bg-emerald-500/15 px-1.5 text-[10px] text-emerald-700 dark:text-emerald-300">
+                          <span className="shrink-0 rounded-full bg-emerald-500/15 px-1.5 text-[0.625rem] text-emerald-700 dark:text-emerald-300">
                             {t('keys.freeBadge')}
                           </span>
                         )}
                         {typeof m.context_length === 'number' && (
-                          <span className="shrink-0 text-[11px] text-muted-foreground">
+                          <span className="shrink-0 text-[0.6875rem] text-muted-foreground">
                             {Math.round(m.context_length / 1000)}k
                           </span>
                         )}

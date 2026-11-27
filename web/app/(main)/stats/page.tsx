@@ -65,6 +65,7 @@ import {
 } from '@/components/ui/table';
 import {notify} from '@/lib/toast';
 import {useT} from '@/lib/i18n/provider';
+import {CHART_TICK_FONT, CHART_TIP_FONT} from '@/lib/chart-font';
 
 const CHART_COLORS = [
   'var(--chart-1)',
@@ -391,7 +392,7 @@ export default function StatsPage() {
       {summary?.usage_health && !summary.usage_health.ok && (
         <div className="flex items-start gap-2 rounded-[16px] border border-amber-500/30 bg-amber-500/[0.07] px-3.5 py-3">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
-          <div className="text-[11px] leading-5">
+          <div className="text-[0.6875rem] leading-5">
             <span className="font-medium text-amber-700 dark:text-amber-300">
               {t('stats.usageHealthTitle')}
             </span>
@@ -468,7 +469,7 @@ export default function StatsPage() {
           </div>
           <Link
             href="/settings/models"
-            className="text-[11px] text-muted-foreground underline-offset-2 hover:underline"
+            className="text-[0.6875rem] text-muted-foreground underline-offset-2 hover:underline"
           >
             {t('stats.costPriceLink')}
           </Link>
@@ -480,21 +481,21 @@ export default function StatsPage() {
             ['total', t('stats.costTotal'), summary?.total_cost, summary?.total_unpriced],
           ] as const).map(([key, label, value, unpriced]) => (
             <div key={key}>
-              <div className="text-[11px] text-muted-foreground">{label}</div>
+              <div className="text-[0.6875rem] text-muted-foreground">{label}</div>
               <div className="mt-0.5 text-lg font-semibold tabular-nums">
                 {fmtMoney(value, summary?.cost_currency)}
               </div>
               {!!unpriced && (
                 // 有没算进费用的调用时必须说出来：否则用户会拿一个悄悄缩水的
                 // 金额当成「全量花费」。
-                <div className="mt-0.5 text-[10px] text-amber-600 dark:text-amber-400">
+                <div className="mt-0.5 text-[0.625rem] text-amber-600 dark:text-amber-400">
                   {t('stats.costUnpriced', {n: fmtNumber(unpriced)})}
                 </div>
               )}
             </div>
           ))}
         </div>
-        <p className="mt-3 text-[11px] leading-5 text-muted-foreground">
+        <p className="mt-3 text-[0.6875rem] leading-5 text-muted-foreground">
           {t('stats.costNote')}
         </p>
       </section>
@@ -504,7 +505,7 @@ export default function StatsPage() {
           <div className="text-sm font-medium">{t('stats.tokenTrend')}</div>
           {/* 副标题必须与**实际粒度**一致：今日是按小时画的，写「按天聚合」就是
               在骗人（这也是最早那版的表现：选择器说今日、图是一根柱子）。 */}
-          <div className="text-[11px] text-muted-foreground">
+          <div className="text-[0.6875rem] text-muted-foreground">
             {spec.granularity === 'hour' ? t('stats.hourlyAgg') : t('stats.dailyAgg')}
           </div>
         </div>
@@ -519,16 +520,16 @@ export default function StatsPage() {
                   dataKey="label"
                   tickLine={false}
                   axisLine={false}
-                  fontSize={11}
+                  fontSize={CHART_TICK_FONT}
                   stroke="var(--muted-foreground)"
                   /* 24 个小时（或 90 天）标签全画出来会糊成一片，按 spec 抽稀。 */
                   interval={Math.max(0, spec.tickEvery - 1)}
                 />
-                <YAxis yAxisId="tok" tickLine={false} axisLine={false} fontSize={11}
+                <YAxis yAxisId="tok" tickLine={false} axisLine={false} fontSize={CHART_TICK_FONT}
                        stroke="var(--muted-foreground)" tickFormatter={(v) => fmtCompact(Number(v))} />
                 {/* 成功 / 失败是「次数」，与 token 差好几个数量级；放右轴才看得见。 */}
                 <YAxis yAxisId="cnt" orientation="right" tickLine={false} axisLine={false}
-                       fontSize={11} stroke="var(--muted-foreground)" allowDecimals={false}
+                       fontSize={CHART_TICK_FONT} stroke="var(--muted-foreground)" allowDecimals={false}
                        width={40} />
                 {/* 积分（issue #427）：与 token 也不同量级，单独一根更靠外的右轴，
                     不和次数挤在一根上。hidden 只保留轴线占位，避免三根轴互相覆盖。 */}
@@ -539,7 +540,7 @@ export default function StatsPage() {
                     background: 'var(--popover)',
                     border: '1px solid var(--border)',
                     borderRadius: 12,
-                    fontSize: 12,
+                    fontSize: CHART_TIP_FONT,
                   }}
                   formatter={(value, name) => {
                     const label = String(name);
@@ -652,7 +653,7 @@ export default function StatsPage() {
             <Server className="h-4 w-4" />
             {t('stats.upstreamTitle')}
           </div>
-          <div className="text-[11px] text-muted-foreground">{t('stats.upstreamNote')}</div>
+          <div className="text-[0.6875rem] text-muted-foreground">{t('stats.upstreamNote')}</div>
         </div>
         {upstream && (!upstream.available || upstream.enabled === false) ? (
           <p className="text-xs leading-5 text-muted-foreground">
@@ -681,11 +682,11 @@ export default function StatsPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="border-b border-border/60 hover:bg-transparent">
-                    <TableHead className="pl-0 text-[11px] text-muted-foreground">{t('metric.name')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">Token</TableHead>
-                    <TableHead className="text-[11px] text-muted-foreground">{t('metric.paid')}</TableHead>
-                    <TableHead className="pr-0 text-[11px] text-muted-foreground">{t('stats.cacheHitRate')}</TableHead>
+                    <TableHead className="pl-0 text-[0.6875rem] text-muted-foreground">{t('metric.name')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">Token</TableHead>
+                    <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.paid')}</TableHead>
+                    <TableHead className="pr-0 text-[0.6875rem] text-muted-foreground">{t('stats.cacheHitRate')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -724,11 +725,11 @@ function AccountModelUsagePanel({items}: {items: AccountModelUsageRow[]}) {
           <Table>
             <TableHeader>
               <TableRow className="border-b border-border/60 hover:bg-transparent">
-                <TableHead className="text-[11px] text-muted-foreground">{t('stats.account')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('stats.model')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">Token</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('metric.paid')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('stats.account')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('stats.model')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">Token</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.paid')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -769,11 +770,11 @@ function AccountUsagePanel({items}: {items: AccountUsageRow[]}) {
           <Table>
             <TableHeader>
               <TableRow className="border-b border-border/60 hover:bg-transparent">
-                <TableHead className="text-[11px] text-muted-foreground">{t('stats.date')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('stats.account')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">Token</TableHead>
-                <TableHead className="text-[11px] text-muted-foreground">{t('metric.paid')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('stats.date')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('stats.account')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">Token</TableHead>
+                <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.paid')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -840,16 +841,16 @@ function BreakdownPanel({
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/60 hover:bg-transparent">
-              <TableHead className="pl-0 text-[11px] text-muted-foreground">{t('metric.name')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">Token</TableHead>
+              <TableHead className="pl-0 text-[0.6875rem] text-muted-foreground">{t('metric.name')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('metric.requestsShort')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">Token</TableHead>
               {throughput && (
-                <TableHead className="whitespace-nowrap text-[11px] text-muted-foreground">
+                <TableHead className="whitespace-nowrap text-[0.6875rem] text-muted-foreground">
                   {t('stats.tokensPerSec')}
                 </TableHead>
               )}
-              <TableHead className="whitespace-nowrap text-[11px] text-muted-foreground">{t('stats.colCost')}</TableHead>
-              <TableHead className="pr-0 text-[11px] text-muted-foreground">{t('metric.paid')}</TableHead>
+              <TableHead className="whitespace-nowrap text-[0.6875rem] text-muted-foreground">{t('stats.colCost')}</TableHead>
+              <TableHead className="pr-0 text-[0.6875rem] text-muted-foreground">{t('metric.paid')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

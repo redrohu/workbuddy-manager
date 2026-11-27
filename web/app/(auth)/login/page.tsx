@@ -107,7 +107,7 @@ export default function LoginPage() {
         <form onSubmit={submit} method="post" className="rounded-[24px] bg-muted p-5">
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <Label htmlFor="username" className="text-[11px] text-muted-foreground">
+              <Label htmlFor="username" className="text-[0.6875rem] text-muted-foreground">
                 {t('login.username')}
               </Label>
               <Input
@@ -121,7 +121,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-[11px] text-muted-foreground">
+              <Label htmlFor="password" className="text-[0.6875rem] text-muted-foreground">
                 {t('login.password')}
               </Label>
               <Input
@@ -157,7 +157,7 @@ export default function LoginPage() {
           </div>
         </form>
 
-        <p className="mt-6 text-center text-[11px] text-muted-foreground">
+        <p className="mt-6 text-center text-[0.6875rem] text-muted-foreground">
           {t('login.legal')}
         </p>
       </motion.div>

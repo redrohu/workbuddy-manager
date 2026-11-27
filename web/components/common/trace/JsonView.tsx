@@ -327,7 +327,7 @@ function StringHover({value, x, y, panelRef, onEnter, onLeave}: {
       aria-label={t('trace.stringDetail')}
     >
       <div className="flex items-center justify-between gap-2 border-b px-2 py-1">
-        <div className="flex items-center gap-1 rounded-full border p-0.5 text-[10px]">
+        <div className="flex items-center gap-1 rounded-full border p-0.5 text-[0.625rem]">
           {(['preview', 'raw'] as const).map((key) => (
             <button
               key={key}
@@ -346,7 +346,7 @@ function StringHover({value, x, y, panelRef, onEnter, onLeave}: {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-muted-foreground">
+          <span className="text-[0.625rem] text-muted-foreground">
             {t('trace.stringStats', {
               chars: value.length,
               lines: value.split('\n').length,
@@ -355,7 +355,7 @@ function StringHover({value, x, y, panelRef, onEnter, onLeave}: {
           <CopyButton value={mode === 'raw' ? raw : value} label={t('trace.copyValue')} />
         </div>
       </div>
-      <pre className="max-h-[360px] overflow-auto whitespace-pre-wrap break-words p-2 font-mono text-[11px] leading-5">
+      <pre className="max-h-[360px] overflow-auto whitespace-pre-wrap break-words p-2 font-mono text-[0.6875rem] leading-5">
         {mode === 'preview' ? value : raw}
       </pre>
     </div>
@@ -560,7 +560,7 @@ export function JsonPreview({value, expandAll, focusPath, maxHeight = 'max-h-[60
   }, [focusPath, focus, rootPrefix]);
 
   if (value === undefined || value === null) {
-    return <p className="text-[11px] text-muted-foreground">{t('trace.notCaptured')}</p>;
+    return <p className="text-[0.6875rem] text-muted-foreground">{t('trace.notCaptured')}</p>;
   }
 
   return (
@@ -597,7 +597,7 @@ export function JsonPreview({value, expandAll, focusPath, maxHeight = 'max-h-[60
         lineHeight={18}
         overscan={40}
         style={themeDefault}
-        className="text-[12px]"
+        className="text-[0.75rem]"
       />
       {hovered !== null && (
         <StringHover
@@ -661,7 +661,7 @@ function StringDetail({value, onClose}: {value: string; onClose: () => void}) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-wrap items-center justify-between gap-2 border-b px-3 py-2">
-          <div className="flex items-center gap-1 rounded-full border p-0.5 text-[11px]">
+          <div className="flex items-center gap-1 rounded-full border p-0.5 text-[0.6875rem]">
             {(['preview', 'raw'] as const).map((key) => (
               <button
                 key={key}
@@ -680,7 +680,7 @@ function StringDetail({value, onClose}: {value: string; onClose: () => void}) {
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-muted-foreground">
+            <span className="text-[0.625rem] text-muted-foreground">
               {t('trace.stringStats', {
                 chars: value.length,
                 lines: value.split('\n').length,
@@ -691,7 +691,7 @@ function StringDetail({value, onClose}: {value: string; onClose: () => void}) {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground hover:bg-muted"
+              className="rounded-full border px-2 py-0.5 text-[0.6875rem] text-muted-foreground hover:bg-muted"
             >
               {t('common.close')}
             </button>
@@ -700,11 +700,11 @@ function StringDetail({value, onClose}: {value: string; onClose: () => void}) {
         <div className="min-h-0 flex-1 overflow-auto">
           {mode === 'preview' ? (
             // 真实换行：white-space: pre-wrap 让 \n 变成换行；不转义引号与缩进
-            <pre className="whitespace-pre-wrap break-words p-3 font-mono text-[11px] leading-5">
+            <pre className="whitespace-pre-wrap break-words p-3 font-mono text-[0.6875rem] leading-5">
               {value}
             </pre>
           ) : (
-            <pre className="whitespace-pre-wrap break-words p-3 font-mono text-[11px] leading-5">
+            <pre className="whitespace-pre-wrap break-words p-3 font-mono text-[0.6875rem] leading-5">
               {raw}
             </pre>
           )}

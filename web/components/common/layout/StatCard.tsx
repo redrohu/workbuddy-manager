@@ -61,7 +61,7 @@ export function StatCard({
       className="min-h-[88px] sm:min-h-[96px] rounded-[20px] bg-muted px-3.5 py-3 sm:px-4"
     >
       <div className="flex items-start justify-between gap-2">
-        <div className="text-[11px] font-medium text-gray-500 dark:text-gray-400 truncate">
+        <div className="text-[0.6875rem] font-medium text-gray-500 dark:text-gray-400 truncate">
           {label}
         </div>
         {Icon && (
@@ -86,7 +86,7 @@ export function StatCard({
       {hint && (
         <div
           className={cn(
-            'mt-2 text-[11px]',
+            'mt-2 text-[0.6875rem]',
             hintTone ? TONE_VALUE[hintTone] : 'text-gray-500 dark:text-gray-400',
           )}
         >

@@ -146,14 +146,14 @@ export function DatabaseMaintenancePanel() {
           <div className="flex items-center gap-3 rounded-2xl bg-muted p-3">
             <HardDrive className="h-4 w-4 text-muted-foreground" />
             <div>
-              <div className="text-[11px] text-muted-foreground">{t('dbMaintenance.dbSize')}</div>
+              <div className="text-[0.6875rem] text-muted-foreground">{t('dbMaintenance.dbSize')}</div>
               <div className="font-mono text-sm">{fmtSize(status.db_bytes)}</div>
             </div>
           </div>
           <div className="flex items-center gap-3 rounded-2xl bg-muted p-3">
             <HardDrive className="h-4 w-4 text-muted-foreground" />
             <div>
-              <div className="text-[11px] text-muted-foreground">{t('dbMaintenance.walSize')}</div>
+              <div className="text-[0.6875rem] text-muted-foreground">{t('dbMaintenance.walSize')}</div>
               <div className="font-mono text-sm">{fmtSize(status.wal_bytes)}</div>
             </div>
           </div>

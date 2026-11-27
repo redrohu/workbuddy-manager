@@ -64,7 +64,7 @@ function Countdown({next, all}: {next: CreditExpiry; all: CreditExpiry[]}) {
 
   return (
     <span
-      className={`rounded-full px-1.5 py-0.5 text-[10px] leading-3 tabular-nums ${cls}`}
+      className={`rounded-full px-1.5 py-0.5 text-[0.625rem] leading-3 tabular-nums ${cls}`}
       title={[
         t('credit.expiryTipTitle', {total: fmtNumber(total)}),
         ...lines,

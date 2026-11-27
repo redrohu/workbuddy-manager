@@ -446,7 +446,7 @@ export default function TracesPage() {
                 {t('trace.autoRefresh')}
               </Label>
               {autoRefresh && (
-                <span className="text-[11px] text-muted-foreground">
+                <span className="text-[0.6875rem] text-muted-foreground">
                   {lastUpdate
                     ? t('trace.updatedAgo', {s: agoSeconds(lastUpdate, now)})
                     : t('trace.updating')}
@@ -467,7 +467,7 @@ export default function TracesPage() {
               <PopoverContent align="end" className="w-72 space-y-3">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">{t('trace.refreshSettings')}</p>
-                  <p className="text-[11px] text-muted-foreground">
+                  <p className="text-[0.6875rem] text-muted-foreground">
                     {t('trace.refreshIntervalHint')}
                   </p>
                 </div>
@@ -609,7 +609,7 @@ export default function TracesPage() {
                 className="h-8 text-xs"
               />
               {/* 辅助调用（标题生成等）默认折叠：它们是同一次对话的一部分 */}
-              <label className="flex cursor-pointer items-center gap-1.5 text-[11px] text-muted-foreground">
+              <label className="flex cursor-pointer items-center gap-1.5 text-[0.6875rem] text-muted-foreground">
                 <Switch checked={showAux} onCheckedChange={setShowAux}
                         aria-label={t('trace.showAux')} />
                 {t('trace.showAux')}
@@ -644,22 +644,22 @@ export default function TracesPage() {
                     </span>
                     <span className="flex shrink-0 items-center gap-1">
                       {s.kind !== 'main' ? (
-                        <Badge className="bg-amber-500/15 text-[10px] text-amber-700">
+                        <Badge className="bg-amber-500/15 text-[0.625rem] text-amber-700">
                           {t('trace.auxBadge')}
                         </Badge>
                       ) : (s.aux_count ?? 0) > 0 ? (
                         // 主会话下面挂着辅助调用时给个数字：辅助调用默认不单列，
                         // 但完全看不见会让人以为「标题没被记下来」。
-                        <span className="text-[10px] text-muted-foreground">
+                        <span className="text-[0.625rem] text-muted-foreground">
                           {t('trace.hasAux', {n: s.aux_count ?? 0 })}
                         </span>
                       ) : null}
-                      <Badge variant="outline" className="text-[10px]">
+                      <Badge variant="outline" className="text-[0.625rem]">
                         {clientLabel(s.client)}
                       </Badge>
                     </span>
                   </div>
-                  <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
+                  <div className="mt-1 flex items-center justify-between text-[0.6875rem] text-muted-foreground">
                     <span>{fmtDateTime(s.updated_at)}</span>
                     <span>
                       {t('trace.tokensShort', {
@@ -672,7 +672,7 @@ export default function TracesPage() {
               ))}
             </div>
 
-            <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+            <div className="flex items-center justify-between text-[0.6875rem] text-muted-foreground">
               <Button
                 variant="ghost" size="icon" className="h-6 w-6"
                 disabled={page <= 1}
@@ -709,7 +709,7 @@ export default function TracesPage() {
                       {sessionTitle(session)}
                     </p>
                     {session.kind !== 'main' && (
-                      <p className="mt-1 text-[11px] text-amber-600">
+                      <p className="mt-1 text-[0.6875rem] text-amber-600">
                         {session.parent_id
                           ? t('trace.auxOf', {id: session.parent_id})
                           : t('trace.auxUnlinked')}
@@ -725,7 +725,7 @@ export default function TracesPage() {
                       </p>
                     )}
                     {(session.aux?.length ?? 0) > 0 && (
-                      <p className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-muted-foreground">
+                      <p className="mt-1 flex flex-wrap items-center gap-1 text-[0.6875rem] text-muted-foreground">
                         {t('trace.auxInline', {n: session.aux?.length ?? 0})}
                         {(session.aux ?? []).map((a) => (
                           <button
@@ -739,7 +739,7 @@ export default function TracesPage() {
                         ))}
                       </p>
                     )}
-                    <p className="mt-0.5 text-[11px] text-muted-foreground">
+                    <p className="mt-0.5 text-[0.6875rem] text-muted-foreground">
                       {t('trace.sessionMeta', {
                         client: clientLabel(session.client)
                           + (clientVersion(session.client_ua) ? ` ${clientVersion(session.client_ua)}` : ''),
@@ -800,7 +800,7 @@ export default function TracesPage() {
                         setTab('overview');
                       }}
                       className={cn(
-                        'rounded-full border px-2 py-0.5 text-[11px] transition-colors',
+                        'rounded-full border px-2 py-0.5 text-[0.6875rem] transition-colors',
                         item.id === turnId
                           ? 'border-primary/50 bg-primary/10'
                           : 'border-border hover:bg-muted',
@@ -828,7 +828,7 @@ export default function TracesPage() {
                       setTab('overview');
                       setPendingTurns(0);
                     }}
-                    className="flex w-fit items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-2.5 py-1 text-[11px] text-primary transition-colors hover:bg-primary/20"
+                    className="flex w-fit items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-2.5 py-1 text-[0.6875rem] text-primary transition-colors hover:bg-primary/20"
                   >
                     <Radar className="h-3 w-3" />
                     {t('trace.newTurns', {n: pendingTurns})}
@@ -862,7 +862,7 @@ export default function TracesPage() {
                     role="group"
                     aria-label={t('trace.viewLabel')}
                     title={t('trace.viewHint')}
-                    className="flex items-center gap-1.5 text-[11px]"
+                    className="flex items-center gap-1.5 text-[0.6875rem]"
                   >
                     <span className="text-muted-foreground">{t('trace.viewLabel')}</span>
                     <div className="flex items-center rounded-full border p-0.5">
@@ -896,7 +896,7 @@ export default function TracesPage() {
                     <div
                       role="group"
                       aria-label={t('trace.formatLabel')}
-                      className="flex items-center gap-1.5 text-[11px]"
+                      className="flex items-center gap-1.5 text-[0.6875rem]"
                     >
                       <span className="text-muted-foreground">{t('trace.formatLabel')}</span>
                       <div className="flex items-center rounded-full border p-0.5">
@@ -1004,7 +1004,7 @@ function Overview({turn}: {turn: TapTurn}) {
       <dl className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs sm:grid-cols-3">
         {rows.map(([label, value]) => (
           <div key={label} className="flex flex-col">
-            <dt className="text-[11px] text-muted-foreground">{label}</dt>
+            <dt className="text-[0.6875rem] text-muted-foreground">{label}</dt>
             <dd className="truncate" title={String(value)}>{value}</dd>
           </div>
         ))}
@@ -1012,7 +1012,7 @@ function Overview({turn}: {turn: TapTurn}) {
       {turn.summary.tool_names.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {turn.summary.tool_names.map((name) => (
-            <Badge key={name} variant="outline" className="text-[10px]">{name}</Badge>
+            <Badge key={name} variant="outline" className="text-[0.625rem]">{name}</Badge>
           ))}
         </div>
       )}
@@ -1120,21 +1120,21 @@ function RequestTab({turn, view, format, highlight, expandAll, focusPath,
   return (
     <div className="space-y-3">
       {turn.truncated && (
-        <p className="text-[11px] text-amber-600">{t('trace.truncatedHint')}</p>
+        <p className="text-[0.6875rem] text-amber-600">{t('trace.truncatedHint')}</p>
       )}
-      <p className="text-[11px] text-muted-foreground">
+      <p className="text-[0.6875rem] text-muted-foreground">
         {view === 'client' ? t('trace.clientRequestHint') : t('trace.gatewayRequestHint')}
       </p>
       {view === 'gateway' && (
         rewrites.length > 0 ? (
-          <div className="flex flex-wrap items-center gap-1 text-[11px]">
+          <div className="flex flex-wrap items-center gap-1 text-[0.6875rem]">
             <span className="text-muted-foreground">{t('trace.rewrites')}</span>
             {rewrites.map((key) => (
-              <span key={key} className="rounded-full border px-1.5 text-[10px]">{key}</span>
+              <span key={key} className="rounded-full border px-1.5 text-[0.625rem]">{key}</span>
             ))}
           </div>
         ) : (
-          <p className="text-[11px] text-muted-foreground">{t('trace.noRewrite')}</p>
+          <p className="text-[0.6875rem] text-muted-foreground">{t('trace.noRewrite')}</p>
         )
       )}
       <Headers
@@ -1157,7 +1157,7 @@ function RequestTab({turn, view, format, highlight, expandAll, focusPath,
               focusPath={focusPath}
               maxHeight="max-h-[60vh]" />
           ) : (
-            <pre className={BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 font-mono text-[11px]"}>
+            <pre className={BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 font-mono text-[0.6875rem]"}>
               {turn.request_raw}
             </pre>
           )
@@ -1165,7 +1165,7 @@ function RequestTab({turn, view, format, highlight, expandAll, focusPath,
           <JsonPreview value={shown} highlight={highlight} expandAll={expandAll}
                        focusPath={focusPath} />
         ) : (
-          <pre className={BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 font-mono text-[11px]"}>
+          <pre className={BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 font-mono text-[0.6875rem]"}>
             {pretty(shown)}
           </pre>
         )}
@@ -1197,7 +1197,7 @@ function BodyHeader({title, format, expandAll, onToggleExpand, extra}: {
         <button
           type="button"
           onClick={onToggleExpand}
-          className="rounded-full border px-2 py-0.5 text-[10px] text-muted-foreground hover:bg-muted"
+          className="rounded-full border px-2 py-0.5 text-[0.625rem] text-muted-foreground hover:bg-muted"
         >
           {expandAll ? t('trace.collapseAll') : t('trace.expandAll')}
         </button>
@@ -1236,9 +1236,9 @@ function Headers({title, items}: {title: string; items: [string, string][]}) {
     <section className="min-w-0">
       <h4 className="mb-1 text-xs font-medium">{title}</h4>
       {items.length === 0 ? (
-        <p className="text-[11px] text-muted-foreground">{t('trace.noHeaders')}</p>
+        <p className="text-[0.6875rem] text-muted-foreground">{t('trace.noHeaders')}</p>
       ) : (
-        <dl className="max-h-56 min-w-0 overflow-auto rounded-md bg-muted/40 p-2 text-[11px]">
+        <dl className="max-h-56 min-w-0 overflow-auto rounded-md bg-muted/40 p-2 text-[0.6875rem]">
           {items.map(([key, value]) => (
             <div key={key} className="flex min-w-0 gap-2 py-0.5">
               <dt className="w-40 shrink-0 truncate font-mono text-muted-foreground">{key}</dt>
@@ -1247,7 +1247,7 @@ function Headers({title, items}: {title: string; items: [string, string][]}) {
           ))}
         </dl>
       )}
-      <p className="mt-1 text-[10px] text-muted-foreground">{t('trace.headersHint')}</p>
+      <p className="mt-1 text-[0.625rem] text-muted-foreground">{t('trace.headersHint')}</p>
     </section>
   );
 }
@@ -1262,12 +1262,12 @@ function ToolCalls({calls}: {calls: {id: string; name: string; arguments: string
         {calls.map((call, i) => (
           <div key={`${call.id || 'call'}-${i}`} className="rounded-md border bg-muted/30 p-2">
             <div className="flex items-center justify-between gap-2">
-              <span className="truncate font-mono text-[11px]">
+              <span className="truncate font-mono text-[0.6875rem]">
                 {call.name || `#${i + 1}`}
               </span>
               <CopyButton value={call.arguments} label={t('trace.copyArgs')} />
             </div>
-            <pre className="mt-1 max-h-48 overflow-auto whitespace-pre-wrap break-words text-[11px]">
+            <pre className="mt-1 max-h-48 overflow-auto whitespace-pre-wrap break-words text-[0.6875rem]">
               {call.arguments || '{}'}
             </pre>
           </div>
@@ -1305,10 +1305,10 @@ function ResponseTab({turn, view, format, expandAll, onToggleExpand}: {
   if (format === 'raw') {
     return (
       <div className="space-y-3">
-        <p className="text-[11px] text-muted-foreground">{note}</p>
+        <p className="text-[0.6875rem] text-muted-foreground">{note}</p>
         <section>
           <h4 className="mb-1 text-xs font-medium">{t('trace.rawStream')}</h4>
-          <pre className={BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 font-mono text-[11px]"}>
+          <pre className={BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 font-mono text-[0.6875rem]"}>
             {raw || (structured ? pretty(structured) : '—')}
           </pre>
         </section>
@@ -1318,7 +1318,7 @@ function ResponseTab({turn, view, format, expandAll, onToggleExpand}: {
 
   return (
     <div className="space-y-3">
-      <p className="text-[11px] text-muted-foreground">{note}</p>
+      <p className="text-[0.6875rem] text-muted-foreground">{note}</p>
       {structured ? (
         <section>
           <BodyHeader title={t('trace.clientResponse')} format={format}
@@ -1339,7 +1339,7 @@ function ResponseTab({turn, view, format, expandAll, onToggleExpand}: {
           <summary className="cursor-pointer text-muted-foreground">
             {view === 'client' ? t('trace.clientRawStream') : t('trace.rawStream')}
           </summary>
-          <pre className={"mt-1 " + BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 text-[11px]"}>
+          <pre className={"mt-1 " + BLOCK_SCROLL + " rounded-md bg-muted/40 p-2 text-[0.6875rem]"}>
             {raw}
           </pre>
         </details>
@@ -1396,7 +1396,7 @@ function DiffTab({diff, hasPrev, onLocate}: {
       <div className="space-y-1">
         <p className="text-xs text-muted-foreground">{t('trace.diffEmpty')}</p>
         {diff.from_digest && (
-          <p className="text-[11px] text-muted-foreground">{t('trace.diffDigestNote')}</p>
+          <p className="text-[0.6875rem] text-muted-foreground">{t('trace.diffDigestNote')}</p>
         )}
       </div>
     );
@@ -1404,7 +1404,7 @@ function DiffTab({diff, hasPrev, onLocate}: {
   return (
     <div className="space-y-4 text-xs">
       {diff.from_digest && (
-        <p className="rounded-md border border-amber-500/30 bg-amber-500/5 px-2 py-1.5 text-[11px] text-amber-700 dark:text-amber-300">
+        <p className="rounded-md border border-amber-500/30 bg-amber-500/5 px-2 py-1.5 text-[0.6875rem] text-amber-700 dark:text-amber-300">
           {t('trace.diffDigestNote')}
         </p>
       )}
@@ -1487,17 +1487,17 @@ function DiffTab({diff, hasPrev, onLocate}: {
           <h4 className="mb-1 font-medium">{t('trace.diffTools')}</h4>
           <div className="flex flex-wrap gap-1">
             {diff.tools.added.map((n) => (
-              <Badge key={`ta${n}`} className="bg-emerald-600/15 text-[10px] text-emerald-700">+ {n}</Badge>
+              <Badge key={`ta${n}`} className="bg-emerald-600/15 text-[0.625rem] text-emerald-700">+ {n}</Badge>
             ))}
             {diff.tools.removed.map((n) => (
-              <Badge key={`tr${n}`} className="bg-red-600/15 text-[10px] text-red-600">- {n}</Badge>
+              <Badge key={`tr${n}`} className="bg-red-600/15 text-[0.625rem] text-red-600">- {n}</Badge>
             ))}
             {diff.tools.changed.map((x) => (
               <button
                 key={`tc${x.name}`}
                 type="button"
                 onClick={() => onLocate(['tools'])}
-                className="rounded-full border px-1.5 text-[10px] hover:bg-muted"
+                className="rounded-full border px-1.5 text-[0.625rem] hover:bg-muted"
                 title={t('trace.locate')}
               >
                 ~ {x.name}
@@ -1530,17 +1530,17 @@ function DiffRow({title, index, tone, onLocate, locateLabel, children}: {
                 className="flex min-w-0 flex-1 items-center gap-1 text-left">
           <ChevronRight className={cn('h-3 w-3 shrink-0 text-muted-foreground transition-transform',
             open && 'rotate-90')} />
-          <span className="truncate font-mono text-[11px]">{title}</span>
+          <span className="truncate font-mono text-[0.6875rem]">{title}</span>
           {index !== undefined && (
-            <span className="shrink-0 text-[10px] text-muted-foreground">#{index}</span>
+            <span className="shrink-0 text-[0.625rem] text-muted-foreground">#{index}</span>
           )}
         </button>
         <button type="button" onClick={onLocate}
-                className="shrink-0 rounded-full border px-1.5 text-[10px] text-muted-foreground hover:bg-muted">
+                className="shrink-0 rounded-full border px-1.5 text-[0.625rem] text-muted-foreground hover:bg-muted">
           {locateLabel}
         </button>
       </div>
-      {open && <div className="mt-1 pl-4 text-[11px]">{children}</div>}
+      {open && <div className="mt-1 pl-4 text-[0.6875rem]">{children}</div>}
     </li>
   );
 }
@@ -1551,7 +1551,7 @@ function ValueCell({label, value, tone, long}: {
 }) {
   return (
     <div className="min-w-0 rounded bg-muted/40 p-1">
-      <span className="block text-[10px] text-muted-foreground">{label}</span>
+      <span className="block text-[0.625rem] text-muted-foreground">{label}</span>
       <span className={cn('block break-words font-mono',
         long && 'max-h-32 overflow-auto whitespace-pre-wrap',
         tone === 'bad' ? 'text-red-600' : 'text-emerald-700 dark:text-emerald-400')}>
@@ -1567,7 +1567,7 @@ function Block({title, body}: {title: string; body: string}) {
   return (
     <section>
       <h4 className="mb-1 text-xs font-medium">{title}</h4>
-      <pre className={BLOCK_SCROLL + " whitespace-pre-wrap break-words rounded-md bg-muted/40 p-2 text-[11px]"}>
+      <pre className={BLOCK_SCROLL + " whitespace-pre-wrap break-words rounded-md bg-muted/40 p-2 text-[0.6875rem]"}>
         {body}
       </pre>
     </section>
@@ -1609,7 +1609,7 @@ function Timeline({
 
   return (
     <div className="space-y-1">
-      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+      <div className="flex items-center justify-between text-[0.6875rem] text-muted-foreground">
         <span>{t('trace.timeline', {n: turns.length})}</span>
         <span>{fmtMs(span)}</span>
       </div>

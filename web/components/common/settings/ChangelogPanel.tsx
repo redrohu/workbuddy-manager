@@ -62,7 +62,7 @@ function InlineText({text}: {text: string}) {
         }
         if (part.startsWith('`') && part.endsWith('`')) {
           return (
-            <code key={i} className="rounded bg-muted px-1 py-0.5 font-mono text-[11px]">
+            <code key={i} className="rounded bg-muted px-1 py-0.5 font-mono text-[0.6875rem]">
               {part.slice(1, -1)}
             </code>
           );
@@ -148,22 +148,22 @@ function VersionBlock({
             {unreleased ? t('changelog.unreleased') : `v${version}`}
           </span>
           {isCurrent && !unreleased && (
-            <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
+            <Badge variant="secondary" className="h-5 px-1.5 text-[0.625rem]">
               {t('changelog.currentVersion')}
             </Badge>
           )}
           {unreleased && (
             <Badge
               variant="outline"
-              className="h-5 border-amber-500/40 bg-amber-500/10 px-1.5 text-[10px] text-amber-600 dark:text-amber-400"
+              className="h-5 border-amber-500/40 bg-amber-500/10 px-1.5 text-[0.625rem] text-amber-600 dark:text-amber-400"
             >
               {t('changelog.inProgress')}
             </Badge>
           )}
-          {date && <span className="text-[11px] text-muted-foreground">{date}</span>}
+          {date && <span className="text-[0.6875rem] text-muted-foreground">{date}</span>}
         </span>
         {!expanded && (
-          <span className="shrink-0 text-[11px] text-muted-foreground">
+          <span className="shrink-0 text-[0.6875rem] text-muted-foreground">
             {t('changelog.items', {count, n: count})}
           </span>
         )}
@@ -176,13 +176,13 @@ function VersionBlock({
               <div className="flex items-center gap-2">
                 <span
                   className={cn(
-                    'rounded-md border px-1.5 py-0.5 text-[10px] font-medium',
+                    'rounded-md border px-1.5 py-0.5 text-[0.625rem] font-medium',
                     SECTION_STYLE[sec.title] ?? 'border-border bg-muted text-muted-foreground',
                   )}
                 >
                   {sectionLabel(sec.title, t)}
                 </span>
-                <span className="text-[11px] text-muted-foreground">
+                <span className="text-[0.6875rem] text-muted-foreground">
                   {t('changelog.items', {count: sec.items.length, n: sec.items.length})}
                 </span>
               </div>
@@ -190,12 +190,12 @@ function VersionBlock({
             </div>
           ))}
           {isCurrent && currentVersion && !unreleased && (
-            <div className="pt-0.5 text-[11px] text-muted-foreground">
+            <div className="pt-0.5 text-[0.6875rem] text-muted-foreground">
               {t('changelog.thisIsCurrent')}
             </div>
           )}
           {index === 0 && !unreleased && (
-            <div className="pt-0.5 text-[11px] text-muted-foreground">
+            <div className="pt-0.5 text-[0.6875rem] text-muted-foreground">
               {t('changelog.seeAll')}
             </div>
           )}
@@ -293,7 +293,7 @@ export function ChangelogPanel() {
       </div>
 
       {data.truncated && (
-        <p className="text-[11px] text-muted-foreground">
+        <p className="text-[0.6875rem] text-muted-foreground">
           {t('changelog.truncated', {n: data.versions.length, total: data.total ?? 0})}
         </p>
       )}

@@ -638,16 +638,16 @@ export default function KeysPage() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/60 hover:bg-transparent">
-              <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('metric.name')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('keys.colPrefix')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('accounts.colStatus')}</TableHead>
+              <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('metric.name')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('keys.colPrefix')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('accounts.colStatus')}</TableHead>
               {/* 版本列紧跟状态：它和状态一样是「这把密钥的属性」，位置与账号页的列序一致 */}
-              <TableHead className="text-[11px] text-muted-foreground">{t('keys.realm')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('keys.expiry')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('keys.colIpModels')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('keys.colUsedTokens')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('keys.colLastUsed')}</TableHead>
-              {isAdmin && <TableHead className="pr-4 text-right text-[11px] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('keys.realm')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('keys.expiry')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('keys.colIpModels')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('keys.colUsedTokens')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('keys.colLastUsed')}</TableHead>
+              {isAdmin && <TableHead className="pr-4 text-right text-[0.6875rem] text-muted-foreground">{t('accounts.colActions')}</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -667,7 +667,7 @@ export default function KeysPage() {
                         有值才说明这把钥匙走的是另一个账号池（见 server/upstreamsvc.py） */}
                     {k.upstream_id ? (
                       <div className="mt-0.5">
-                        <Badge variant="secondary" className="rounded-full text-[10px]">
+                        <Badge variant="secondary" className="rounded-full text-[0.625rem]">
                           {t('keys.upstreamTag', {name: upstreamName(k.upstream_id)})}
                         </Badge>
                       </div>
@@ -690,14 +690,14 @@ export default function KeysPage() {
                       列显示的是版本 —— 用户看到的就是这个错位）。 */}
                   <TableCell>
                     {k.realm === 'global' ? (
-                      <Badge variant="secondary" className="rounded-full text-[10px]">{t('realm.global')}</Badge>
+                      <Badge variant="secondary" className="rounded-full text-[0.625rem]">{t('realm.global')}</Badge>
                     ) : k.realm === 'cn' ? (
-                      <Badge variant="secondary" className="rounded-full text-[10px]">{t('realm.cn')}</Badge>
+                      <Badge variant="secondary" className="rounded-full text-[0.625rem]">{t('realm.cn')}</Badge>
                     ) : (
                       // 存量密钥：本字段引入前创建的，两版都能调。单独标出来
                       // 而不是默认显示成国内版——那会让人以为它已被限定。
                       <span
-                        className="text-[10px] text-amber-600 dark:text-amber-400"
+                        className="text-[0.625rem] text-amber-600 dark:text-amber-400"
                         title={t('keys.realmUnsetTitle')}
                       >
                         {t('keys.realmUnset')}
@@ -746,7 +746,7 @@ export default function KeysPage() {
                                 ? 'text-amber-600 dark:text-amber-400 font-medium'
                                 : 'text-muted-foreground';
                             return (
-                              <span className={`text-[10px] ${dTone}`} title={t('keys.quotaDaily')}>
+                              <span className={`text-[0.625rem] ${dTone}`} title={t('keys.quotaDaily')}>
                                 {t('keys.dailyUsed', {
                                   used: fmtNumber(dUsed),
                                   quota: fmtNumber(k.daily_quota),
@@ -756,7 +756,7 @@ export default function KeysPage() {
                           })()}
                           {!!k.quota_credit && (
                             <span
-                              className={`text-[10px] ${cTone}`}
+                              className={`text-[0.625rem] ${cTone}`}
                               title={t('keys.quotaCredit')}
                             >
                               {t('keys.creditUsed', {
@@ -882,12 +882,12 @@ export default function KeysPage() {
           <DialogBody className="max-h-[min(70vh,560px)]">
             <div className="space-y-4 px-6 pb-2">
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('keys.name')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.name')}</Label>
                 <Input value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder={t('keys.namePlaceholder')} />
               </div>
               {!editing ? (
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('keys.expiresInDays')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.expiresInDays')}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -897,7 +897,7 @@ export default function KeysPage() {
                 </div>
               ) : (
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">
+                  <Label className="text-[0.6875rem] text-muted-foreground">
                     {t('keys.expiry')}
                     {editing.expires_at
                       ? t('keys.expiryCurrent', {at: fmtDateTime(editing.expires_at)})
@@ -932,7 +932,7 @@ export default function KeysPage() {
               )}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('keys.maxIps')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.maxIps')}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -941,7 +941,7 @@ export default function KeysPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">{t('keys.quotaTokens')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.quotaTokens')}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -951,7 +951,7 @@ export default function KeysPage() {
                 </div>
                 <div className="space-y-1.5">
                   {/* 每日 token 限额：与总额度各自独立，按服务器本地日期每天 0 点恢复 */}
-                  <Label className="text-[11px] text-muted-foreground">{t('keys.quotaDaily')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.quotaDaily')}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -959,7 +959,7 @@ export default function KeysPage() {
                     value={form.dailyQuota}
                     onChange={(e) => setForm({...form, dailyQuota: e.target.value})}
                   />
-                  <p className="text-[11px] leading-4 text-muted-foreground">
+                  <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('keys.quotaDailyHint')}
                   </p>
                 </div>
@@ -967,7 +967,7 @@ export default function KeysPage() {
                   {/* 积分额度：与 token 额度各自独立，任一超限即拒绝，两个都留 0 = 不限。
                       step=any 是必要的——上游按倍率扣费，值本身可能是小数（如 0.05），
                       限成整数会让小额预算根本没法设。 */}
-                  <Label className="text-[11px] text-muted-foreground">{t('keys.quotaCredit')}</Label>
+                  <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.quotaCredit')}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -975,13 +975,13 @@ export default function KeysPage() {
                     value={form.quotaCredit}
                     onChange={(e) => setForm({...form, quotaCredit: e.target.value})}
                   />
-                  <p className="text-[11px] leading-4 text-muted-foreground">
+                  <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('keys.quotaCreditHint')}
                   </p>
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('keys.ipWhitelist')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.ipWhitelist')}</Label>
                 <Textarea
                   rows={3}
                   value={form.ipAllowlist}
@@ -990,7 +990,7 @@ export default function KeysPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('keys.realmLimit')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.realmLimit')}</Label>
                 {/* 版本归属：**新建时不显示选择器**，直接跟随当前所在版本——
                     在哪个版本的界面里建，就是哪个版本的密钥。
                     用户明确要求过不要让他在这里选：选错了是**静默的**（只有真正
@@ -1012,7 +1012,7 @@ export default function KeysPage() {
                         <SelectItem value="__all__">{t('keys.realmAll')}</SelectItem>
                       </SelectContent>
                     </Select>
-                    <p className="text-[11px] leading-4 text-muted-foreground">
+                    <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                       {form.realm === ''
                         ? t('keys.realmHintUnlimited')
                         : form.realm === 'global'
@@ -1026,7 +1026,7 @@ export default function KeysPage() {
                       <Badge
                         variant="secondary"
                         className={
-                          'rounded-full text-[10px] ' +
+                          'rounded-full text-[0.625rem] ' +
                           (form.realm === ''
                             ? ''
                             : realm === 'global'
@@ -1040,7 +1040,7 @@ export default function KeysPage() {
                             ? t('realm.global')
                             : t('realm.cn')}
                       </Badge>
-                      <span className="text-[11px] leading-4 text-muted-foreground">
+                      <span className="text-[0.6875rem] leading-4 text-muted-foreground">
                         {form.realm === '' ? t('keys.realmUnlimitedOn') : t('keys.realmFollowsPage')}
                       </span>
                     </div>
@@ -1049,7 +1049,7 @@ export default function KeysPage() {
                         都能调的密钥，而不必先建出来再编辑。 */}
                     <label
                       htmlFor="key-realm-unlimited"
-                      className="mt-1.5 flex cursor-pointer items-center gap-1.5 text-[11px] text-muted-foreground"
+                      className="mt-1.5 flex cursor-pointer items-center gap-1.5 text-[0.6875rem] text-muted-foreground"
                     >
                       <Switch
                         id="key-realm-unlimited"
@@ -1063,7 +1063,7 @@ export default function KeysPage() {
                 )}
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('keys.upstreamLabel')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.upstreamLabel')}</Label>
                 {/* 多上游（分组隔离）：选了某个上游，这把密钥的请求就只走那个上游的
                     账号池。默认上游 = 不绑定，也就是升级前的行为。 */}
                 <Select
@@ -1086,7 +1086,7 @@ export default function KeysPage() {
                       ))}
                   </SelectContent>
                 </Select>
-                <p className="text-[11px] leading-4 text-muted-foreground">
+                <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                   {t('keys.upstreamHint')}
                 </p>
               </div>
@@ -1096,7 +1096,7 @@ export default function KeysPage() {
                   否则后端 403 并在提示里说明要设哪个环境变量。 */}
               {!editing && (
                 <div className="space-y-1.5">
-                  <Label className="text-[11px] text-muted-foreground">
+                  <Label className="text-[0.6875rem] text-muted-foreground">
                     {t('keys.customTokenLabel')}
                   </Label>
                   <Input
@@ -1104,13 +1104,13 @@ export default function KeysPage() {
                     placeholder={t('keys.customTokenPlaceholder')}
                     onChange={(e) => setForm({...form, customToken: e.target.value})}
                   />
-                  <p className="text-[11px] leading-4 text-muted-foreground">
+                  <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                     {t('keys.customTokenHint')}
                   </p>
                 </div>
               )}
               <div className="space-y-1.5">
-                <Label className="text-[11px] text-muted-foreground">{t('keys.modelWhitelist')}</Label>
+                <Label className="text-[0.6875rem] text-muted-foreground">{t('keys.modelWhitelist')}</Label>
                 {/* 手输保留（清单里暂时没有的模型仍要能填），旁边给「从清单选择」：
                     候选按版本分组，勾选即加入 —— 记不住名字、写错了等调用失败才发现的日子结束。 */}
                 <ModelWhitelistInput
@@ -1144,7 +1144,7 @@ export default function KeysPage() {
                 />
                 {unknownModels !== null && unknownModels.length > 0 && (
                   <p ref={unknownRef}
-                     className="text-[10px] leading-4 text-amber-600 dark:text-amber-400">
+                     className="text-[0.625rem] leading-4 text-amber-600 dark:text-amber-400">
                     {t('keys.modelsUnknown', {names: unknownModels.join(t('common.listSeparator'))})}
                   </p>
                 )}
@@ -1152,7 +1152,7 @@ export default function KeysPage() {
                     版本归属由上面的选项控制（粗粒度，拦跨版本调用），
                     白名单在版本之内再收窄到具体几个模型（细粒度）。
                     写模型名时注意与所选版本一致——带 global: 前缀的是国际版模型。 */}
-                <p className="text-[11px] leading-4 text-muted-foreground">
+                <p className="text-[0.6875rem] leading-4 text-muted-foreground">
                   {/* 反引号包住的模型名由 RichText 渲染成等宽字体 */}
                   <RichText text={t('keys.modelPrefixNote')} />
                 </p>
@@ -1199,8 +1199,8 @@ export default function KeysPage() {
                 <CopyButton value={issued || ''} size="sm" showLabel label={t('keys.copyKey')} />
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] text-muted-foreground">Base URL</span>
-                <code className="min-w-0 flex-1 break-all font-mono text-[11px]">{baseUrl}/v1</code>
+                <span className="text-[0.6875rem] text-muted-foreground">Base URL</span>
+                <code className="min-w-0 flex-1 break-all font-mono text-[0.6875rem]">{baseUrl}/v1</code>
                 <CopyButton value={`${baseUrl}/v1`} title={t('keys.copyBaseUrl')} />
               </div>
 
@@ -1234,7 +1234,7 @@ export default function KeysPage() {
                   </Button>
                 </div>
               </div>
-              <p className="text-[11px] text-muted-foreground">{t('keys.exportHint')}</p>
+              <p className="text-[0.6875rem] text-muted-foreground">{t('keys.exportHint')}</p>
               {exported ? (
                 <div className="flex items-start gap-2 rounded-xl bg-muted p-2">
                   {/* wrap="off"：这一段是给机器读的配置，换行会把一行拆成两行，
@@ -1248,7 +1248,7 @@ export default function KeysPage() {
                       按钮被推到画面外）。field-sizing-fixed 让它回到按 CSS 宽度
                       （w-full）排布，min-w-0 拆掉 flex 项的 min-width:auto 兜底。 */}
                   <Textarea readOnly wrap="off" value={exported}
-                            className="max-h-[min(240px,28dvh)] min-h-[120px] flex-1 min-w-0 field-sizing-fixed overflow-auto font-mono text-[11px] leading-relaxed" />
+                            className="max-h-[min(240px,28dvh)] min-h-[120px] flex-1 min-w-0 field-sizing-fixed overflow-auto font-mono text-[0.6875rem] leading-relaxed" />
                   <CopyButton value={exported} size="sm" showLabel label={t('common.copy')} />
                 </div>
               ) : null}
@@ -1262,7 +1262,7 @@ export default function KeysPage() {
                   <span className="text-xs font-medium">{t('keys.importTitle')}</span>
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <label htmlFor="key-import-set-current"
-                           className="flex cursor-pointer items-center gap-1.5 text-[11px] text-muted-foreground">
+                           className="flex cursor-pointer items-center gap-1.5 text-[0.6875rem] text-muted-foreground">
                       <Switch id="key-import-set-current" checked={importSetCurrent}
                               disabled={!canImport}
                               onCheckedChange={setImportSetCurrent} />
@@ -1284,17 +1284,17 @@ export default function KeysPage() {
                     </Button>
                   </div>
                 </div>
-                <p className="text-[11px] text-muted-foreground">{importHint}</p>
+                <p className="text-[0.6875rem] text-muted-foreground">{importHint}</p>
                 {/* 认到哪个可执行文件要说出来：用户才知道"关闭/重新打开"的是哪一个，
                     也才能发现面板是不是认错了东西。 */}
                 {importClientState?.exe ? (
-                  <p className="flex gap-1.5 text-[11px] text-muted-foreground">
+                  <p className="flex gap-1.5 text-[0.6875rem] text-muted-foreground">
                     <span className="shrink-0">{t('keys.detectLocated')}</span>
                     <code className="min-w-0 break-all font-mono">{importClientState.exe}</code>
                   </p>
                 ) : null}
                 {imported ? (
-                  <div className="space-y-1 rounded-xl bg-muted p-2 text-[11px]">
+                  <div className="space-y-1 rounded-xl bg-muted p-2 text-[0.6875rem]">
                     <div className="flex items-center gap-1.5 font-medium">
                       <CircleCheck className="size-3.5 shrink-0" />
                       {imported.method === 'deeplink'

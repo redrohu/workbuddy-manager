@@ -140,13 +140,13 @@ export function AccountTaskDialog({
             <Sparkles className="size-4 text-muted-foreground" />
             {t('accounts.taskRunTitle')}
             {runningThis && (
-              <Badge variant="secondary" className="rounded-full text-[10px]">
+              <Badge variant="secondary" className="rounded-full text-[0.625rem]">
                 <Loader2 className="mr-1 size-3 animate-spin" />
                 {t('tasks.runRunning', {mode: t(`tasks.runMode_${status?.mode}`)})}
               </Badge>
             )}
           </DialogTitle>
-          <DialogDescription className="pt-1 text-[13px]">
+          <DialogDescription className="pt-1 text-[0.8125rem]">
             {t('accounts.taskRunFor', {name: account?.nickname || account?.uid || ''})}
           </DialogDescription>
         </DialogHeader>
@@ -156,7 +156,7 @@ export function AccountTaskDialog({
         <DialogBody className="max-h-[min(640px,calc(100dvh-12rem))]">
           <div className="space-y-3 px-6 pb-2">
             {/* 账号身份：昵称会重复（同名号更常见），uid 才是唯一标识 */}
-            <div className="rounded-xl bg-muted px-3 py-2 text-[11px] text-muted-foreground">
+            <div className="rounded-xl bg-muted px-3 py-2 text-[0.6875rem] text-muted-foreground">
               <div className="truncate text-foreground">
                 {account?.nickname || t('accounts.unnamed')}
               </div>
@@ -169,16 +169,16 @@ export function AccountTaskDialog({
               <>
                 <div className="flex items-start gap-2 rounded-xl bg-amber-500/10 px-3 py-2">
                   <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-amber-500" />
-                  <span className="text-[13px] font-medium">{t('tasks.runFullConfirmTitle')}</span>
+                  <span className="text-[0.8125rem] font-medium">{t('tasks.runFullConfirmTitle')}</span>
                 </div>
-                <p className="text-[13px] leading-relaxed text-muted-foreground">
+                <p className="text-[0.8125rem] leading-relaxed text-muted-foreground">
                   {/* 译文里用 ** 标重点（项目约定），由 RichText 渲染成 <b> */}
                   <RichText text={t('tasks.runFullConfirmBody')} />
                 </p>
               </>
             ) : (
               <>
-                <p className="text-[11px] leading-relaxed text-muted-foreground">
+                <p className="text-[0.6875rem] leading-relaxed text-muted-foreground">
                   {t('accounts.taskRunDesc')}
                 </p>
 
@@ -186,7 +186,7 @@ export function AccountTaskDialog({
                 {runningOther && (
                   <div className="flex items-start gap-2 rounded-xl bg-muted px-3 py-2">
                     <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-amber-500" />
-                    <span className="text-[11px] leading-relaxed text-muted-foreground">
+                    <span className="text-[0.6875rem] leading-relaxed text-muted-foreground">
                       {t('accounts.taskRunBusyOther', {target: otherLabel})}
                     </span>
                   </div>
@@ -197,7 +197,7 @@ export function AccountTaskDialog({
                   <div className="flex items-start gap-2 rounded-xl bg-muted px-3 py-2">
                     <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-amber-500" />
                     {/* whitespace-pre-line：这段说明是分条的（两种部署形态各一条修法） */}
-                    <span className="text-[11px] leading-relaxed whitespace-pre-line text-muted-foreground">
+                    <span className="text-[0.6875rem] leading-relaxed whitespace-pre-line text-muted-foreground">
                       {status?.unavailable_reason}
                     </span>
                   </div>
@@ -217,7 +217,7 @@ export function AccountTaskDialog({
                           if (!n) return null;
                           return (
                             <Badge key={st} variant="secondary"
-                                   className={'rounded-full text-[10px] ' + STATE_BADGE[st]}>
+                                   className={'rounded-full text-[0.625rem] ' + STATE_BADGE[st]}>
                               {t(STATE_KEY[st])} {n}
                             </Badge>
                           );
@@ -232,7 +232,7 @@ export function AccountTaskDialog({
                               type="button"
                               onClick={() => setView(v)}
                               className={
-                                'rounded-full px-2 py-0.5 text-[11px] transition-colors ' +
+                                'rounded-full px-2 py-0.5 text-[0.6875rem] transition-colors ' +
                                 (view === v
                                   ? 'bg-background text-foreground shadow-sm'
                                   : 'text-muted-foreground hover:text-foreground')
@@ -247,7 +247,7 @@ export function AccountTaskDialog({
 
                     {view === 'raw' || (status.tasks || []).length === 0 ? (
                       <div className="max-h-[220px] overflow-auto rounded-xl bg-muted/60 p-3">
-                        <pre className="whitespace-pre-wrap break-all font-mono text-[11px] leading-relaxed text-foreground/80">
+                        <pre className="whitespace-pre-wrap break-all font-mono text-[0.6875rem] leading-relaxed text-foreground/80">
                           {/* 回显的是上游脚本的原始 stdout（写死中文），译文只在展示层
                               按模板逐行替换 —— 详见 lib/i18n/taskrun.ts。 */}
                           {status.lines.map((l) => translateRunLine(l)).join('\n')}
@@ -258,15 +258,15 @@ export function AccountTaskDialog({
                         {(status.tasks || []).map((item) => (
                           <li key={item.code} className="rounded-xl bg-muted/60 px-3 py-2">
                             <div className="flex items-start justify-between gap-2">
-                              <span className="text-[12px] font-medium leading-snug">
+                              <span className="text-[0.75rem] font-medium leading-snug">
                                 {taskName(item.code)}
                               </span>
                               <Badge variant="secondary"
-                                     className={'shrink-0 rounded-full text-[10px] ' + STATE_BADGE[item.state]}>
+                                     className={'shrink-0 rounded-full text-[0.625rem] ' + STATE_BADGE[item.state]}>
                                 {t(STATE_KEY[item.state])}
                               </Badge>
                             </div>
-                            <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground"
+                            <p className="mt-0.5 line-clamp-2 text-[0.6875rem] leading-relaxed text-muted-foreground"
                                title={translateRunLine(item.line)}>
                               {detailLine(item.line, item.code)}
                             </p>

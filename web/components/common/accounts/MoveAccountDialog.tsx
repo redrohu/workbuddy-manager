@@ -97,7 +97,7 @@ export function MoveAccountDialog({
         <DialogBody className="max-h-[min(640px,calc(100dvh-12rem))]">
           <div className="px-6 pb-2">
             <div className="space-y-1.5">
-              <Label className="text-[11px] text-muted-foreground">
+              <Label className="text-[0.6875rem] text-muted-foreground">
                 {t('accounts.moveTargetLabel')}
               </Label>
               <Select value={target} onValueChange={setTarget}>

@@ -24,6 +24,7 @@ import type {StatsRealtime} from '@/lib/types';
 import {fmtAgo, fmtNumber} from '@/lib/format';
 import {useHeartbeat} from '@/lib/use-heartbeat';
 import {useT} from '@/lib/i18n/provider';
+import {CHART_TICK_FONT} from '@/lib/chart-font';
 
 /**
  * 实时条的刷新间隔：1 秒。
@@ -192,7 +193,7 @@ export function RealtimeStatsStrip({days}: {days: number}) {
       />
       <div className="wb-rt-strip col-span-2 min-h-[88px] sm:min-h-[96px] rounded-[20px] bg-muted px-3.5 py-3 sm:px-4">
         <div className="flex items-start justify-between gap-2">
-          <div className="text-[11px] font-medium text-gray-500 dark:text-gray-400 truncate">
+          <div className="text-[0.6875rem] font-medium text-gray-500 dark:text-gray-400 truncate">
             {t('stats.realtimeTrend')}
           </div>
           <div className="wb-rt-conc h-6 w-6 shrink-0 rounded-full bg-white/70 dark:bg-white/[0.05] grid place-items-center">
@@ -215,11 +216,11 @@ export function RealtimeStatsStrip({days}: {days: number}) {
                   background: 'var(--popover)',
                   border: '1px solid var(--border)',
                   borderRadius: 10,
-                  fontSize: 11,
+                  fontSize: CHART_TICK_FONT,
                   padding: '4px 8px',
                   fontVariantNumeric: 'tabular-nums',
                 }}
-                labelStyle={{color: 'var(--muted-foreground)', fontSize: 11}}
+                labelStyle={{color: 'var(--muted-foreground)', fontSize: CHART_TICK_FONT}}
                 itemStyle={{padding: 0}}
                 formatter={(value, name) => [
                   fmtNumber(Number(value)),

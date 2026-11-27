@@ -358,7 +358,7 @@ export function ProxyPanel() {
                        }} />
                 {t('settings.proxyIntervalUnit')}
               </span>
-              <span className="text-[11px] text-muted-foreground">
+              <span className="text-[0.6875rem] text-muted-foreground">
                 {t('settings.proxyPoolEnabledRoutes', {enabled: String(pool.routes_enabled),
                                                        total: String(pool.routes_total)})}
               </span>
@@ -391,7 +391,7 @@ export function ProxyPanel() {
             </Button>
           </div>
         </div>
-        <div className="mb-3 text-[11px] leading-4 text-muted-foreground">
+        <div className="mb-3 text-[0.6875rem] leading-4 text-muted-foreground">
           <RichText text={t('settings.proxyRoutesDesc')} />
         </div>
 
@@ -433,7 +433,7 @@ export function ProxyPanel() {
                       <TableCell className="text-xs tabular-nums text-muted-foreground">
                         {route.weight}
                       </TableCell>
-                      <TableCell className="text-[11px]">
+                      <TableCell className="text-[0.6875rem]">
                         {testing === route.name ? (
                           <span className="flex items-center gap-1.5 text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />{t('settings.proxyTesting')}
@@ -456,22 +456,22 @@ export function ProxyPanel() {
                       </TableCell>
                       <TableCell className="max-w-[24rem]">
                         <span className="flex items-center gap-1.5">
-                          <span className={'truncate font-mono text-[11px] ' + (route.enabled
+                          <span className={'truncate font-mono text-[0.6875rem] ' + (route.enabled
                             ? 'text-muted-foreground' : 'text-muted-foreground/50 line-through')}>
                             {route.name} · {route.masked}
                           </span>
                           {!route.enabled && (
-                            <Badge variant="secondary" className="text-[10px]">
+                            <Badge variant="secondary" className="text-[0.625rem]">
                               {t('settings.proxyDisabledBadge')}
                             </Badge>
                           )}
                           {route.local && (
-                            <Badge variant="secondary" className="text-[10px]">
+                            <Badge variant="secondary" className="text-[0.625rem]">
                               {t('settings.proxyLocalBadge')}
                             </Badge>
                           )}
                           {route.shared_warning && (
-                            <Badge className="bg-amber-500/15 text-[10px] text-amber-700 dark:text-amber-300"
+                            <Badge className="bg-amber-500/15 text-[0.625rem] text-amber-700 dark:text-amber-300"
                                    title={t('settings.proxySharedWarning', {count: String(route.bound)})}>
                               {t('settings.proxySharedBadge')}
                             </Badge>
@@ -486,15 +486,15 @@ export function ProxyPanel() {
                       <TableCell>
                         <span className="flex flex-wrap items-center gap-1">
                           {(route.bound_names || []).map((n) => (
-                            <Badge key={n} variant="secondary" className="text-[10px]">{n}</Badge>
+                            <Badge key={n} variant="secondary" className="text-[0.625rem]">{n}</Badge>
                           ))}
                           {route.bound > (route.bound_names || []).length && (
-                            <Badge variant="outline" className="text-[10px]">
+                            <Badge variant="outline" className="text-[0.625rem]">
                               +{route.bound - (route.bound_names || []).length}
                             </Badge>
                           )}
                           {!route.bound && (
-                            <span className="text-[11px] text-muted-foreground">
+                            <span className="text-[0.6875rem] text-muted-foreground">
                               {t('settings.proxyNoBindings')}
                             </span>
                           )}
@@ -563,7 +563,7 @@ export function ProxyPanel() {
                   aria-label={t('settings.proxyGlobalTitle')}
                   onCheckedChange={(v) => setGlobalForm({...globalForm, enabled: v})} />
         </div>
-        <div className="mb-3 text-[11px] leading-4 text-muted-foreground">
+        <div className="mb-3 text-[0.6875rem] leading-4 text-muted-foreground">
           <RichText text={t('settings.proxyGlobalDesc')} />
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -596,7 +596,7 @@ export function ProxyPanel() {
             {t('settings.proxyTest')}
           </Button>
         </div>
-        <div className="mt-2 text-[11px] leading-4 text-muted-foreground">
+        <div className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
           {t(sourceKey, {value: settings?.effective || ''})}
         </div>
       </div>
@@ -604,7 +604,7 @@ export function ProxyPanel() {
       {/* ── 更新下载代理 ── */}
       <div className="rounded-[20px] bg-muted p-4">
         <div className="mb-1 text-sm font-medium">{t('settings.proxyUpdateTitle')}</div>
-        <div className="mb-3 text-[11px] leading-4 text-muted-foreground">
+        <div className="mb-3 text-[0.6875rem] leading-4 text-muted-foreground">
           <RichText text={t('settings.proxyUpdateDesc')} />
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -617,14 +617,14 @@ export function ProxyPanel() {
           </Button>
         </div>
         {settings?.env_update_proxy ? (
-          <div className="mt-2 text-[11px] leading-4 text-muted-foreground">
+          <div className="mt-2 text-[0.6875rem] leading-4 text-muted-foreground">
             {t('settings.proxyUpdateEnv', {value: settings.env_update_proxy})}
           </div>
         ) : null}
       </div>
 
       {/* ── 说明 ── */}
-      <div className="rounded-[20px] bg-muted p-4 text-[11px] leading-5 text-muted-foreground">
+      <div className="rounded-[20px] bg-muted p-4 text-[0.6875rem] leading-5 text-muted-foreground">
         <RichText text={t('settings.proxyScopeNote')} />
       </div>
 
@@ -654,7 +654,7 @@ export function ProxyPanel() {
               <Input className="mt-1 h-8 bg-background font-mono text-xs" value={form.url}
                      placeholder="socks5://user:pass@host:10000"
                      onChange={(e) => setForm({...form, url: e.target.value})} />
-              <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+              <p className="mt-1 text-[0.6875rem] leading-4 text-muted-foreground">
                 {t('settings.proxyUrlHint')}
               </p>
             </div>
@@ -674,7 +674,7 @@ export function ProxyPanel() {
                 </span>
               </div>
             </div>
-            <p className="text-[11px] leading-4 text-muted-foreground">
+            <p className="text-[0.6875rem] leading-4 text-muted-foreground">
               {t('settings.proxyWeightHint')}
             </p>
           </DialogBody>
@@ -737,7 +737,7 @@ export function ProxyPanel() {
                 {t('settings.proxyAutoAssignUnit')}
               </span>
             </div>
-            <p className="text-[11px] leading-4 text-muted-foreground">
+            <p className="text-[0.6875rem] leading-4 text-muted-foreground">
               {bindLoading
                 ? t('settings.proxyBindingsLoading')
                 : t('settings.proxyAutoAssignHint', {count: String(

@@ -60,11 +60,11 @@ function ToastCard({
       </span>
 
       <div className="min-w-0 flex-1 pt-[3px]">
-        <p className="text-[13px] font-semibold leading-[18px] tracking-[-0.01em] text-foreground">
+        <p className="text-[0.8125rem] font-semibold leading-[18px] tracking-[-0.01em] text-foreground">
           {message}
         </p>
         {description && (
-          <p className="mt-0.5 text-[11.5px] leading-4 text-muted-foreground">{description}</p>
+          <p className="mt-0.5 text-[0.71875rem] leading-4 text-muted-foreground">{description}</p>
         )}
       </div>
 

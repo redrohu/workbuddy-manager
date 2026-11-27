@@ -22,6 +22,7 @@ import {
   Pin as PinIcon,
   Move as MoveIcon,
 } from 'lucide-react';
+import {usePathname} from 'next/navigation';
 import {useThemeUtils} from '@/hooks/use-theme-utils';
 import {useAuth} from '@/lib/auth-context';
 import {accountApi, authApi, errText, systemApi} from '@/lib/api';
@@ -95,6 +96,7 @@ export function ManagementBar() {
   const themeUtils = useThemeUtils();
   const {me, isAdmin, logout} = useAuth();
   const t = useT();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [dockViewport, setDockViewport] = useState<DockViewport>('desktop');
   const [profileOpen, setProfileOpen] = useState(false);
@@ -639,9 +641,11 @@ export function ManagementBar() {
           onClick={() => {
             if (isAdmin) setAddOpen(true);
           }}
-          className="w-full h-full flex items-center justify-center cursor-pointer rounded transition-colors"
+          className="flex h-9 cursor-pointer items-center justify-center rounded-full px-3 transition-colors hover:bg-gray-200 dark:hover:bg-neutral-700"
         >
-          <PlusCircle className="h-4 w-4" />
+          <span className="text-xs font-medium text-foreground whitespace-nowrap leading-none">
+            {t('nav.quickAdd')}
+          </span>
         </div>
       ),
     },
@@ -656,9 +660,11 @@ export function ManagementBar() {
               <div
                 data-slot="dock-profile-trigger"
                 data-dock-no-drag="true"
-                className="w-full h-full flex items-center justify-center cursor-pointer rounded transition-colors"
+                className="flex h-9 cursor-pointer items-center justify-center rounded-full px-3 transition-colors hover:bg-gray-200 dark:hover:bg-neutral-700"
               >
-                <User className="h-4 w-4" />
+                <span className="text-xs font-medium text-foreground whitespace-nowrap leading-none">
+                  {t('nav.profile')}
+                </span>
               </div>
             </DialogTrigger>
             <DialogContent
@@ -688,14 +694,14 @@ export function ManagementBar() {
                               </AvatarFallback>
                             </Avatar>
                             <div className="min-w-0">
-                              <div className="truncate text-[15px] font-semibold text-foreground">
+                              <div className="truncate text-[0.9375rem] font-semibold text-foreground">
                                 {me.username}
                               </div>
                               <div className="truncate text-xs text-muted-foreground">
                                 WorkBuddy Manager
                               </div>
                               <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                                <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px]">
+                                <Badge variant="secondary" className="h-5 rounded-full px-2 text-[0.625rem]">
                                   {me.role === 'admin' ? t('profile.roleAdmin') : t('profile.roleViewer')}
                                 </Badge>
                               </div>
@@ -758,7 +764,7 @@ export function ManagementBar() {
                         <Separator />
 
                         <div className="space-y-2">
-                          <div className="text-[11px] font-medium text-muted-foreground">{t('profile.poolOverview')}</div>
+                          <div className="text-[0.6875rem] font-medium text-muted-foreground">{t('profile.poolOverview')}</div>
                           <div className="flex flex-wrap items-center gap-2">
                             <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-2">
                               <Users className="size-3.5 text-foreground/60" />
@@ -782,7 +788,7 @@ export function ManagementBar() {
 
                         {mounted && (
                           <div className="space-y-2">
-                            <div className="text-[11px] font-medium text-muted-foreground">{t('profile.systemSettings')}</div>
+                            <div className="text-[0.6875rem] font-medium text-muted-foreground">{t('profile.systemSettings')}</div>
                             <div className="flex flex-wrap items-center gap-2">
                               <button
                                 type="button"
@@ -828,7 +834,7 @@ export function ManagementBar() {
                   )}
 
                   <div className="space-y-2">
-                    <div className="text-[11px] font-medium text-muted-foreground">{t('profile.quickLinks')}</div>
+                    <div className="text-[0.6875rem] font-medium text-muted-foreground">{t('profile.quickLinks')}</div>
                     <div className="flex flex-wrap items-center gap-2">
                       <Link
                         href="https://linux.do"
@@ -881,7 +887,7 @@ export function ManagementBar() {
                   <div className="space-y-2">
                     <div className="text-xs font-medium">{t('profile.about')}</div>
                     <div className="space-y-1.5">
-                      <div className="text-[11px] font-light text-muted-foreground">
+                      <div className="text-[0.6875rem] font-light text-muted-foreground">
                         {/* 版本以后端为准（package.json 里那个没人维护，停在 1.0.0）；
                             构建时间由 next.config 在构建时注入，不再用手写的死值。 */}
                         {runtimeVersion
@@ -889,7 +895,7 @@ export function ManagementBar() {
                           : `Version ${packageJson.version}${t('profile.versionFallback')}`}
                         {BUILD_TIME ? `, Build At ${BUILD_TIME}` : ''}
                       </div>
-                      <div className="text-[11px] font-light leading-5 text-muted-foreground">
+                      <div className="text-[0.6875rem] font-light leading-5 text-muted-foreground">
                         {t('profile.aboutDesc')}
                       </div>
                     </div>
@@ -936,10 +942,10 @@ export function ManagementBar() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="space-y-1.5">
-              <div className="text-[10px] font-medium leading-4 text-foreground md:text-[11px]">
+              <div className="text-[0.625rem] font-medium leading-4 text-foreground md:text-[0.6875rem]">
                 {t('dock.tipTitle')}
               </div>
-              <p className="text-[10px] leading-4 text-muted-foreground md:text-[11px]">
+              <p className="text-[0.625rem] leading-4 text-muted-foreground md:text-[0.6875rem]">
                 {/* 索引夹回范围内：切换「固定底部 / 悬浮」会让步骤数变化
                     （固定模式下「长按可拖动」那一条被去掉），停在最后一步时
                     索引可能越界，直接取会渲染出 undefined。 */}
@@ -962,7 +968,7 @@ export function ManagementBar() {
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="h-5 rounded-full px-1 text-[10px] text-muted-foreground md:h-6 md:px-1.5 md:text-[11px]"
+                    className="h-5 rounded-full px-1 text-[0.625rem] text-muted-foreground md:h-6 md:px-1.5 md:text-[0.6875rem]"
                     onClick={handleDismissDockTip}
                   >
                     {t('dock.tipDismiss')}
@@ -973,7 +979,7 @@ export function ManagementBar() {
                     size="sm"
                     aria-label={t('dock.tipNext')}
                     title={t('dock.tipNext')}
-                    className="h-5 rounded-full px-1 text-[10px] text-muted-foreground md:h-6 md:px-1.5 md:text-[11px]"
+                    className="h-5 rounded-full px-1 text-[0.625rem] text-muted-foreground md:h-6 md:px-1.5 md:text-[0.6875rem]"
                     onClick={handleNextDockTip}
                   >
                     <ChevronRight className="size-3 md:size-3.5" />
@@ -985,8 +991,9 @@ export function ManagementBar() {
         )}
         <FloatingDock
           items={dockItems}
-          desktopClassName="bg-background/70 backdrop-blur-md border border-border/40 shadow-lg shadow-black/10 dark:shadow-white/5 h-16 pb-3 px-4 gap-2"
-          mobileButtonClassName="bg-background/70 backdrop-blur-md border border-border/40 shadow-lg shadow-black/10 dark:shadow-white/5 h-12 w-12"
+          pathname={pathname}
+          desktopClassName="bg-background/70 backdrop-blur-md border border-border/40 shadow-lg shadow-black/10 dark:shadow-white/5 py-2 px-3 gap-1 overflow-x-auto scroll-slim max-w-[min(95vw,75rem)]"
+          mobileButtonClassName="bg-background/70 backdrop-blur-md border border-border/40 shadow-lg shadow-black/10 dark:shadow-white/5 h-10 w-10"
         />
       </div>
 

@@ -337,11 +337,11 @@ export default function PlaygroundPage() {
                   <div className="max-w-md space-y-2 text-center">
                     <Bot className="mx-auto h-7 w-7 text-muted-foreground/60" />
                     <div className="text-sm font-medium">{t('playground.startTitle')}</div>
-                    <p className="text-[11px] leading-5 text-muted-foreground">
+                    <p className="text-[0.6875rem] leading-5 text-muted-foreground">
                       {t('playground.startDesc')}
                     </p>
                     {currentModel && (
-                      <p className="text-[11px] text-muted-foreground">
+                      <p className="text-[0.6875rem] text-muted-foreground">
                         {t('playground.currentModel')}{' '}
                         <span className="font-mono">{currentModel.id}</span>
                         {currentModel.efforts.length > 0 &&
@@ -397,7 +397,7 @@ export default function PlaygroundPage() {
                                 直接删掉，不留占位。 */}
                             {typeof m.credit === 'number' && (
                               <span
-                                className="inline-flex items-center gap-1 text-[10px] tabular-nums"
+                                className="inline-flex items-center gap-1 text-[0.625rem] tabular-nums"
                                 title={t('playground.creditTitle')}
                               >
                                 <Coins className="h-3 w-3" />
@@ -405,7 +405,7 @@ export default function PlaygroundPage() {
                               </span>
                             )}
                             {!!m.tokens && (
-                              <span className="text-[11px] tabular-nums text-muted-foreground">
+                              <span className="text-[0.6875rem] tabular-nums text-muted-foreground">
                                 {m.tokens} tokens
                               </span>
                             )}
@@ -441,7 +441,7 @@ export default function PlaygroundPage() {
                   onEffortChange={setEffort}
                 />
                 <div className="mt-1.5 flex items-center justify-between gap-2 px-1">
-                  <span className="truncate text-[11px] text-muted-foreground">
+                  <span className="truncate text-[0.6875rem] text-muted-foreground">
                     {models.length > 0
                       ? t('playground.modelsAvailable', {count: models.length, n: models.length})
                       : t('playground.noModels')}
@@ -449,7 +449,7 @@ export default function PlaygroundPage() {
                   {/* 实时消耗：本次会话累计 */}
                   <Badge
                     variant="secondary"
-                    className="shrink-0 rounded-full text-[10px] tabular-nums"
+                    className="shrink-0 rounded-full text-[0.625rem] tabular-nums"
                     title={t('playground.sessionCreditTitle')}
                   >
                     <Coins className="mr-1 h-3 w-3" />
@@ -466,7 +466,7 @@ export default function PlaygroundPage() {
             既占地方又不好读；居中窄栏反而更像一句注脚。
             字号 11px / 行高 20px：中文在这个组合下不挤，也不至于淡到看不清。
           */}
-          <p className="mx-auto max-w-lg shrink-0 text-center text-[11px] leading-5 text-muted-foreground">
+          <p className="mx-auto max-w-lg shrink-0 text-center text-[0.6875rem] leading-5 text-muted-foreground">
             {t('playground.footnote1')}
             <span className="mx-1.5 text-muted-foreground/40">·</span>
             {t('playground.footnote2')}

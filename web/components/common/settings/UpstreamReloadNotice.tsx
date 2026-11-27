@@ -84,7 +84,7 @@ export function UpstreamReloadNotice() {
         data-slot="reload-notice"
         data-phase="applying"
         role="status"
-        className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border border-sky-500/30 bg-sky-500/[0.07] px-3.5 py-2 text-[11px]"
+        className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border border-sky-500/30 bg-sky-500/[0.07] px-3.5 py-2 text-[0.6875rem]"
       >
         <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-sky-600 dark:text-sky-400" />
         <span className="font-medium">{t('settings.applyRunning')}</span>
@@ -99,7 +99,7 @@ export function UpstreamReloadNotice() {
         data-slot="reload-notice"
         data-phase="ok"
         role="status"
-        className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border border-emerald-500/30 bg-emerald-500/[0.07] px-3.5 py-2 text-[11px]"
+        className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[16px] border border-emerald-500/30 bg-emerald-500/[0.07] px-3.5 py-2 text-[0.6875rem]"
       >
         <CircleCheck className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
         <span className="font-medium">{t('settings.applyOk')}</span>
@@ -115,7 +115,7 @@ export function UpstreamReloadNotice() {
       data-slot="reload-notice"
       data-phase="failed"
       role="alert"
-      className="flex items-start gap-2.5 rounded-[16px] border border-amber-500/30 bg-amber-500/[0.07] px-3.5 py-2 text-[11px]"
+      className="flex items-start gap-2.5 rounded-[16px] border border-amber-500/30 bg-amber-500/[0.07] px-3.5 py-2 text-[0.6875rem]"
     >
       <TriangleAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-400" />
       <div className="flex-1 space-y-1">
@@ -128,7 +128,7 @@ export function UpstreamReloadNotice() {
       <Button
         variant="ghost"
         size="sm"
-        className="h-6 shrink-0 rounded-full px-2 text-[11px] text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+        className="h-6 shrink-0 rounded-full px-2 text-[0.6875rem] text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
         aria-label={t('settings.applyDismiss')}
         onClick={() => setDismissed(true)}
       >

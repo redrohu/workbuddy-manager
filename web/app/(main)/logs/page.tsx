@@ -96,7 +96,7 @@ function AccountCell({account}: {account: string | null}) {
     <>
       <span>{m ? m[1] : account}</span>
       {m && m[2] && (
-        <span className="ml-1 font-mono text-[11px] text-muted-foreground">{m[2]}</span>
+        <span className="ml-1 font-mono text-[0.6875rem] text-muted-foreground">{m[2]}</span>
       )}
     </>
   );
@@ -341,7 +341,7 @@ export default function LogsPage() {
       {/* 账号列一直是「未采集」时说明为什么 —— 否则用户只能看到一句
           「稍后自动回填」等下去，而它可能永远不会填上。 */}
       {backfill?.hint && (
-        <div className="flex flex-wrap items-start gap-2 rounded-[20px] border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[11px] leading-relaxed text-amber-800 dark:text-amber-200">
+        <div className="flex flex-wrap items-start gap-2 rounded-[20px] border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[0.6875rem] leading-relaxed text-amber-800 dark:text-amber-200">
           <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
           <span className="min-w-0 flex-1">
             {t('logs.accountBackfillHint', {
@@ -361,7 +361,7 @@ export default function LogsPage() {
       <section className="rounded-[20px] bg-muted p-4">
         <div className="grid grid-cols-2 items-end gap-3 md:grid-cols-6">
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('logs.filterRange')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('logs.filterRange')}</Label>
             <Select value={days} onValueChange={(v) => { setDays(v); setPage(1); }}>
               <SelectTrigger className="bg-background" aria-label={t('logs.filterRange')}><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -373,7 +373,7 @@ export default function LogsPage() {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('logs.filterKey')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('logs.filterKey')}</Label>
             <Select value={keyId} onValueChange={(v) => { setKeyId(v); setPage(1); }}>
               <SelectTrigger className="bg-background" aria-label={t('logs.filterKey')}><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -385,7 +385,7 @@ export default function LogsPage() {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('accounts.colStatus')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('accounts.colStatus')}</Label>
             <Select value={status} onValueChange={(v) => { setStatus(v); setPage(1); }}>
               <SelectTrigger className="bg-background" aria-label={t('accounts.colStatus')}><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -396,12 +396,12 @@ export default function LogsPage() {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('nav.models')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('nav.models')}</Label>
             {/* 文本类防抖 400ms 后自动生效，没有「查询」按钮要按 */}
             <Input value={model} onChange={(e) => setModel(e.target.value)} placeholder={t('common.all')} className="bg-background" />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-[11px] text-muted-foreground">{t('logs.filterIp')}</Label>
+            <Label className="text-[0.6875rem] text-muted-foreground">{t('logs.filterIp')}</Label>
             <Input value={ip} onChange={(e) => setIp(e.target.value)} placeholder={t('common.all')} className="bg-background" />
           </div>
           {/* 原来这里是「查询」按钮。六个筛选项现在都是改完即生效，那个按钮点了
@@ -423,24 +423,24 @@ export default function LogsPage() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/60 hover:bg-transparent">
-              <TableHead className="pl-4 text-[11px] text-muted-foreground">{t('logs.colTime')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('nav.keys')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">IP</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('logs.colAccount')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('logs.colChannel')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('nav.models')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('logs.colEffort')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('accounts.colStatus')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('logs.colFirstFrame')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('logs.colFirstToken')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">{t('logs.colLatency')}</TableHead>
-              <TableHead className="text-[11px] text-muted-foreground">Token</TableHead>
+              <TableHead className="pl-4 text-[0.6875rem] text-muted-foreground">{t('logs.colTime')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('nav.keys')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">IP</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('logs.colAccount')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('logs.colChannel')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('nav.models')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('logs.colEffort')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('accounts.colStatus')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('logs.colFirstFrame')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('logs.colFirstToken')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">{t('logs.colLatency')}</TableHead>
+              <TableHead className="text-[0.6875rem] text-muted-foreground">Token</TableHead>
               {/* 按 DeepSeek 官方价估算的费用（issue #380）。与右边「积分」是两回事：
                   积分是上游真实扣的，费用是「这些 token 按官方价买要多少钱」。 */}
-              <TableHead className="whitespace-nowrap text-[11px] text-muted-foreground">
+              <TableHead className="whitespace-nowrap text-[0.6875rem] text-muted-foreground">
                 {t('logs.colCost')}
               </TableHead>
-              <TableHead className="pr-4 text-[11px] text-muted-foreground">{t('metric.paid')}</TableHead>
+              <TableHead className="pr-4 text-[0.6875rem] text-muted-foreground">{t('metric.paid')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -461,14 +461,14 @@ export default function LogsPage() {
                 </TableCell>
                 {/* 客户端渠道（issue #233）：按 UA 归类，用来定位「哪类客户端在把
                     账号打进 429」。旧记录没有这一列，显示「—」而不是猜一个。 */}
-                <TableCell className="font-mono text-[11px] text-muted-foreground"
+                <TableCell className="font-mono text-[0.6875rem] text-muted-foreground"
                            title={l.channel ? `User-Agent: ${l.ua || ''}` : undefined}>
                   {l.channel || '—'}
                 </TableCell>
                 <TableCell className="text-xs">
                   {l.model || '—'}
                   {l.mapped_model && l.mapped_model !== l.model && (
-                    <span className="ml-1 text-[11px] text-muted-foreground">→{l.mapped_model}</span>
+                    <span className="ml-1 text-[0.6875rem] text-muted-foreground">→{l.mapped_model}</span>
                   )}
                 </TableCell>
                 {/*
@@ -478,7 +478,7 @@ export default function LogsPage() {
                 */}
                 <TableCell className="text-xs">
                   {l.effort ? (
-                    <Badge variant="secondary" className="rounded-full font-mono text-[10px]">
+                    <Badge variant="secondary" className="rounded-full font-mono text-[0.625rem]">
                       {l.effort}
                     </Badge>
                   ) : (
@@ -532,14 +532,14 @@ export default function LogsPage() {
                   ) : (
                     <span className="text-muted-foreground/70">—</span>
                   )}
-                  {l.stream && <span className="ml-1 text-[11px] text-muted-foreground">{t('logs.streamShort')}</span>}
+                  {l.stream && <span className="ml-1 text-[0.6875rem] text-muted-foreground">{t('logs.streamShort')}</span>}
                   {/* 提示词缓存（issue #69）：用户靠这条判断「缓存到底有没有起作用」。
                       上游没返回这三个字段时整块不显示（而不是显示 0%）——
                       与「确实没命中」不是一回事。 */}
                   {typeof l.cache_hit_tokens === 'number' ? (
                     <span
                       className={
-                        'ml-1 text-[10px] ' +
+                        'ml-1 text-[0.625rem] ' +
                         (l.cache_hit_tokens > 0
                           ? 'text-emerald-600 dark:text-emerald-400'
                           : 'text-amber-600 dark:text-amber-400')
@@ -591,7 +591,7 @@ export default function LogsPage() {
         )}
 
         <div className="flex items-center justify-between px-4 py-3">
-          <div className="text-[11px] text-muted-foreground">
+          <div className="text-[0.6875rem] text-muted-foreground">
             {t('logs.pageInfo', {total: fmtNumber(total), page, pages})}
           </div>
           <div className="flex gap-1">
