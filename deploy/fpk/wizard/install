@@ -1,0 +1,34 @@
+[
+  {
+    "stepTitle": "欢迎使用 WorkBuddy Manager",
+    "items": [
+      {
+        "type": "text",
+        "field": "port",
+        "label": "管理面板端口",
+        "rules": [{"required": true, "message": "请输入端口"}],
+        "options": [],
+        "helpText": "安装后访问 http://NAS-IP:端口/ 。",
+        "initValue": "7864"
+      },
+      {
+        "type": "text",
+        "field": "gateway_listen",
+        "label": "自带网关监听地址",
+        "rules": [{"required": true, "message": "请输入监听地址"}],
+        "options": [],
+        "helpText": "默认 127.0.0.1:7865（仅本机，推荐）。改成 0.0.0.0:7865 后局域网可直接调用自带网关（需要网关密钥，注意防火墙与端口暴露风险）。端口需在 1024-65535 之间。",
+        "initValue": "127.0.0.1:7865"
+      },
+      {
+        "type": "password",
+        "field": "pwd",
+        "label": "管理员密码",
+        "rules": [],
+        "options": [],
+        "helpText": "至少 12 位。留空则首次启动随机生成并写入应用日志。",
+        "initValue": ""
+      }
+    ]
+  }
+]

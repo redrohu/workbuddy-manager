@@ -1,0 +1,4 @@
+#!/bin/bash
+# 升级后清依赖标记，让下次启动按新包 wheels 重装。
+[ -n "${TRIM_PKGVAR}" ] && rm -f "${TRIM_PKGVAR}/.deps-ok"
+exit 0

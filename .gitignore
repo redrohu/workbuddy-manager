@@ -143,3 +143,11 @@ start-all.cmd
 stop-all.cmd
 dev/.weight-task
 dev/.shots-weight-task
+
+# ── fnOS（飞牛 OS）fpk 打包 ────────────────────────────────
+# dist/ 是 fpk 产物（每个约 50 MB，含内置 Python 与上游二进制）；
+# dev/.fpk-cache/ 是打 aarch64 包用的平台相关素材（内置 Python 运行时、
+# arm64 的上游二进制、aarch64 wheel），都不该进版本库。
+/dist/
+dev/.fpk-cache/
+_fpk/

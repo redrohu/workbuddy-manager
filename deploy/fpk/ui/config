@@ -1,0 +1,18 @@
+{
+  ".url": {
+    "wbmgr.Application": {
+      "noDisplay": false,
+      "allUsers": false,
+      "fileTypes": [],
+      "control": {"accessPerm": "editable"},
+      "protocol": "http",
+      "gatewayPrefix": "",
+      "gatewaySocket": "",
+      "title": "WorkBuddy Manager",
+      "icon": "images/icon_{0}.png",
+      "type": "url",
+      "port": "${port}",
+      "url": "/"
+    }
+  }
+}

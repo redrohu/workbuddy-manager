@@ -1,0 +1,87 @@
+#!/bin/bash
+export WB_APPDEST=${TRIM_APPDEST}
+export WB_VAR_DIR=${TRIM_PKGVAR}
+
+LOG_FILE="${TRIM_PKGVAR}/info.log"
+PID_FILE="${TRIM_PKGVAR}/manager.pid"
+
+# 数据目录：优先应用共享目录 @appshare/wbmgr（文件管理 → 应用文件可见），
+# 不可用时回落私有目录。仅在应用已停止时做首次迁移，避免搬动正在使用的数据库。
+RUNNING=0
+if [ -f "${PID_FILE}" ]; then
+    pid=$(head -n 1 "${PID_FILE}" | tr -d '[:space:]')
+    kill -0 "${pid}" 2>/dev/null && RUNNING=1
+fi
+SHARE_DIR="$(readlink -f "$(dirname "${TRIM_PKGVAR}")/../@appshare/wbmgr" 2>/dev/null)"
+if [ "${RUNNING}" = "1" ]; then
+    SHARE_DIR="${TRIM_PKGVAR}"
+elif [ -n "${SHARE_DIR}" ] && mkdir -p "${SHARE_DIR}" 2>/dev/null && [ -w "${SHARE_DIR}" ]; then
+    if [ -d "${TRIM_PKGVAR}/data" ] && { [ ! -d "${SHARE_DIR}/data" ] || [ -z "$(ls -A "${SHARE_DIR}/data" 2>/dev/null)" ]; }; then
+        rmdir "${SHARE_DIR}/data" 2>/dev/null || true
+        [ ! -d "${SHARE_DIR}/data" ] && mv "${TRIM_PKGVAR}/data" "${SHARE_DIR}/data"
+    fi
+    if [ -d "${TRIM_PKGVAR}/upstream" ] && { [ ! -d "${SHARE_DIR}/upstream" ] || [ -z "$(ls -A "${SHARE_DIR}/upstream" 2>/dev/null)" ]; }; then
+        rmdir "${SHARE_DIR}/upstream" 2>/dev/null || true
+        [ ! -d "${SHARE_DIR}/upstream" ] && mv "${TRIM_PKGVAR}/upstream" "${SHARE_DIR}/upstream"
+    fi
+    mkdir -p "${SHARE_DIR}/data" "${SHARE_DIR}/upstream/auths" "${SHARE_DIR}/upstream/data"
+else
+    SHARE_DIR="${TRIM_PKGVAR}"
+    mkdir -p "${SHARE_DIR}/data" "${SHARE_DIR}/upstream/auths" "${SHARE_DIR}/upstream/data"
+fi
+export WB_SHARE_DIR="${SHARE_DIR}"
+
+log_msg() { echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "${LOG_FILE}"; }
+check_process() { kill -0 "$1" 2>/dev/null; }
+
+status() {
+    if [ -f "${PID_FILE}" ]; then
+        pid=$(head -n 1 "${PID_FILE}" | tr -d '[:space:]')
+        if check_process "${pid}"; then return 0; fi
+        rm -f "${PID_FILE}"
+    fi
+    return 1
+}
+
+start_process() {
+    if status; then return 0; fi
+    log_msg "任务/账号数据目录：${WB_SHARE_DIR}"
+
+    log_msg "生成运行配置（面板端口 ${port}）"
+    bash "${TRIM_APPDEST}/bin/gen-config.sh" "${port}" "${pwd}" >> "${LOG_FILE}" 2>&1
+
+    log_msg "启动自带网关（127.0.0.1:7865）"
+    bash "${TRIM_APPDEST}/bin/up-start.sh" >> "${LOG_FILE}" 2>&1
+
+    log_msg "启动管理端"
+    nohup bash "${TRIM_APPDEST}/bin/run-manager.sh" >> "${LOG_FILE}" 2>&1 &
+    printf "%s" "$!" > "${PID_FILE}"
+
+    log_msg "启动上游守护（30s 巡检）"
+    nohup bash "${TRIM_APPDEST}/bin/up-watch.sh" "$(head -n 1 "${PID_FILE}")" >> "${LOG_FILE}" 2>&1 &
+    return 0
+}
+
+stop_process() {
+    log_msg "停止管理端"
+    if [ -r "${PID_FILE}" ]; then
+        pid=$(head -n 1 "${PID_FILE}" | tr -d '[:space:]')
+        if [ -n "${pid}" ] && check_process "${pid}"; then
+            kill -TERM "${pid}" 2>/dev/null
+            count=0
+            while check_process "${pid}" && [ $count -lt 15 ]; do sleep 1; count=$((count + 1)); done
+            check_process "${pid}" && kill -KILL "${pid}" 2>/dev/null
+        fi
+        rm -f "${PID_FILE}"
+    fi
+    log_msg "停止自带网关"
+    bash "${TRIM_APPDEST}/bin/up-stop.sh" >> "${LOG_FILE}" 2>&1
+    return 0
+}
+
+case $1 in
+start) start_process ;;
+stop) stop_process ;;
+status) if status; then exit 0; else exit 3; fi ;;
+*) exit 1 ;;
+esac

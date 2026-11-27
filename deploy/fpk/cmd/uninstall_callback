@@ -1,0 +1,11 @@
+#!/bin/bash
+# 卸载回调：按向导选择保留或删除数据（私有目录 + 共享目录）。
+WIZARD_DATA_ACTION="$wizard_data_action"
+SHARE="$(readlink -f "$(dirname "${TRIM_PKGVAR}")/../@appshare/wbmgr" 2>/dev/null)"
+if [ "$WIZARD_DATA_ACTION" = "delete" ]; then
+    rm -rf "${TRIM_PKGVAR}"
+    if [ -n "${SHARE}" ] && [ -d "${SHARE}" ]; then
+        find "${SHARE}" -mindepth 1 -delete 2>/dev/null
+    fi
+fi
+exit 0

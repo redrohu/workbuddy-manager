@@ -1,0 +1,34 @@
+[
+  {
+    "stepTitle": "修改设置",
+    "items": [
+      {
+        "type": "text",
+        "field": "port",
+        "label": "管理面板端口",
+        "rules": [{"required": true, "message": "请输入端口"}],
+        "options": [],
+        "helpText": "修改后需重启应用生效。",
+        "initValue": "7864"
+      },
+      {
+        "type": "text",
+        "field": "gateway_listen",
+        "label": "自带网关监听地址",
+        "rules": [],
+        "options": [],
+        "helpText": "留空 = 保持当前设置。默认 127.0.0.1:7865（仅本机）；改成 0.0.0.0:7865 可供局域网直接调用（需要网关密钥，注意防火墙与端口暴露风险）。端口需在 1024-65535 之间，修改后需重启应用生效。",
+        "initValue": ""
+      },
+      {
+        "type": "password",
+        "field": "pwd",
+        "label": "管理员密码",
+        "rules": [],
+        "options": [],
+        "helpText": "留空表示不修改；填写则覆盖（至少 12 位）。",
+        "initValue": ""
+      }
+    ]
+  }
+]
