@@ -274,7 +274,8 @@
     "failedRequests": "失敗請求",
     "todayFailed": "今天 {n} 次失敗",
     "weekFailed": "近 7 天 {n} 次失敗 · {realm}",
-    "creditsExpiryDaily": "最近一天（{time}）共 {amount} 積分到期"
+    "creditsExpiryDaily": "最近一天（{time}）共 {amount} 積分到期",
+    "creditsLoading": "正在查詢即時積分…"
   },
   "stats": {
     "realtimeClientInflight": "用戶端在途 {n}",
@@ -453,8 +454,15 @@
     "weightHint": "這是乘數：2 表示同等條件下被抽中的機會約為預設的兩倍，0.5 表示減半。預設 1，範圍 0.1–100。它不改變帳號是否可用（冷卻、停用、在途佔滿照舊攔截），也不會讓低權重的號完全輪不到。儲存後會自動重新載入上游。",
     "weightSaved": "權重已儲存：×{weight}",
     "weightCleared": "已恢復預設權重（1）",
+    "skipTasksBadge": "不參與任務",
+    "skipTasksBadgeTitle": "該帳號不參與簽到、保活、旅行、活躍、開學季、夜貓等定時任務；轉發不受影響（帳號仍在號池裡）。",
+    "skipTasksEnable": "設定為不參與定時任務（保留轉發）",
+    "skipTasksDisable": "恢復參與定時任務",
+    "skipTasksSavedOn": "已設定該帳號不參與定時任務（轉發照常）",
+    "skipTasksSavedOff": "已恢復該帳號參與定時任務",
     "weightInvalid": "請填 0.1 到 100 之間的數字（留空 = 預設 1）",
     "checkinSkippedNote": "（另有 {skipped} 個帳號不適用：國際版無簽到體系）",
+    "checkinSkipTasksNote": "（另有 {n} 個帳號已設定不參與定時任務，已跳過）",
     "checkinDoneTitle": "今日已簽到（{at}），無需重複",
     "checkinAlreadyNote": "（{n} 個帳號今日已簽到，已跳過）",
     "checkinNothingPending": "今日都已簽到",
@@ -2042,9 +2050,6 @@
     "passthrough（透传客户端 system，默认）": "passthrough（透傳客戶端 system，預設）",
     "custom（替换为网关提示词）": "custom（替換為閘道提示詞）",
     "自定义提示词文件": "自訂提示詞檔案",
-    "在 custom 与 append 模式下生效。留空使用内置默认提示词": "在 custom 與 append 模式下生效。留空使用內建預設提示詞",
-    "路径必须存在于上游容器内且可读；写错会导致上游启动失败、反代不可用。不确定就留空。": "路徑必須存在於上游容器內且可讀；寫錯會導致上游啟動失敗、閘道無法使用。不確定就留空。",
-    "留空 = 使用内置默认": "留空 = 使用內建預設",
     "请求体上限": "請求內文上限",
     "单个请求体最大体积，超过返回 413。反代网关也按此值限制入站请求，调大可容纳更长的上下文": "單一請求內文最大體積，超過回傳 413。閘道也依此值限制入站請求，調大可容納更長的上下文",
     "出站 User-Agent": "出站 User-Agent",
@@ -2158,7 +2163,10 @@
     "秒": "秒",
     "分钟": "分鐘",
     "请求上限（旧版上游）": "請求上限（舊版上游）",
-    "自定义密钥形态未启用：请设置环境变量 WB_KEY_CUSTOM_ENABLED=1 后重启": "自訂金鑰形態未啟用：請設定環境變數 WB_KEY_CUSTOM_ENABLED=1 後重新啟動"
+    "自定义密钥形态未启用：请设置环境变量 WB_KEY_CUSTOM_ENABLED=1 后重启": "自訂金鑰形態未啟用：請設定環境變數 WB_KEY_CUSTOM_ENABLED=1 後重新啟動",
+    "在 custom 与 append 模式下生效，必须填写上游容器内可读的提示词文件路径": "在 custom 與 append 模式下生效，必須填寫上游容器內可讀的提示詞檔案路徑",
+    "路径必须存在于上游容器内且可读；留空会使用极短的中性兜底提示词。写错会导致上游启动失败、反代不可用。": "路徑必須存在於上游容器內且可讀；留空會使用極短的中性備援提示詞。寫錯會導致上游啟動失敗、反向代理不可用。",
+    "/app/data/prompt-custom.txt": "/app/data/prompt-custom.txt"
   },
   "redPacket": {
     "title": "紅包",
