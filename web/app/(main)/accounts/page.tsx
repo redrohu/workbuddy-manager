@@ -1032,7 +1032,7 @@ export default function AccountsPage() {
     return (
       <Badge
         variant="outline"
-        className="shrink-0 rounded-full border-muted-foreground/30 px-1.5 py-0 text-[10px] font-normal text-muted-foreground"
+        className="shrink-0 rounded-full border-muted-foreground/30 px-1.5 py-0 text-[0.625rem] font-normal text-muted-foreground"
         title={t('accounts.skipTasksBadgeTitle')}
       >
         <ListX className="mr-0.5 h-3 w-3" />
